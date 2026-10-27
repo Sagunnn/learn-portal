@@ -166,6 +166,7 @@ export default function IndicatorLab({ onState }: { onState?: (s: WidgetState) =
                 key={li}
                 role="button"
                 tabIndex={0}
+                {...(slot === 0 ? { "data-start": true } : {})}
                 aria-label={`Test tube ${mystery ? letters[slot] : liquid.name}`}
                 onClick={() => apply(slot)}
                 onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), apply(slot))}

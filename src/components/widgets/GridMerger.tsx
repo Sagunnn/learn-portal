@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { fracTex, lcm, simplify } from "../../lib/fraction";
-import { Button } from "../ui/primitives";
-import { EquationBar, Stepper, Tex, WidgetPanel, useReportState, type WidgetState } from "./controls";
+import { EquationBar, Tex, WidgetPanel, useReportState, type WidgetState } from "./controls";
 import { C, MergeGrids, type MergePhase } from "./figures";
 
 /**
@@ -47,13 +46,24 @@ export default function GridMerger({
 
   return (
     <WidgetPanel>
-      <div className="grid gap-3 sm:grid-cols-2">
-        <FractionPicker label="Box A" color={C.blue} n={a1} d={b1} onN={(v) => change(() => setA1(v))} onD={(v) => change(() => { setB1(v); setA1((x) => Math.min(x, v - 1)); })} />
-        <FractionPicker label="Box B" color={C.orange} n={a2} d={b2} onN={(v) => change(() => setA2(v))} onD={(v) => change(() => { setB2(v); setA2((x) => Math.min(x, v - 1)); })} />
+      <div className="rounded-3xl border border-slate-200 bg-white p-2">
+        <MergeGrids
+          a={[a1, b1]}
+          b={[a2, b2]}
+          phase={phase}
+          onPickA={phase === 0 ? (n) => change(() => setA1(Math.max(1, n))) : undefined}
+          onPickB={phase === 0 ? (n) => change(() => setA2(Math.max(1, n))) : undefined}
+          onPlus={() => setPhase(1)}
+          onEquals={() => setPhase(2)}
+        />
+        <p className="pb-1 text-center text-base font-semibold text-slate-500">
+          {phase === 0 ? "Tap the columns of A and the rows of B to shade them, then tap ＋" : phase === 1 ? "Same-size pieces now! Tap ＝ to pour them together." : "Combined!"}
+        </p>
       </div>
 
-      <div className="rounded-xl bg-white p-2">
-        <MergeGrids a={[a1, b1]} b={[a2, b2]} phase={phase} />
+      <div className="grid gap-3 sm:grid-cols-2">
+        <SizePicker label="Box A is cut into" color={C.blue} value={b1} onPick={(v) => change(() => { setB1(v); setA1((x) => Math.min(x, v - 1)); })} />
+        <SizePicker label="Box B is cut into" color={C.orange} value={b2} onPick={(v) => change(() => { setB2(v); setA2((x) => Math.min(x, v - 1)); })} />
       </div>
 
       <EquationBar tex={tex}>
@@ -61,18 +71,6 @@ export default function GridMerger({
         {phase === 1 && `Both boxes now have the same ${b1} × ${b2} = ${cells} pieces. Same-size pieces can be added.`}
         {phase === 2 && `${a1 * b2} blue + ${a2 * b1} orange = ${sum} pieces of ${cells}.`}
       </EquationBar>
-
-      <div className="flex flex-wrap gap-2">
-        <Button size="sm" variant={phase === 0 ? "primary" : "secondary"} onClick={() => setPhase(1)} disabled={phase !== 0}>
-          ① Overlay &amp; find common grid
-        </Button>
-        <Button size="sm" variant={phase === 1 ? "primary" : "secondary"} onClick={() => setPhase(2)} disabled={phase !== 1}>
-          ② Combine the pieces
-        </Button>
-        <Button size="sm" variant="ghost" onClick={() => setPhase(0)} disabled={phase === 0}>
-          Reset
-        </Button>
-      </div>
 
       <div className="rounded-3xl border-2 border-rose-200 bg-rose-50 px-5 py-3 text-base text-slate-700">
         <div className="mb-1 font-bold text-rose-700">⚠️ The classic trap</div>
@@ -91,14 +89,27 @@ export default function GridMerger({
   );
 }
 
-function FractionPicker({ label, color, n, d, onN, onD }: { label: string; color: string; n: number; d: number; onN: (v: number) => void; onD: (v: number) => void }) {
+/** Big preset pills for how many pieces a box is cut into. */
+function SizePicker({ label, color, value, onPick }: { label: string; color: string; value: number; onPick: (v: number) => void }) {
   return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl border bg-white p-3" style={{ borderColor: color + "55" }}>
-      <span className="w-full text-base font-bold sm:w-auto" style={{ color }}>
+    <div className="rounded-2xl border border-slate-200 bg-white p-3 text-center">
+      <div className="mb-2 font-display text-base font-semibold" style={{ color }}>
         {label}
-      </span>
-      <Stepper label="top" value={n} min={1} max={d - 1} onChange={onN} color={color} />
-      <Stepper label="bottom" value={d} min={2} max={6} onChange={onD} color={C.line} />
+      </div>
+      <div className="flex justify-center gap-1.5">
+        {[2, 3, 4, 5, 6].map((v) => (
+          <button
+            key={v}
+            type="button"
+            aria-pressed={value === v}
+            onClick={() => onPick(v)}
+            className="min-h-[48px] min-w-[48px] rounded-2xl border-2 border-b-4 font-display text-xl font-semibold transition-all active:mb-[2px] active:translate-y-[2px] active:border-b-2"
+            style={value === v ? { background: color, borderColor: color, color: "white" } : { borderColor: "#e2e8f0", color: "#475569" }}
+          >
+            {v}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

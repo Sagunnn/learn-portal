@@ -114,6 +114,8 @@ To add a widget: build it in `src/components/widgets/`, register it in `registry
 
 **Print summary**: add a top-level `cheatSheet` (`title?`, `intro?`, up to 8 `items` with `title`, `tex?`, `body?`, `visual?`) and the lesson gets a "Print 1-page summary" button. Only the sheet prints, sized for one A4 page.
 
+**Lab goals**: in every `interactive` chunk the **first** challenge is the lab's 🎯 **Goal**. It shows as a banner at the top, turns green with its one-sentence `explain` when reached, and unlocks **Next** (a small "Skip for now" is always offered). The other challenges appear one at a time as ⭐ bonus goals. Every lab also gets a **Reset Lab 🔄** button and a pulsing **👆 Tap me to start!** hint on the element its widget marks with `data-start`.
+
 **Sandbox challenges / missions**: an `interactive` chunk can list `challenges: [{ "id", "text", "goal": { "top": 8, "bottom": 12 }, "xp": 50 }]`. A goal value is an exact number or a range like `{ "max": 8 }`; `xp` defaults to 5. A challenge is solved (confetti, +5 XP, saved) the moment the widget's state matches every key in `goal`. The state keys for each widget are listed in the schema's description of `challenges`.
 
 ## Design system
@@ -126,7 +128,7 @@ Cozy, calm and playful, for a 12-year-old to spend an hour in.
 - **Icons**: crisp SVG icons from `lucide-react` for the interface (subjects via `iconKey` in `subjects.json`, streak, XP, level, section badges). Emojis only appear inside lesson drawings and content.
 - **Dashboard**: a compact gradient "Continue learning" hero (max 160px) with the week tracker, then a 3-column subject grid. Streak, XP and level appear only in the sticky header.
 - **Type**: Nunito for reading, Fredoka for headings and buttons (self-hosted via `@fontsource`), Mukta for Devanagari. Base size is 17px on phones, 18px on larger screens.
-- **Toy-like controls**: buttons are at least 56px tall with a chunky `border-b-4` that squashes on click. Sliders have a big round thumb plus **[−] / [+]** arcade buttons.
+- **Toy-like controls**: labs are driven by touching the drawing (tap pieces, ✂️, the jug, the skater, the crate, the bottles, the jars, the match). Numbers float on the drawing as pills (`SvgPill`), not in tables. Instead of range sliders, values use big **[−] value [+]** arcade steppers (hold to repeat) with preset pills.
 - **Drawings first**: labs show ONE colour-coded `StatBadge` above a large drawing instead of tables. Labels float on the drawing, and test tubes, beakers, flasks and the crate have faces (`widgets/Face.tsx`) that react to what's happening.
 - **Rewards**: the sticky HUD shows the streak, XP/level bar and one badge per lesson section (dots on phones). Confetti fires on correct answers, missions, finished lessons and passed quizzes, and is skipped when the device asks for reduced motion. The coach gently "breathes".
 

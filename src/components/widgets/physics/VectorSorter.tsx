@@ -101,11 +101,12 @@ export default function VectorSorter({ onState }: { onState?: (s: WidgetState) =
       </div>
 
       <div className="flex min-h-14 flex-wrap gap-2">
-        {loose.map((c) => (
+        {loose.map((c, i) => (
           <button
             key={`${c.id}-${wrong?.id === c.id ? wrong.at : 0}`}
             type="button"
             draggable
+            {...(i === 0 ? { "data-start": true } : {})}
             onDragStart={(e) => {
               e.dataTransfer.setData("text/plain", c.id);
               e.dataTransfer.effectAllowed = "move";

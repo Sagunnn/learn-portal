@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { confettiAt } from "../../../lib/confetti";
 import { Button, cx } from "../../ui/primitives";
-import { EquationBar, WidgetPanel, useReportState, type WidgetState } from "../controls";
+import { EquationBar, SvgPill, WidgetPanel, useReportState, type WidgetState } from "../controls";
 import { Chip, useAnimationLoop } from "../physics/shared";
 import Face from "../Face";
 import { Chem, ChemSvg, Vessel, tex, uiColor } from "./chem";
@@ -168,7 +168,8 @@ export default function Neutralization({ acid: a0 = 0, base: b0 = 0, onState }: 
             <line key={i} x1={372} x2={380} y1={26 + i * 20} y2={26 + i * 20} stroke="#475569" strokeWidth={1.5} />
           ))}
           <rect x={381} y={150} width={8} height={22} fill="#475569" />
-          <g role="button" tabIndex={0} aria-label={tapOpen ? "Close tap" : "Open tap"} className="cursor-pointer" onClick={() => evap === null && setTapOpen(!tapOpen)}>
+          <g data-start role="button" tabIndex={0} aria-label={tapOpen ? "Close tap" : "Open tap"} className="cursor-pointer" onClick={() => evap === null && setTapOpen(!tapOpen)}>
+            <rect x={350} y={140} width={70} height={40} fill="transparent" />
             <rect x={366} y={154} width={38} height={10} rx={5} fill={tapOpen ? "#10b981" : "#f43f5e"} transform={tapOpen ? "rotate(90 385 159)" : undefined} />
           </g>
           <text x={412} y={160} fontSize={12} fontWeight={800} fill="#4f46e5">
@@ -202,6 +203,21 @@ export default function Neutralization({ acid: a0 = 0, base: b0 = 0, onState }: 
               ))}
             </Vessel>
           </g>
+          {/* ripple where each drop lands, and the reading right above the liquid */}
+          {evap === null && drops.length > 0 && (
+            <ellipse key={drops[drops.length - 1]} cx={385} cy={by + bh - level * (bh - 6) + 2} rx={8} ry={3} fill="none" stroke="white" strokeWidth={2.5} className="chem-ripple" />
+          )}
+          {evap === null && (
+            <SvgPill
+              x={bx + bw / 2}
+              y={Math.max(by + 18, by + bh - level * (bh - 6) - 22)}
+              text={`pH ${ph.toFixed(1)}${neutral ? " · Neutral!" : ph > 7 ? " · Basic" : " · Acidic"}`}
+              fill={uiColor(ph)}
+              color="white"
+              stroke="white"
+              size={15}
+            />
+          )}
           {evap === null && <Face x={bx + bw / 2} y={by + bh - 34} scale={1.3} mood={neutral ? "happy" : ph < 4 ? "sour" : ph > 7 ? "wow" : "curious"} />}
           {/* heat shimmer while neutralising or boiling */}
           {((reacted > 0 && !neutral && ph < 7) || (evap !== null && !crystallized)) && (

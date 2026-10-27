@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import { Button, cx } from "../../ui/primitives";
-import { EquationBar, Slider, WidgetPanel, useReportState, type WidgetState } from "../controls";
+import { Button } from "../../ui/primitives";
+import { EquationBar, Slider, SvgPill, WidgetPanel, useReportState, type WidgetState } from "../controls";
 import { Arrow, Chip, P, Person, useAnimationLoop } from "./shared";
 
 /**
@@ -80,6 +80,10 @@ export default function WorkDetector({ scenario: sc0 = 0, onState }: { scenario?
 
       <div className="rounded-2xl border-2 border-b-4 border-slate-200 bg-gradient-to-b from-slate-50 to-white p-2">
         <svg viewBox="0 0 800 260" className="block h-auto w-full select-none">
+          {/* tap the person / cart to push or walk */}
+          <g data-start role="button" aria-label={isCart ? "Push the cart" : isWall ? "Push the wall" : "Walk"} className="cursor-pointer" onClick={() => !running && start()}>
+            <rect x={isWall ? 220 : objX - 110} y={ground - 130} width={isWall ? 160 : 260} height={130} fill="transparent" />
+          </g>
           <rect x={0} y={ground} width={800} height={50} fill="#e2e8f0" />
           {isCart && (
             <>
@@ -150,21 +154,30 @@ export default function WorkDetector({ scenario: sc0 = 0, onState }: { scenario?
               </text>
             </>
           )}
+          {/* Work Done meter, right on the drawing */}
+          <g>
+            <rect x={738} y={40} width={34} height={160} rx={17} fill="#fef3c7" stroke="#f59e0b" strokeWidth={3} />
+            <rect x={741} y={43 + 154 * (1 - meterPct / 100)} width={28} height={154 * (meterPct / 100)} rx={14} fill="#f59e0b" style={{ transition: "y 120ms, height 120ms" }} />
+            <text x={755} y={28} textAnchor="middle" fontSize={20}>
+              ⚡
+            </text>
+          </g>
+          <SvgPill
+            x={728}
+            y={222}
+            anchor="end"
+            text={zeroFlash ? "0 J! No work done!" : `${shown.toLocaleString()} J`}
+            fill={zeroFlash ? "#fff1f2" : "#fffbeb"}
+            color={zeroFlash ? "#be123c" : "#b45309"}
+            stroke={zeroFlash ? "#fda4af" : "#fcd34d"}
+            size={18}
+          />
+          {!pushed && (
+            <text x={400} y={22} textAnchor="middle" fontSize={15} fontWeight={800} fill="#64748b">
+              {isCart ? "👆 Tap the cart to push it" : isWall ? "👆 Tap to push the wall" : "👆 Tap to walk with the bag"}
+            </text>
+          )}
         </svg>
-      </div>
-
-      {/* energy meter */}
-      <div className={cx("rounded-2xl border-2 border-b-4 p-3", zeroFlash ? "phys-flash border-rose-400 bg-rose-50" : "border-amber-300 bg-amber-50")}>
-        <div className="mb-1 flex items-baseline justify-between">
-          <span className="text-base font-extrabold text-amber-900">⚡ Work Done meter</span>
-          <span className={cx("font-mono text-2xl font-extrabold tabular-nums", zeroFlash ? "text-rose-600" : "text-amber-700")}>
-            {zeroFlash ? "0 J! No work done!" : `${shown.toLocaleString()} J`}
-          </span>
-        </div>
-        <div className="h-5 overflow-hidden rounded-full bg-amber-200/70">
-          <div className="h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-500" style={{ width: `${meterPct}%` }} />
-        </div>
-        <div className="mt-1 text-right text-[11px] font-bold text-amber-800/70">scale: 0 to {MAX_J.toLocaleString()} J</div>
       </div>
 
       <EquationBar
@@ -184,9 +197,35 @@ export default function WorkDetector({ scenario: sc0 = 0, onState }: { scenario?
       </EquationBar>
 
       <div className="grid gap-5">
-        {scenario !== 2 && <Slider label="Force F (N)" value={force} min={0} max={500} color={P.force} step={10} onChange={(v) => (reset(), setForce(v))} />}
+        {scenario !== 2 && (
+          <Slider
+            label="Force F (N)"
+            value={force}
+            min={0}
+            max={500}
+            color={P.force}
+            step={10}
+            unit="N"
+            onChange={(v) => (reset(), setForce(v))}
+            presets={[
+              { label: "50 N", value: 50 },
+              { label: "100 N", value: 100 },
+              { label: "200 N", value: 200 },
+              { label: "500 N 💪", value: 500 },
+            ]}
+          />
+        )}
         {scenario !== 1 && (
-          <Slider label={isCart ? "Distance pushed d (m)" : "Distance walked (m)"} value={distance} min={0} max={isCart ? 20 : 50} color={P.vector} onChange={(v) => (reset(), setDistance(v))} />
+          <Slider
+            label={isCart ? "Distance pushed d" : "Distance walked"}
+            value={distance}
+            min={0}
+            max={isCart ? 20 : 50}
+            color={P.vector}
+            unit="m"
+            onChange={(v) => (reset(), setDistance(v))}
+            presets={(isCart ? [1, 5, 10, 20] : [5, 20, 50]).map((v) => ({ label: `${v} m`, value: v }))}
+          />
         )}
       </div>
 

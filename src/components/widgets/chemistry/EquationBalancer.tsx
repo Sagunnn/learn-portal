@@ -195,6 +195,7 @@ export default function EquationBalancer({ eq: eq0 = 0, onState }: { eq?: number
               <button
                 type="button"
                 aria-label={`More ${f}`}
+                {...(i === 0 ? { "data-start": true } : {})}
                 onClick={() => bump(i, 1)}
                 disabled={coefs[i] >= MAX}
                 className="h-7 w-10 rounded-xl border-2 border-b-4 border-slate-200 bg-white text-base font-black text-slate-600 transition-all active:mb-[2px] active:translate-y-[2px] active:border-b-2 disabled:opacity-30"

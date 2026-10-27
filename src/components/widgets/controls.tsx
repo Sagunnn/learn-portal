@@ -1,4 +1,4 @@
-import { useEffect, useId, useMemo, useRef, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useId, useMemo, useRef, type ReactNode } from "react";
 import { renderRich } from "../../lib/richText";
 import { cx } from "../ui/primitives";
 
@@ -8,7 +8,44 @@ export function Tex({ tex, display = false, className }: { tex: string; display?
   return <span className={className} dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
-/** Chunky slider: a big round thumb, with [−] and [+] arcade buttons either side. */
+/** Repeats `fn` while a button is held (first after 380 ms, then every 90 ms). */
+function useHoldRepeat(fn: () => void) {
+  const timer = useRef<number | null>(null);
+  const fnRef = useRef(fn);
+  fnRef.current = fn;
+  const stop = () => {
+    if (timer.current !== null) window.clearTimeout(timer.current);
+    timer.current = null;
+  };
+  useEffect(() => stop, []);
+  return {
+    onPointerDown: (e: React.PointerEvent) => {
+      if (e.button !== 0) return;
+      fnRef.current();
+      const loop = (delay: number) => {
+        timer.current = window.setTimeout(() => {
+          fnRef.current();
+          loop(90);
+        }, delay);
+      };
+      loop(380);
+    },
+    onPointerUp: stop,
+    onPointerLeave: stop,
+    onPointerCancel: stop,
+    onKeyDown: (e: React.KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        fnRef.current();
+      }
+    },
+  };
+}
+
+/**
+ * Big arcade stepper: [ − ]  value  [ + ] (hold to repeat), with optional preset pills.
+ * Replaces fiddly range sliders. A thin bar under the value shows where it sits in its range.
+ */
 export function Slider({
   label,
   value,
@@ -18,6 +55,8 @@ export function Slider({
   color = "#4f46e5",
   hint,
   step = 1,
+  unit,
+  presets,
 }: {
   label: ReactNode;
   value: number;
@@ -27,43 +66,93 @@ export function Slider({
   color?: string;
   hint?: string;
   step?: number;
+  unit?: string;
+  presets?: { label: ReactNode; value: number }[];
 }) {
   const id = useId();
+  const clamp = (v: number) => Math.min(max, Math.max(min, Math.round(v * 1000) / 1000));
+  const valueRef = useRef(value);
+  valueRef.current = value;
+  const down = useHoldRepeat(() => onChange(clamp(valueRef.current - step)));
+  const up = useHoldRepeat(() => onChange(clamp(valueRef.current + step)));
   const pct = max > min ? ((value - min) / (max - min)) * 100 : 0;
-  const nudge = (d: number) => onChange(Math.min(max, Math.max(min, Math.round((value + d * step) * 1000) / 1000)));
   const btn =
-    "grid size-12 shrink-0 place-items-center rounded-2xl border-2 border-b-4 border-slate-200 bg-white text-2xl font-black text-slate-700 transition-all duration-150 hover:bg-slate-50 active:mb-[3px] active:translate-y-[3px] active:border-b-2 disabled:opacity-30";
+    "grid size-14 shrink-0 select-none place-items-center rounded-2xl border-2 border-b-4 border-slate-200 bg-white text-3xl font-black text-slate-700 transition-all duration-100 hover:bg-slate-50 active:mb-[3px] active:translate-y-[3px] active:border-b-2 disabled:opacity-30 touch-manipulation";
   return (
-    <div>
-      <div className="mb-2 flex items-baseline justify-between gap-2">
-        <label htmlFor={id} className="font-display text-base font-semibold text-slate-700">
-          {label}
-        </label>
-        <span className="font-display text-2xl font-bold tabular-nums" style={{ color }}>
-          {value}
-        </span>
+    <div role="group" aria-labelledby={id}>
+      <div id={id} className="mb-2 font-display text-base font-semibold text-slate-700">
+        {label}
       </div>
       <div className="flex items-center gap-3">
-        <button type="button" className={btn} onClick={() => nudge(-1)} disabled={value <= min} aria-label="Decrease">
+        <button type="button" className={btn} {...down} disabled={value <= min} aria-label="Decrease">
           −
         </button>
-        <input
-          id={id}
-          type="range"
-          min={min}
-          max={max}
-          step={step}
-          value={value}
-          aria-valuetext={hint}
-          onChange={(e) => onChange(Number(e.target.value))}
-          className="range min-w-0 flex-1"
-          style={{ "--thumb": color, background: `linear-gradient(to right, ${color} ${pct}%, #e2e8f0 ${pct}%)` } as CSSProperties}
-        />
-        <button type="button" className={btn} onClick={() => nudge(1)} disabled={value >= max} aria-label="Increase">
+        <div className="min-w-0 flex-1 text-center">
+          <output className="block font-display text-4xl font-semibold tabular-nums leading-none" style={{ color }} aria-live="polite" aria-label={hint}>
+            {value > 0 && min < 0 ? "+" : ""}
+            {value}
+            {unit && <span className="ml-1 text-lg text-slate-400">{unit}</span>}
+          </output>
+          <div className="mx-auto mt-2 h-2 max-w-48 overflow-hidden rounded-full bg-slate-100" aria-hidden>
+            <div className="h-full rounded-full transition-[width] duration-200" style={{ width: `${pct}%`, background: color }} />
+          </div>
+        </div>
+        <button type="button" className={btn} {...up} disabled={value >= max} aria-label="Increase">
           +
         </button>
       </div>
+      {presets && (
+        <div className="mt-3 flex flex-wrap justify-center gap-2">
+          {presets.map((p, i) => (
+            <button
+              key={i}
+              type="button"
+              aria-pressed={value === p.value}
+              onClick={() => onChange(clamp(p.value))}
+              className={cx(
+                "min-h-[44px] rounded-full border-2 border-b-4 px-4 font-display text-base font-semibold transition-all active:mb-[2px] active:translate-y-[2px] active:border-b-2",
+                value === p.value ? "border-indigo-700 bg-indigo-600 text-white" : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50",
+              )}
+            >
+              {p.label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
+  );
+}
+
+/** A value pill drawn inside an SVG, e.g. "50 N →" on an arrow. */
+export function SvgPill({
+  x,
+  y,
+  text,
+  fill = "#ffffff",
+  color = "#0f172a",
+  stroke = "#cbd5e1",
+  size = 15,
+  anchor = "middle",
+}: {
+  x: number;
+  y: number;
+  text: string;
+  fill?: string;
+  color?: string;
+  stroke?: string;
+  size?: number;
+  anchor?: "start" | "middle" | "end";
+}) {
+  const w = text.length * size * 0.58 + 22;
+  const h = size + 14;
+  const left = anchor === "middle" ? x - w / 2 : anchor === "end" ? x - w : x;
+  return (
+    <g style={{ transition: "transform 200ms" }}>
+      <rect x={left} y={y - h / 2} width={w} height={h} rx={h / 2} fill={fill} stroke={stroke} strokeWidth={2} />
+      <text x={left + w / 2} y={y + size * 0.36} textAnchor="middle" fontSize={size} fontWeight={800} fill={color} fontFamily="Fredoka Variable, Nunito Variable, sans-serif">
+        {text}
+      </text>
+    </g>
   );
 }
 

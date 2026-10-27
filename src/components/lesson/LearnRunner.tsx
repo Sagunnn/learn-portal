@@ -37,11 +37,21 @@ export default function LearnRunner({ lesson, onCards, onQuiz }: { lesson: Lesso
   const [furthest, setFurthest] = useState(init.start);
   const [answeredBefore, setAnsweredBefore] = useState(init.answeredBefore);
   const [answered, setAnswered] = useState<Set<number>>(() => new Set());
+  const [skipped, setSkipped] = useState<Set<number>>(() => new Set());
   const [finished, setFinished] = useState<{ xp: number } | null>(() => (init.done ? { xp: 0 } : null));
 
   const chunk = lesson.chunks[index];
   const isAnswered = (i: number) => lesson.chunks[i].type !== "check" || answered.has(i) || i < answeredBefore;
-  const locked = !isAnswered(index);
+  // A lab's Next unlocks once its 🎯 goal (first challenge) is reached — or the student skips it.
+  const goalOf = (i: number) => {
+    const c = lesson.chunks[i];
+    return c.type === "interactive" ? c.challenges?.[0]?.id : undefined;
+  };
+  const goalPending = (i: number) => {
+    const g = goalOf(i);
+    return !!g && !(saved?.challengesDone ?? []).includes(g) && !skipped.has(i) && i >= answeredBefore;
+  };
+  const locked = !isAnswered(index) || goalPending(index);
   const moreBubbles = seg < steps[index] - 1;
   const atStart = index === 0 && seg === 0;
   const stepNow = steps.slice(0, index).reduce((a, b) => a + b, 0) + seg + 1;
@@ -125,7 +135,9 @@ export default function LearnRunner({ lesson, onCards, onQuiz }: { lesson: Lesso
     );
   }
 
-  const hint = locked
+  const hint = goalPending(index)
+    ? ne ? "🎯 लक्ष्य पूरा गरेपछि अगाडि बढ्न सकिन्छ।" : "Reach the 🎯 goal to unlock Next."
+    : locked
     ? ne ? "अगाडि बढ्न प्रश्नको उत्तर दिनुहोस्।" : "Answer to unlock Next."
     : chunk.type === "interactive"
       ? ne ? "चलाएर हेर्नुभयो?" : "Played with it? Then go on!"
@@ -167,6 +179,15 @@ export default function LearnRunner({ lesson, onCards, onQuiz }: { lesson: Lesso
           {hint && (
             <p className="mb-2 text-center text-base font-semibold text-slate-500" aria-live="polite">
               {hint}
+              {goalPending(index) && (
+                <button
+                  type="button"
+                  onClick={() => setSkipped((s) => new Set(s).add(index))}
+                  className="ml-2 rounded-full px-2 font-semibold text-slate-400 underline decoration-dotted underline-offset-4 hover:text-slate-600"
+                >
+                  {ne ? "अहिले छोड्नुहोस्" : "Skip for now"}
+                </button>
+              )}
             </p>
           )}
           <div className="flex items-center gap-3">

@@ -39,7 +39,8 @@
             "mystery": 1,
             "foundBase": 1
           },
-          "xp": 50
+          "xp": 50,
+          "explain": "Only a base turns phenolphthalein pink and red litmus blue."
         },
         {
           "id": "m-test-all",
@@ -130,7 +131,7 @@
       "type": "interactive",
       "widget": "phScale",
       "title": "Zoom in: the pH scale",
-      "intro": "Slide from 0 to 14 and zoom into the liquid. Acids are crowded with $\\text{H}^+$ ions; bases with $\\text{OH}^-$ ions.",
+      "intro": "Tap the **ACID** or **BASE** bottle to drip, or pick a liquid. Acids crowd with $\\text{H}^+$; bases with $\\text{OH}^-$.",
       "props": {
         "ph": 3
       },
@@ -141,7 +142,8 @@
           "goal": {
             "ph": 7
           },
-          "xp": 10
+          "xp": 10,
+          "explain": "At pH 7, H⁺ and OH⁻ balance out: neutral, like pure water."
         }
       ]
     },
@@ -159,8 +161,8 @@
       "widget": "neutralization",
       "title": "Station 2 · The Salt Factory",
       "intro": [
-        "The beaker holds acid with **universal indicator** (red, pH 1). Add base from the burette.",
-        "Aim for **green, pH 7**. Go drop by drop near the end!"
+        "The beaker holds acid with **universal indicator** (red, pH 1).",
+        "Tap the burette tap or the drop buttons. Aim for **green, pH 7**!"
       ],
       "props": {
         "acid": 0,
@@ -175,7 +177,8 @@
             "base": 0,
             "crystallized": 1
           },
-          "xp": 50
+          "xp": 50,
+          "explain": "The acid and base cancelled out, leaving water and table salt, $\\text{NaCl}$."
         },
         {
           "id": "m-sulphate",
@@ -244,7 +247,8 @@
           "goal": {
             "cured": 3
           },
-          "xp": 50
+          "xp": 50,
+          "explain": "Each problem was an acid, so a mild base neutralised it."
         }
       ]
     },
@@ -292,7 +296,7 @@
       "type": "interactive",
       "widget": "reactionLab",
       "title": "Station 3 · Bubble, Pop & Precipitate",
-      "intro": "Try all three reactions and spot every sign of a chemical change.",
+      "intro": "Tap the jars and the matchstick. Spot every sign of a chemical change!",
       "challenges": [
         {
           "id": "m-pop",
@@ -300,7 +304,8 @@
           "goal": {
             "popped": 1
           },
-          "xp": 50
+          "xp": 50,
+          "explain": "Hydrogen burns with a squeaky pop. That's the test for $\\text{H}_2$!"
         },
         {
           "id": "m-milky",
@@ -409,7 +414,8 @@
             "eq": 0,
             "balanced": 1
           },
-          "xp": 50
+          "xp": 50,
+          "explain": "$2\\text{H}_2 + \\text{O}_2 \\rightarrow 2\\text{H}_2\\text{O}$: 4 H and 2 O atoms on each side."
         },
         {
           "id": "m-three",

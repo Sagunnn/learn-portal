@@ -84,10 +84,17 @@ export default function ReactionLab({ onState }: { onState?: (s: WidgetState) =>
   const fh = 220;
   const mouthX = fx + fw / 2;
   /** Matchstick resting at the top right; moves so its head reaches `to`. */
-  const matchStick = (state: Match, out: boolean, to: { x: number; y: number }) => {
+  const matchStick = (state: Match, out: boolean, to: { x: number; y: number }, onTap?: () => void) => {
     const atMouth = state !== "idle";
     return (
-      <g style={{ transform: atMouth ? `translate(${to.x - 620}px, ${to.y - 120}px)` : "translate(0, 0)", transition: "transform 700ms ease-in-out" }}>
+      <g
+        role="button"
+        aria-label="Bring a burning matchstick"
+        className="cursor-pointer"
+        onClick={() => state !== "moving" && onTap?.()}
+        style={{ transform: atMouth ? `translate(${to.x - 620}px, ${to.y - 120}px)` : "translate(0, 0)", transition: "transform 700ms ease-in-out" }}
+      >
+        <rect x={600} y={80} width={110} height={100} fill="transparent" />
         <line x1={620} y1={120} x2={700} y2={170} stroke="#a16207" strokeWidth={6} strokeLinecap="round" />
         <circle cx={620} cy={120} r={7} fill="#b91c1c" />
         {!(state === "done" && out) && (
@@ -157,7 +164,37 @@ export default function ReactionLab({ onState }: { onState?: (s: WidgetState) =>
                   <ChemSvg f="H2" /> gas bubbles ↑
                 </text>
               )}
-              {matchStick(matchA, true, { x: mouthX, y: fy - 40 })}
+              {matchStick(matchA, true, { x: mouthX, y: fy - 40 }, () => bringMatch("A"))}
+              {matchA === "idle" && (
+                <text x={665} y={200} textAnchor="middle" fontSize={13} fontWeight={800} fill="#64748b">
+                  tap the match
+                </text>
+              )}
+              {/* zinc jar: tap to drop granules in */}
+              {!zinc && (
+                <g
+                  data-start
+                  role="button"
+                  aria-label="Drop zinc granules into the acid"
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setZinc(true);
+                    see("gas", "temp");
+                  }}
+                >
+                  <rect x={60} y={200} width={90} height={110} rx={16} fill="#e2e8f0" stroke="#334155" strokeWidth={3} />
+                  <rect x={70} y={186} width={70} height={18} rx={6} fill="#94a3b8" stroke="#334155" strokeWidth={3} />
+                  {[0, 1, 2, 3, 4].map((i) => (
+                    <polygon key={i} points="0,0 9,-3 14,4 8,10 -1,7" transform={`translate(${76 + (i % 3) * 22} ${262 + Math.floor(i / 3) * 16})`} fill="#94a3b8" stroke="#475569" />
+                  ))}
+                  <text x={105} y={238} textAnchor="middle" fontSize={20} fontWeight={800} fill="#334155">
+                    Zn
+                  </text>
+                  <text x={105} y={336} textAnchor="middle" fontSize={13} fontWeight={800} fill="#64748b">
+                    tap to drop in
+                  </text>
+                </g>
+              )}
               {matchA === "done" && zinc && (
                 <g transform={`translate(${mouthX} ${fy - 40})`}>
                   <polygon className="chem-pop" points="0,-46 12,-14 46,-14 18,6 28,40 0,20 -28,40 -18,6 -46,-14 -12,-14" fill="#fde047" stroke="#f59e0b" strokeWidth={3} />
@@ -226,7 +263,31 @@ export default function ReactionLab({ onState }: { onState?: (s: WidgetState) =>
                   {milky >= 1 ? "Milky! ✓" : "turning milky…"}
                 </text>
               )}
-              {matchStick(matchB, true, { x: 145, y: 84 })}
+              {matchStick(matchB, true, { x: 145, y: 84 }, () => bringMatch("B"))}
+              {/* carbonate jar: tap to tip it in */}
+              {!added && (
+                <g
+                  data-start
+                  role="button"
+                  aria-label="Add the carbonate"
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setAdded(true);
+                    see("gas");
+                  }}
+                >
+                  <rect x={270} y={220} width={100} height={90} rx={16} fill="#f8fafc" stroke="#334155" strokeWidth={3} />
+                  {Array.from({ length: 8 }, (_, i) => (
+                    <rect key={i} x={284 + (i % 4) * 19} y={262 + Math.floor(i / 4) * 16} width={carbonate === "CaCO3" ? 14 : 9} height={carbonate === "CaCO3" ? 10 : 7} rx={2} fill="white" stroke="#94a3b8" />
+                  ))}
+                  <text x={320} y={248} textAnchor="middle" fontSize={14} fontWeight={800} fill="#334155">
+                    {carbonate === "NaHCO3" ? "baking soda" : "marble"}
+                  </text>
+                  <text x={320} y={330} textAnchor="middle" fontSize={13} fontWeight={800} fill="#64748b">
+                    tap to tip in
+                  </text>
+                </g>
+              )}
               {matchB === "done" && (
                 <text x={300} y={30} textAnchor="middle" fontSize={14} fontWeight={800} fill="#b91c1c">
                   {added ? "The flame goes out: CO₂ doesn't let things burn." : "No gas yet: the match keeps burning."}
@@ -351,15 +412,17 @@ export default function ReactionLab({ onState }: { onState?: (s: WidgetState) =>
       </div>
       {tab === 2 && (
         <Slider
-          label="⏩ Fast-forward (minutes)"
+          label="⏩ Fast-forward time"
           value={minutes}
           min={0}
           max={20}
           color="#16a34a"
+          unit="min"
           onChange={(m) => {
             setMinutes(m);
             if (m > 0) see("colour");
           }}
+          presets={[0, 5, 10, 20].map((m) => ({ label: m === 0 ? "Start" : `${m} min`, value: m }))}
         />
       )}
 

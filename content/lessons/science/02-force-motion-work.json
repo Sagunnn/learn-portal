@@ -8,7 +8,10 @@
     "titleLocal": "बल, गति र कार्य",
     "summary": "Scalars vs vectors, speed vs velocity, acceleration, net force and work, in four hands-on labs.",
     "estMinutes": 45,
-    "tags": ["physics", "interactive"]
+    "tags": [
+      "physics",
+      "interactive"
+    ]
   },
   "chunks": [
     {
@@ -32,27 +35,56 @@
         {
           "id": "m-out-and-back",
           "text": "**Mission:** walk **80 m** of distance but end with **0 m** of displacement.",
-          "goal": { "distance": 80, "disp": 0 },
-          "xp": 50
+          "goal": {
+            "distance": 80,
+            "disp": 0
+          },
+          "xp": 50,
+          "explain": "You walked 80 m but ended back home, so the arrow from start to finish is 0 m."
         },
         {
           "id": "m-shortest-route",
           "text": "**Mission:** reach the shop using the shortest walk possible, **120 m**.",
-          "goal": { "atShop": 1, "distance": 120 },
+          "goal": {
+            "atShop": 1,
+            "distance": 120
+          },
           "xp": 50
         }
       ],
-      "tasks": ["Take a long, winding route to the shop. Which number keeps growing, and which one ends up the same?"]
+      "tasks": [
+        "Take a long, winding route to the shop. Which number keeps growing, and which one ends up the same?"
+      ]
     },
     {
       "type": "table",
       "title": "Distance vs displacement",
-      "headers": ["", "Distance", "Displacement"],
+      "headers": [
+        "",
+        "Distance",
+        "Displacement"
+      ],
       "rows": [
-        ["Type", "Scalar", "Vector"],
-        ["Answers", "How much?", "How much + which way?"],
-        ["Measures", "Every step of the path", "Straight line, start → finish"],
-        ["Walk out and back home", "Keeps growing", "Back to 0 m"]
+        [
+          "Type",
+          "Scalar",
+          "Vector"
+        ],
+        [
+          "Answers",
+          "How much?",
+          "How much + which way?"
+        ],
+        [
+          "Measures",
+          "Every step of the path",
+          "Straight line, start → finish"
+        ],
+        [
+          "Walk out and back home",
+          "Keeps growing",
+          "Back to 0 m"
+        ]
       ]
     },
     {
@@ -61,8 +93,24 @@
       "title": "Mini-game · Scalar or vector?",
       "intro": "Drop each quantity into the bucket that matches the question it answers.",
       "challenges": [
-        { "id": "m-sort-all", "text": "**Mission:** sort all 8 cards.", "goal": { "sorted": 8 }, "xp": 50 },
-        { "id": "m-sort-perfect", "text": "**Bonus:** sort all 8 with **no** wrong drops.", "goal": { "sorted": 8, "mistakes": 0 }, "xp": 25 }
+        {
+          "id": "m-sort-all",
+          "text": "**Mission:** sort all 8 cards.",
+          "goal": {
+            "sorted": 8
+          },
+          "xp": 50,
+          "explain": "Scalars only need a size. Vectors also need a direction."
+        },
+        {
+          "id": "m-sort-perfect",
+          "text": "**Bonus:** sort all 8 with **no** wrong drops.",
+          "goal": {
+            "sorted": 8,
+            "mistakes": 0
+          },
+          "xp": 25
+        }
       ]
     },
     {
@@ -72,10 +120,22 @@
         "type": "mcq",
         "prompt": "You walk 30 m East, then 30 m West. What is your **displacement**?",
         "options": [
-          { "text": "0 m", "correct": true },
-          { "text": "60 m", "why": "60 m is the **distance**: every step added up. Displacement only compares where you started and where you ended." },
-          { "text": "30 m East", "why": "That was true halfway. Then you walked back, so you ended where you started." },
-          { "text": "60 m West", "why": "You never got further than 30 m from the start, and you ended right back at it." }
+          {
+            "text": "0 m",
+            "correct": true
+          },
+          {
+            "text": "60 m",
+            "why": "60 m is the **distance**: every step added up. Displacement only compares where you started and where you ended."
+          },
+          {
+            "text": "30 m East",
+            "why": "That was true halfway. Then you walked back, so you ended where you started."
+          },
+          {
+            "text": "60 m West",
+            "why": "You never got further than 30 m from the start, and you ended right back at it."
+          }
         ],
         "explanation": "You're back at the start, so the straight-line arrow from start to finish has length **0 m**."
       }
@@ -94,32 +154,52 @@
       "widget": "skateTrack",
       "title": "Lab 2 · The Nitro Skateboard Track",
       "intro": [
-        "Set the starting velocity $u$ and press **Go**. You can change the acceleration $a$ while it rolls!",
+        "Tap the skater to roll. Change the acceleration $a$ while it rolls!",
         "A dot drops every second. Wider gaps mean the skater is going faster."
       ],
-      "props": { "u": 0, "a": 2 },
+      "props": {
+        "u": 0,
+        "a": 2
+      },
       "challenges": [
         {
           "id": "m-nitro-finish",
           "text": "**Mission:** start from rest ($u = 0$) and cross the finish line in **under 8 s**.",
-          "goal": { "finished": 1, "u": 0, "time": { "max": 8 } },
-          "xp": 50
+          "goal": {
+            "finished": 1,
+            "u": 0,
+            "time": {
+              "max": 8
+            }
+          },
+          "xp": 50,
+          "explain": "A big acceleration adds lots of speed every second, so the 90 m flies by."
         },
         {
           "id": "m-turn-around",
           "text": "**Mission:** make the skater **turn around**: start moving East, end up moving West.",
-          "goal": { "turned": 1 },
+          "goal": {
+            "turned": 1
+          },
           "xp": 50
         }
       ],
-      "tasks": ["Set $u = 6$ and $a = 0$. What happens to the gaps between the dots? What does the speedometer do?"]
+      "tasks": [
+        "Set $u = 6$ and $a = 0$. What happens to the gaps between the dots, and to the speed?"
+      ]
     },
     {
       "type": "formula",
       "title": "Acceleration",
       "items": [
-        { "tex": "a = \\frac{v - u}{t}", "label": "change in velocity ÷ time taken" },
-        { "tex": "\\frac{\\text{m/s}}{\\text{s}} = \\text{m/s}^2", "label": "unit: metres per second, every second" }
+        {
+          "tex": "a = \\frac{v - u}{t}",
+          "label": "change in velocity ÷ time taken"
+        },
+        {
+          "tex": "\\frac{\\text{m/s}}{\\text{s}} = \\text{m/s}^2",
+          "label": "unit: metres per second, every second"
+        }
       ],
       "caption": "$u$ = starting velocity, $v$ = final velocity, $t$ = time. A negative $a$ means slowing down (**deceleration**)."
     },
@@ -129,11 +209,23 @@
         "id": "check-accel",
         "type": "fill",
         "prompt": "A skater speeds up from $3\\text{ m/s}$ to $9\\text{ m/s}$ in $2\\text{ s}$. Acceleration $a = $ ___ $\\text{m/s}^2$",
-        "answers": ["3"],
+        "answers": [
+          "3"
+        ],
         "match": "number",
         "mistakes": [
-          { "answers": ["6"], "why": "$9 - 3 = 6$ is the change in velocity. Acceleration is the change **per second**, so divide by $2\\text{ s}$." },
-          { "answers": ["12"], "why": "That's $6 \\times 2$. Divide by the time instead of multiplying." }
+          {
+            "answers": [
+              "6"
+            ],
+            "why": "$9 - 3 = 6$ is the change in velocity. Acceleration is the change **per second**, so divide by $2\\text{ s}$."
+          },
+          {
+            "answers": [
+              "12"
+            ],
+            "why": "That's $6 \\times 2$. Divide by the time instead of multiplying."
+          }
         ],
         "explanation": "$a = \\dfrac{v - u}{t} = \\dfrac{9 - 3}{2} = 3\\text{ m/s}^2$"
       }
@@ -152,38 +244,60 @@
       "widget": "cratePush",
       "title": "Lab 3 · Tug-of-War & Crate Pusher",
       "intro": [
-        "Add pullers to each team, pick a surface, then press **Pull!**",
+        "Tap **+50** or **+100** to add pullers, then tap the crate to pull!",
         "**Amber** arrows are the pulls, **rose** is friction, **indigo** is the net force."
       ],
-      "props": { "surface": 0 },
+      "props": {
+        "surface": 0
+      },
       "challenges": [
         {
           "id": "m-balance",
           "text": "**Mission:** balance the tug-of-war with **at least 4 people** pulling ($F_{\\text{net}} = 0\\text{ N}$).",
-          "goal": { "net": 0, "people": { "min": 4 } },
-          "xp": 50
+          "goal": {
+            "net": 0,
+            "people": {
+              "min": 4
+            }
+          },
+          "xp": 50,
+          "explain": "Equal pulls cancel out: $F_{\\text{net}} = 0\\text{ N}$, so the crate doesn't speed up."
         },
         {
           "id": "m-ice-two",
           "text": "**Mission:** on **ice**, make the 50 kg crate accelerate at $2\\text{ m/s}^2$ to the right.",
-          "goal": { "surface": 0, "accel": 2 },
+          "goal": {
+            "surface": 0,
+            "accel": 2
+          },
           "xp": 50
         },
         {
           "id": "m-rough-road",
           "text": "**Mission:** on the **rough road**, pull hard enough to get the crate moving.",
-          "goal": { "surface": 2, "moving": 1 },
+          "goal": {
+            "surface": 2,
+            "moving": 1
+          },
           "xp": 50
         }
       ],
-      "tasks": ["On **wood**, make the net force $50\\text{ N}$. Why doesn't the crate move?"]
+      "tasks": [
+        "On **wood**, make the net force $50\\text{ N}$. Why doesn't the crate move?"
+      ]
     },
     {
       "type": "formula",
       "title": "Net force and F = m × a",
       "items": [
-        { "tex": "F_{\\text{net}} = F_{\\text{right}} - F_{\\text{left}}", "label": "balanced when F net = 0 N" },
-        { "tex": "F = m \\times a \\quad\\Rightarrow\\quad a = \\frac{F}{m}", "label": "bigger net force → bigger acceleration" }
+        {
+          "tex": "F_{\\text{net}} = F_{\\text{right}} - F_{\\text{left}}",
+          "label": "balanced when F net = 0 N"
+        },
+        {
+          "tex": "F = m \\times a \\quad\\Rightarrow\\quad a = \\frac{F}{m}",
+          "label": "bigger net force → bigger acceleration"
+        }
       ],
       "caption": "$1\\text{ N}$ is the force that gives a $1\\text{ kg}$ mass an acceleration of $1\\text{ m/s}^2$."
     },
@@ -194,10 +308,22 @@
         "type": "mcq",
         "prompt": "Two teams pull a rope: $300\\text{ N}$ to the right and $300\\text{ N}$ to the left. What happens?",
         "options": [
-          { "text": "The forces are balanced, so it doesn't speed up", "correct": true },
-          { "text": "It accelerates to the right", "why": "The right pull is cancelled exactly by the left pull: $300 - 300 = 0\\text{ N}$." },
-          { "text": "It accelerates to the left", "why": "Neither side is stronger. $F_{\\text{net}} = 0\\text{ N}$, so there's no acceleration." },
-          { "text": "It gets pulled in both directions at once and speeds up", "why": "Forces in opposite directions **cancel**. The net force decides the motion, and here it's 0 N." }
+          {
+            "text": "The forces are balanced, so it doesn't speed up",
+            "correct": true
+          },
+          {
+            "text": "It accelerates to the right",
+            "why": "The right pull is cancelled exactly by the left pull: $300 - 300 = 0\\text{ N}$."
+          },
+          {
+            "text": "It accelerates to the left",
+            "why": "Neither side is stronger. $F_{\\text{net}} = 0\\text{ N}$, so there's no acceleration."
+          },
+          {
+            "text": "It gets pulled in both directions at once and speeds up",
+            "why": "Forces in opposite directions **cancel**. The net force decides the motion, and here it's 0 N."
+          }
         ],
         "explanation": "$F_{\\text{net}} = 300 - 300 = 0\\text{ N}$, so $a = 0$."
       }
@@ -215,24 +341,39 @@
       "type": "interactive",
       "widget": "workDetector",
       "title": "Lab 4 · The Scientific Work Detector",
-      "intro": "Try all three scenarios and watch the **Work Done meter**.",
+      "intro": "Pick a scenario, then tap the picture and watch the **Work Done meter**.",
       "challenges": [
         {
           "id": "m-thousand-joules",
           "text": "**Mission:** do exactly $1000\\text{ J}$ of work on the cart.",
-          "goal": { "scenario": 0, "work": 1000, "pushed": 1 },
-          "xp": 50
+          "goal": {
+            "scenario": 0,
+            "work": 1000,
+            "pushed": 1
+          },
+          "xp": 50,
+          "explain": "Force × distance = 1000 J, for example $100\\text{ N} \\times 10\\text{ m}$."
         },
         {
           "id": "m-wall",
           "text": "**Mission:** push the brick wall with $500\\text{ N}$ and check the meter.",
-          "goal": { "scenario": 1, "force": 500, "pushed": 1 },
+          "goal": {
+            "scenario": 1,
+            "force": 500,
+            "pushed": 1
+          },
           "xp": 50
         },
         {
           "id": "m-bag",
           "text": "**Mission:** carry the bag at least $20\\text{ m}$ and read the work done against gravity.",
-          "goal": { "scenario": 2, "pushed": 1, "distance": { "min": 20 } },
+          "goal": {
+            "scenario": 2,
+            "pushed": 1,
+            "distance": {
+              "min": 20
+            }
+          },
           "xp": 50
         }
       ]
@@ -252,25 +393,78 @@
         "id": "check-work",
         "type": "fill",
         "prompt": "Ram pushes a box with $20\\text{ N}$ across $6\\text{ m}$. Work done = ___ $\\text{J}$",
-        "answers": ["120"],
+        "answers": [
+          "120"
+        ],
         "match": "number",
         "mistakes": [
-          { "answers": ["26"], "why": "You added. Work is force **times** distance: $20 \\times 6$." },
-          { "answers": ["3.33", "3.3"], "why": "You divided. Work is force **times** distance: $20 \\times 6$." }
+          {
+            "answers": [
+              "26"
+            ],
+            "why": "You added. Work is force **times** distance: $20 \\times 6$."
+          },
+          {
+            "answers": [
+              "3.33",
+              "3.3"
+            ],
+            "why": "You divided. Work is force **times** distance: $20 \\times 6$."
+          }
         ],
         "explanation": "$W = F \\times d = 20 \\times 6 = 120\\text{ J}$"
       }
     }
   ],
   "flashcards": [
-    { "id": "scalar", "front": "Scalar", "back": "Has size only. *How much?*\nMass, time, speed, distance, temperature", "tag": "Basics" },
-    { "id": "vector", "front": "Vector", "back": "Has size **and** direction. *How much + which way?*\nForce, velocity, acceleration, displacement", "tag": "Basics" },
-    { "id": "distance", "front": "Distance vs displacement", "back": "Distance: the whole path walked (scalar).\nDisplacement: straight line from start to finish, with a direction (vector).", "tag": "Lab 1" },
-    { "id": "velocity", "front": "Speed vs velocity", "back": "Speed: how fast ($5\\text{ m/s}$).\nVelocity: how fast + which way ($-5\\text{ m/s}$ = West).", "tag": "Lab 2" },
-    { "id": "acceleration", "front": "Acceleration formula", "back": "$a = \\dfrac{v - u}{t}$\nunit: $\\text{m/s}^2$", "tag": "Lab 2" },
-    { "id": "newton", "front": "Unit of force", "back": "newton, $\\text{N}$\n$1\\text{ N} = 1\\text{ kg} \\times 1\\text{ m/s}^2$", "tag": "Lab 3" },
-    { "id": "fma", "front": "Net force and acceleration", "back": "$F = m \\times a$\nBalanced forces ($F_{\\text{net}} = 0$) → no acceleration.", "tag": "Lab 3" },
-    { "id": "work", "front": "Work done", "back": "$W = F \\times d$, in joules ($\\text{J}$)\nOnly counts movement in the direction of the force.", "tag": "Lab 4" }
+    {
+      "id": "scalar",
+      "front": "Scalar",
+      "back": "Has size only. *How much?*\nMass, time, speed, distance, temperature",
+      "tag": "Basics"
+    },
+    {
+      "id": "vector",
+      "front": "Vector",
+      "back": "Has size **and** direction. *How much + which way?*\nForce, velocity, acceleration, displacement",
+      "tag": "Basics"
+    },
+    {
+      "id": "distance",
+      "front": "Distance vs displacement",
+      "back": "Distance: the whole path walked (scalar).\nDisplacement: straight line from start to finish, with a direction (vector).",
+      "tag": "Lab 1"
+    },
+    {
+      "id": "velocity",
+      "front": "Speed vs velocity",
+      "back": "Speed: how fast ($5\\text{ m/s}$).\nVelocity: how fast + which way ($-5\\text{ m/s}$ = West).",
+      "tag": "Lab 2"
+    },
+    {
+      "id": "acceleration",
+      "front": "Acceleration formula",
+      "back": "$a = \\dfrac{v - u}{t}$\nunit: $\\text{m/s}^2$",
+      "tag": "Lab 2"
+    },
+    {
+      "id": "newton",
+      "front": "Unit of force",
+      "back": "newton, $\\text{N}$\n$1\\text{ N} = 1\\text{ kg} \\times 1\\text{ m/s}^2$",
+      "tag": "Lab 3"
+    },
+    {
+      "id": "fma",
+      "front": "Net force and acceleration",
+      "back": "$F = m \\times a$\nBalanced forces ($F_{\\text{net}} = 0$) → no acceleration.",
+      "tag": "Lab 3"
+    },
+    {
+      "id": "work",
+      "front": "Work done",
+      "back": "$W = F \\times d$, in joules ($\\text{J}$)\nOnly counts movement in the direction of the force.",
+      "tag": "Lab 4"
+    }
   ],
   "quiz": {
     "passPercent": 70,
@@ -279,12 +473,29 @@
         "id": "p-accel-up",
         "type": "fill",
         "prompt": "A cyclist speeds up from $2\\text{ m/s}$ to $12\\text{ m/s}$ in $5\\text{ s}$. Acceleration = ___ $\\text{m/s}^2$",
-        "answers": ["2"],
+        "answers": [
+          "2"
+        ],
         "match": "number",
         "mistakes": [
-          { "answers": ["10"], "why": "$12 - 2 = 10$ is the change in velocity. Acceleration is the change **per second**: divide by $5\\text{ s}$." },
-          { "answers": ["2.8"], "why": "$(12 + 2) \\div 5$ adds the velocities. Use the **difference**: $v - u$." },
-          { "answers": ["50"], "why": "You multiplied by the time. Divide instead: $10 \\div 5$." }
+          {
+            "answers": [
+              "10"
+            ],
+            "why": "$12 - 2 = 10$ is the change in velocity. Acceleration is the change **per second**: divide by $5\\text{ s}$."
+          },
+          {
+            "answers": [
+              "2.8"
+            ],
+            "why": "$(12 + 2) \\div 5$ adds the velocities. Use the **difference**: $v - u$."
+          },
+          {
+            "answers": [
+              "50"
+            ],
+            "why": "You multiplied by the time. Divide instead: $10 \\div 5$."
+          }
         ],
         "hints": [
           "Acceleration is how much the velocity changes **each second**.",
@@ -297,12 +508,31 @@
         "id": "p-accel-brake",
         "type": "fill",
         "prompt": "A car slows down from $20\\text{ m/s}$ to $5\\text{ m/s}$ in $3\\text{ s}$. Acceleration = ___ $\\text{m/s}^2$",
-        "answers": ["-5"],
+        "answers": [
+          "-5"
+        ],
         "match": "number",
         "mistakes": [
-          { "answers": ["5"], "why": "Right size, wrong sign! The car is **slowing down**, so $v - u = 5 - 20$ is negative." },
-          { "answers": ["8.33", "8.3"], "why": "$(20 + 5) \\div 3$ adds the velocities. Use the difference $v - u$." },
-          { "answers": ["-15", "15"], "why": "That's the change in velocity. Now divide it by the time, $3\\text{ s}$." }
+          {
+            "answers": [
+              "5"
+            ],
+            "why": "Right size, wrong sign! The car is **slowing down**, so $v - u = 5 - 20$ is negative."
+          },
+          {
+            "answers": [
+              "8.33",
+              "8.3"
+            ],
+            "why": "$(20 + 5) \\div 3$ adds the velocities. Use the difference $v - u$."
+          },
+          {
+            "answers": [
+              "-15",
+              "15"
+            ],
+            "why": "That's the change in velocity. Now divide it by the time, $3\\text{ s}$."
+          }
         ],
         "hints": [
           "Is the car speeding up or slowing down? That tells you the sign.",
@@ -315,11 +545,23 @@
         "id": "p-work",
         "type": "fill",
         "prompt": "You push a box with a force of $50\\text{ N}$ and it moves $4\\text{ m}$ forward. Work done = ___ $\\text{J}$",
-        "answers": ["200"],
+        "answers": [
+          "200"
+        ],
         "match": "number",
         "mistakes": [
-          { "answers": ["54"], "why": "You added. Work is force **times** distance." },
-          { "answers": ["12.5"], "why": "You divided. Work is force **times** distance." }
+          {
+            "answers": [
+              "54"
+            ],
+            "why": "You added. Work is force **times** distance."
+          },
+          {
+            "answers": [
+              "12.5"
+            ],
+            "why": "You divided. Work is force **times** distance."
+          }
         ],
         "hints": [
           "Did the box move in the direction you pushed? Then work was done.",
@@ -333,10 +575,22 @@
         "type": "mcq",
         "prompt": "Sita pushes a wall with $300\\text{ N}$ for 2 minutes and gets exhausted. How much work does she do on the wall?",
         "options": [
-          { "text": "$0\\text{ J}$", "correct": true },
-          { "text": "$600\\text{ J}$", "why": "$300 \\times 2$ uses the **time**. $W = F \\times d$ uses distance, and the wall moved $0\\text{ m}$." },
-          { "text": "$36\\,000\\text{ J}$", "why": "$300 \\times 120\\text{ s}$ still uses time, not distance. The wall didn't move, so $d = 0$." },
-          { "text": "$300\\text{ J}$", "why": "That's only the force. Work also needs a distance moved, and here $d = 0\\text{ m}$." }
+          {
+            "text": "$0\\text{ J}$",
+            "correct": true
+          },
+          {
+            "text": "$600\\text{ J}$",
+            "why": "$300 \\times 2$ uses the **time**. $W = F \\times d$ uses distance, and the wall moved $0\\text{ m}$."
+          },
+          {
+            "text": "$36\\,000\\text{ J}$",
+            "why": "$300 \\times 120\\text{ s}$ still uses time, not distance. The wall didn't move, so $d = 0$."
+          },
+          {
+            "text": "$300\\text{ J}$",
+            "why": "That's only the force. Work also needs a distance moved, and here $d = 0\\text{ m}$."
+          }
         ],
         "hints": [
           "Getting tired isn't the same as doing work in science. What does work need?",
@@ -350,10 +604,22 @@
         "type": "mcq",
         "prompt": "A runner does one full lap of a $400\\text{ m}$ track and stops exactly where she started. What are her distance and displacement?",
         "options": [
-          { "text": "Distance 400 m, displacement 0 m", "correct": true },
-          { "text": "Distance 0 m, displacement 400 m", "why": "These are swapped. Distance counts the whole path (400 m); displacement is start → finish, which is the same spot." },
-          { "text": "Distance 400 m, displacement 400 m", "why": "Displacement is the straight line from start to finish. She finished where she started, so it's 0 m." },
-          { "text": "Distance 200 m, displacement 0 m", "why": "Distance counts **every** metre she ran: the whole lap is 400 m." }
+          {
+            "text": "Distance 400 m, displacement 0 m",
+            "correct": true
+          },
+          {
+            "text": "Distance 0 m, displacement 400 m",
+            "why": "These are swapped. Distance counts the whole path (400 m); displacement is start → finish, which is the same spot."
+          },
+          {
+            "text": "Distance 400 m, displacement 400 m",
+            "why": "Displacement is the straight line from start to finish. She finished where she started, so it's 0 m."
+          },
+          {
+            "text": "Distance 200 m, displacement 0 m",
+            "why": "Distance counts **every** metre she ran: the whole lap is 400 m."
+          }
         ],
         "hints": [
           "Distance is a scalar (the whole path). Displacement is a vector (start → finish).",
@@ -366,12 +632,30 @@
         "id": "p-fma",
         "type": "fill",
         "prompt": "A net force of $100\\text{ N}$ acts on a $50\\text{ kg}$ crate on ice (no friction). Acceleration = ___ $\\text{m/s}^2$",
-        "answers": ["2"],
+        "answers": [
+          "2"
+        ],
         "match": "number",
         "mistakes": [
-          { "answers": ["5000"], "why": "You multiplied. From $F = m \\times a$, acceleration is $a = F \\div m$." },
-          { "answers": ["0.5"], "why": "That's $50 \\div 100$, mass divided by force. It's the other way round: $a = F \\div m$." },
-          { "answers": ["150", "50"], "why": "Forces and masses can't be added or subtracted together. Use $a = F \\div m$." }
+          {
+            "answers": [
+              "5000"
+            ],
+            "why": "You multiplied. From $F = m \\times a$, acceleration is $a = F \\div m$."
+          },
+          {
+            "answers": [
+              "0.5"
+            ],
+            "why": "That's $50 \\div 100$, mass divided by force. It's the other way round: $a = F \\div m$."
+          },
+          {
+            "answers": [
+              "150",
+              "50"
+            ],
+            "why": "Forces and masses can't be added or subtracted together. Use $a = F \\div m$."
+          }
         ],
         "hints": [
           "Which formula links force, mass and acceleration?",
@@ -389,11 +673,27 @@
         "title": "Scalar vs vector",
         "wide": true,
         "table": {
-          "headers": ["Scalar: how much?", "Vector: how much + which way?", "Example"],
+          "headers": [
+            "Scalar: how much?",
+            "Vector: how much + which way?",
+            "Example"
+          ],
           "rows": [
-            ["Distance", "Displacement", "One 400 m lap: distance 400 m, displacement 0 m"],
-            ["Speed", "Velocity", "5 m/s vs +5 m/s (East) or −5 m/s (West)"],
-            ["Mass, time, temperature", "Force, acceleration", "20 N to the right; 2 m/s² forwards"]
+            [
+              "Distance",
+              "Displacement",
+              "One 400 m lap: distance 400 m, displacement 0 m"
+            ],
+            [
+              "Speed",
+              "Velocity",
+              "5 m/s vs +5 m/s (East) or −5 m/s (West)"
+            ],
+            [
+              "Mass, time, temperature",
+              "Force, acceleration",
+              "20 N to the right; 2 m/s² forwards"
+            ]
           ]
         }
       },
@@ -410,26 +710,60 @@
       {
         "title": "Force triangle",
         "tex": "F = m \\times a",
-        "visual": { "kind": "triangle", "top": "F", "left": "m", "right": "a" },
+        "visual": {
+          "kind": "triangle",
+          "top": "F",
+          "left": "m",
+          "right": "a"
+        },
         "body": "Cover what you want: $a = \\tfrac{F}{m}$, $m = \\tfrac{F}{a}$."
       },
       {
         "title": "Work triangle",
         "tex": "W = F \\times d",
-        "visual": { "kind": "triangle", "top": "W", "left": "F", "right": "d" },
+        "visual": {
+          "kind": "triangle",
+          "top": "W",
+          "left": "F",
+          "right": "d"
+        },
         "body": "$d$ must be along the force. No movement → $0\\text{ J}$."
       },
       {
         "title": "Units",
         "wide": true,
         "table": {
-          "headers": ["Quantity", "Unit", "Symbol"],
+          "headers": [
+            "Quantity",
+            "Unit",
+            "Symbol"
+          ],
           "rows": [
-            ["Distance, displacement", "metre", "$\\text{m}$"],
-            ["Speed, velocity", "metre per second", "$\\text{m/s}$"],
-            ["Acceleration", "metre per second squared", "$\\text{m/s}^2$"],
-            ["Force", "newton", "$\\text{N}$"],
-            ["Work", "joule", "$\\text{J}$"]
+            [
+              "Distance, displacement",
+              "metre",
+              "$\\text{m}$"
+            ],
+            [
+              "Speed, velocity",
+              "metre per second",
+              "$\\text{m/s}$"
+            ],
+            [
+              "Acceleration",
+              "metre per second squared",
+              "$\\text{m/s}^2$"
+            ],
+            [
+              "Force",
+              "newton",
+              "$\\text{N}$"
+            ],
+            [
+              "Work",
+              "joule",
+              "$\\text{J}$"
+            ]
           ]
         }
       }

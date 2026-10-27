@@ -191,7 +191,29 @@ export type MergePhase = 0 | 1 | 2;
  * Phase 1 lays the other box's lines over each, so both become a b1×b2 grid.
  * Phase 2 pours both shadings into result grid(s).
  */
-export function MergeGrids({ a, b, phase = 2, title }: { a: [number, number]; b: [number, number]; phase?: MergePhase; title?: string }) {
+export function MergeGrids({
+  a,
+  b,
+  phase = 2,
+  title,
+  onPickA,
+  onPickB,
+  onPlus,
+  onEquals,
+}: {
+  a: [number, number];
+  b: [number, number];
+  phase?: MergePhase;
+  title?: string;
+  /** tap column `n` of Box A → shade n columns */
+  onPickA?: (n: number) => void;
+  /** tap row `n` of Box B → shade n rows */
+  onPickB?: (n: number) => void;
+  /** tap the + to overlay the grids */
+  onPlus?: () => void;
+  /** tap the = to combine */
+  onEquals?: () => void;
+}) {
   const [a1, b1] = a;
   const [a2, b2] = b;
   const S = 210;
@@ -203,7 +225,7 @@ export function MergeGrids({ a, b, phase = 2, title }: { a: [number, number]; b:
   const resultBoxes = Math.max(1, Math.ceil(total / cells));
   const top = 10;
   const row2 = top + S + 88;
-  const H = phase === 2 ? row2 + S + 70 : top + S + 70;
+  const H = phase === 2 ? row2 + S + 70 : phase === 1 && onEquals ? top + S + 120 : top + S + 70;
   const ax = 22;
   const bx = W - 22 - S;
   const cw = S / b1;
@@ -258,12 +280,38 @@ export function MergeGrids({ a, b, phase = 2, title }: { a: [number, number]; b:
         {vLines(ax, top, false)}
         {phase >= 1 && hLines(ax, top, true)}
       </>)}
-      <text x={W / 2} y={top + S / 2 + 14} textAnchor="middle" fontSize={44} fontWeight={700} fill={C.line}>+</text>
+      {onPlus && phase === 0 ? (
+        <g role="button" aria-label="Overlay the grids" className="cursor-pointer" onClick={onPlus}>
+          <circle cx={W / 2} cy={top + S / 2} r={34} fill="#ede9fe" stroke={C.cut} strokeWidth={3} className="animate-pulse" />
+          <text x={W / 2} y={top + S / 2 + 14} textAnchor="middle" fontSize={42} fontWeight={700} fill={C.cut}>+</text>
+          <text x={W / 2} y={top + S / 2 + 56} textAnchor="middle" fontSize={12} fontWeight={800} fill={C.cut}>tap to overlay</text>
+        </g>
+      ) : (
+        <text x={W / 2} y={top + S / 2 + 14} textAnchor="middle" fontSize={44} fontWeight={700} fill={C.line}>+</text>
+      )}
       {box(bx, top, <>
         <rect x={bx} y={top} width={S} height={a2 * rh} fill={C.orange} fillOpacity={0.8} />
         {hLines(bx, top, false)}
         {phase >= 1 && vLines(bx, top, true)}
       </>)}
+      {/* tap targets: Box A columns, Box B rows */}
+      {onPickA && (
+        <g data-start>
+          {Array.from({ length: b1 }, (_, i) => (
+            <rect key={`pa${i}`} role="button" aria-label={`Shade ${i + 1} of ${b1}`} x={ax + i * cw} y={top} width={cw} height={S} fill="transparent" className="cursor-pointer hover:fill-white/20" onClick={() => onPickA(a1 === i + 1 ? i : i + 1)} />
+          ))}
+        </g>
+      )}
+      {onPickB &&
+        Array.from({ length: b2 }, (_, i) => (
+          <rect key={`pb${i}`} role="button" aria-label={`Shade ${i + 1} of ${b2}`} x={bx} y={top + i * rh} width={S} height={rh} fill="transparent" className="cursor-pointer hover:fill-white/20" onClick={() => onPickB(a2 === i + 1 ? i : i + 1)} />
+        ))}
+      {onEquals && phase === 1 && (
+        <g role="button" aria-label="Combine the pieces" className="cursor-pointer" onClick={onEquals}>
+          <circle cx={W / 2} cy={top + S + 78} r={30} fill="#dcfce7" stroke="#16a34a" strokeWidth={3} className="animate-pulse" />
+          <text x={W / 2} y={top + S + 92} textAnchor="middle" fontSize={38} fontWeight={700} fill="#16a34a">=</text>
+        </g>
+      )}
       {phase === 0 ? (
         <>
           <SvgFrac x={ax + S / 2} y={labelY} n={a1} d={b1} color={C.blue} size={22} />
@@ -324,7 +372,7 @@ export function MergeGrids({ a, b, phase = 2, title }: { a: [number, number]; b:
 // ---- Area overlap (multiplying) ----------------------------------------------------------
 
 /** Unit square: a/b of the columns blue, c/d of the rows yellow, overlap green. */
-export function OverlapGrid({ a, b, title }: { a: [number, number]; b: [number, number]; title?: string }) {
+export function OverlapGrid({ a, b, title, onPick }: { a: [number, number]; b: [number, number]; title?: string; onPick?: (cols: number, rows: number) => void }) {
   const [n1, d1] = a;
   const [n2, d2] = b;
   const S = 320;
@@ -349,6 +397,9 @@ export function OverlapGrid({ a, b, title }: { a: [number, number]; b: [number, 
             style={{ fill, transition: "fill 300ms ease" }}
             stroke={C.grid}
             strokeWidth={1}
+            {...(onPick
+              ? { role: "button", "aria-label": `${col + 1} columns and ${row + 1} rows`, className: "cursor-pointer hover:opacity-80", onClick: () => onPick(col + 1, row + 1) }
+              : {})}
           />
         );
       })}

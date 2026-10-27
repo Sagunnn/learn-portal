@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Button } from "../../ui/primitives";
-import { EquationBar, Slider, StatBadge, WidgetPanel, useReportState, type WidgetState } from "../controls";
+import { EquationBar, Slider, SvgPill, WidgetPanel, useReportState, type WidgetState } from "../controls";
 import { Arrow, P, fmt, round1, useAnimationLoop } from "./shared";
 
 /**
@@ -83,14 +83,14 @@ export default function SkateTrack({ u: u0 = 0, a: a0 = 2, onState }: { u?: numb
   const sx = X0 + sim.x * PX;
   const facing = v < -0.01 ? -1 : 1;
   const avgA = sim.t > 0 ? (sim.v - u) / sim.t : 0;
-  const vLabelX = Math.max(X0 + 50, Math.min(X1 - 60, sx));
+  const vLabelX = Math.max(X0 + 120, Math.min(X1 - 120, sx));
 
   const status = sim.finished
     ? `🏁 Finish! 90 m in ${sim.t.toFixed(1)} s.`
     : sim.crashed
       ? "💥 Rolled back into the West wall. Reset and try again."
       : !started
-        ? "Set u, then press Go. You can change a while it rolls."
+        ? "Tap the skater (or Go!) to roll. Change a while it rolls."
         : running
           ? a > 0
             ? "Nitro! Velocity grows by " + a + " m/s every second."
@@ -101,14 +101,6 @@ export default function SkateTrack({ u: u0 = 0, a: a0 = 2, onState }: { u?: numb
 
   return (
     <WidgetPanel>
-      <StatBadge
-        parts={[
-          { icon: v < -0.05 ? "⬅️" : "➡️", label: "Velocity", value: `${v > 0.05 ? "+" : v < -0.05 ? "−" : ""}${fmt(Math.abs(v))} m/s ${v > 0.05 ? "East" : v < -0.05 ? "West" : ""}`, tone: "periwinkle" },
-          { icon: "🏁", label: "Speed", value: `${fmt(speed)} m/s`, tone: "sage" },
-          { icon: "⚡", label: "a", value: `${a > 0 ? "+" : ""}${a} m/s²`, tone: "honey" },
-          { icon: "⏱", label: "Time", value: `${sim.t.toFixed(1)} s`, tone: "plain" },
-        ]}
-      />
       <div className="rounded-3xl border-2 border-slate-200 bg-gradient-to-b from-sky-50 to-white p-2">
         <svg viewBox="0 0 820 250" className="block h-auto w-full select-none">
           {/* track + metre marks */}
@@ -142,15 +134,28 @@ export default function SkateTrack({ u: u0 = 0, a: a0 = 2, onState }: { u?: numb
 
           {/* velocity arrow */}
           <Arrow x1={sx} y1={52} x2={sx + Math.max(-90, Math.min(90, v * 9))} y2={52} color={P.vector} width={5} glow />
-          {Math.abs(v) > 0.1 && (
-            <text x={vLabelX} y={38} textAnchor="middle" fontSize={13} fontWeight={800} fill={P.vector}>
-              v = {v > 0 ? "+" : ""}
-              {fmt(v)} m/s
-            </text>
-          )}
+          <SvgPill
+            x={vLabelX}
+            y={22}
+            text={`v ${v > 0.05 ? "+" : v < -0.05 ? "−" : ""}${fmt(Math.abs(v))} m/s · speed ${fmt(speed)}`}
+            fill="#eef2ff"
+            color="#4338ca"
+            stroke="#a5b4fc"
+            size={14}
+          />
+          <SvgPill x={X1 - 4} y={110} text={`⏱ ${sim.t.toFixed(1)} s`} anchor="end" size={14} />
+          <SvgPill x={X0 + 6} y={74} text={`a ${a > 0 ? "+" : ""}${a} m/s²`} anchor="start" fill="#fffbeb" color="#b45309" stroke="#fcd34d" size={14} />
 
           {/* skater */}
-          <g transform={`translate(${sx} 160) scale(${facing} 1)`}>
+          <g
+            data-start
+            role="button"
+            aria-label={running ? "Pause" : "Go"}
+            className="cursor-pointer"
+            onClick={() => (running ? setRunning(false) : go())}
+            transform={`translate(${sx} 160) scale(${facing} 1)`}
+          >
+            <rect x={-40} y={-100} width={80} height={110} fill="transparent" />
             <rect x={-30} y={-12} width={60} height={7} rx={3.5} fill="#7c3aed" />
             <circle cx={-20} cy={-2} r={5} fill={P.line} />
             <circle cx={20} cy={-2} r={5} fill={P.line} />
@@ -193,8 +198,25 @@ export default function SkateTrack({ u: u0 = 0, a: a0 = 2, onState }: { u?: numb
           max={10}
           color={P.vector}
           onChange={(x) => !started && setU(x)}
+          presets={[
+            { label: "⬅️ −6", value: -6 },
+            { label: "Stand still 0", value: 0 },
+            { label: "➡️ +6", value: 6 },
+          ]}
         />
-        <Slider label="Acceleration a (m/s²) · −5 brake … +5 nitro" value={a} min={-5} max={5} color={P.force} onChange={setA} />
+        <Slider
+          label="Acceleration a (m/s²) · change it while rolling!"
+          value={a}
+          min={-5}
+          max={5}
+          color={P.force}
+          onChange={setA}
+          presets={[
+            { label: "🛑 Brake −4", value: -4 },
+            { label: "😌 Cruise 0", value: 0 },
+            { label: "🚀 Nitro +4", value: 4 },
+          ]}
+        />
       </div>
 
       <div className="flex flex-wrap gap-2">

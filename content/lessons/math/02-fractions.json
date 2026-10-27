@@ -28,9 +28,8 @@
       "widget": "equivalentFractions",
       "title": "Module 1 · The Knife & Glue",
       "intro": [
-        "Use the knife to cut every piece into smaller pieces.",
-        "The **number** of pieces changes, but the **amount** shaded never does.",
-        "That's why $\\dfrac{2}{3} = \\dfrac{8}{12}$: the top and bottom were both multiplied by the same number, $k = 4$."
+        "Tap ✂️ to cut every piece into smaller pieces.",
+        "The **number** of pieces changes, but the **amount** shaded never does."
       ],
       "props": {
         "a": 2,
@@ -48,7 +47,8 @@
           "goal": {
             "top": 8,
             "bottom": 12
-          }
+          },
+          "explain": "Each third was cut into 4: $2 \\times 4 = 8$ and $3 \\times 4 = 12$, so $\\tfrac{8}{12}$ is the same amount as $\\tfrac{2}{3}$."
         },
         {
           "id": "ch-half-tenths",
@@ -122,7 +122,8 @@
           "goal": {
             "n": 7,
             "d": 3
-          }
+          },
+          "explain": "7 pieces fill 2 containers of 3 with 1 left over, so $\\tfrac{7}{3} = 2\\tfrac{1}{3}$."
         },
         {
           "id": "ch-three-wholes",
@@ -189,7 +190,7 @@
       "title": "Module 3 · The LCD Grid Merger",
       "intro": [
         "Box A is cut into columns, Box B into rows.",
-        "Press **①** to give both boxes the same grid, then **②** to pour the pieces together."
+        "Tap **＋** to give both boxes the same grid, then **＝** to pour the pieces together."
       ],
       "props": {
         "a1": 1,
@@ -211,7 +212,8 @@
             "a2": 1,
             "b2": 6,
             "phase": 2
-          }
+          },
+          "explain": "Both turned into 24ths: $\\tfrac{6}{24} + \\tfrac{4}{24} = \\tfrac{10}{24}$, which simplifies to $\\tfrac{5}{12}$."
         },
         {
           "id": "ch-overflow",
@@ -292,7 +294,8 @@
             "b": 2,
             "c": 1,
             "d": 2
-          }
+          },
+          "explain": "Half of a half is a quarter: 1 green square out of 4."
         },
         {
           "id": "ch-three-twentieths",

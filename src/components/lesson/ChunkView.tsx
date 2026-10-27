@@ -1,12 +1,7 @@
-import { useRef, useState } from "react";
-import { confettiAt } from "../../lib/confetti";
-import { progress } from "../../lib/progress";
+import { useState } from "react";
 import { splitStory } from "../../lib/story";
-import { useProgress } from "../../hooks/useProgress";
 import { Bubble, Coach } from "../ui/Coach";
-import { useLessonId } from "./LessonContext";
 import type {
-  InteractiveChunk,
   TextChunk,
   CalloutChunk,
   Chunk,
@@ -19,7 +14,7 @@ import type {
 import { Accordion, Button, LangProvider, Rich, cx, langProps, useLang } from "../ui/primitives";
 import QuestionView from "../quiz/QuestionView";
 import { renderRich } from "../../lib/richText";
-import { WIDGETS } from "../widgets/registry";
+import InteractiveStage from "./InteractiveStage";
 
 export interface ChunkViewProps {
   chunk: Chunk;
@@ -29,6 +24,8 @@ export interface ChunkViewProps {
   review?: boolean;
   /** text chunks: how many speech bubbles to show (all when undefined) */
   reveal?: number;
+  /** interactive chunks: called once the lab's main goal is reached */
+  onGoal?: () => void;
 }
 
 export default function ChunkView(props: ChunkViewProps) {
@@ -41,7 +38,7 @@ export default function ChunkView(props: ChunkViewProps) {
   );
 }
 
-function ChunkBody({ chunk, onResolved, review, reveal }: ChunkViewProps) {
+function ChunkBody({ chunk, onResolved, review, reveal, onGoal }: ChunkViewProps) {
   const ne = useLang() === "ne";
   switch (chunk.type) {
     case "text":
@@ -64,7 +61,12 @@ function ChunkBody({ chunk, onResolved, review, reveal }: ChunkViewProps) {
         </div>
       );
     case "interactive":
-      return <Interactive chunk={chunk} />;
+      return (
+        <>
+          <InteractiveStage chunk={chunk} onGoal={onGoal} />
+          {chunk.tasks && chunk.tasks.length > 0 && <Tasks tasks={chunk.tasks} />}
+        </>
+      );
     case "image":
       return (
         <figure>
@@ -103,91 +105,6 @@ function Story({ chunk, reveal }: { chunk: TextChunk; reveal?: number }) {
   );
 }
 
-/** A widget, its intro as coach bubbles, auto-checked challenges and a "Try this" list. */
-function Interactive({ chunk }: { chunk: InteractiveChunk }) {
-  const ne = useLang() === "ne";
-  const Widget = WIDGETS[chunk.widget];
-  const lessonId = useLessonId();
-  const done = new Set(useProgress().lessons[lessonId]?.challengesDone ?? []);
-  const rowRefs = useRef<Record<string, HTMLLIElement | null>>({});
-  const [justSolved, setJustSolved] = useState<string | null>(null);
-
-  const onState = (s: Record<string, number>) => {
-    for (const c of chunk.challenges ?? []) {
-      if (done.has(c.id)) continue;
-      const met = Object.entries(c.goal).every(([k, g]) =>
-        typeof g === "number" ? s[k] === g : s[k] !== undefined && (g.min === undefined || s[k] >= g.min) && (g.max === undefined || s[k] <= g.max),
-      );
-      if (met) {
-        if (progress.completeChallenge(lessonId, c.id, c.xp) > 0) {
-          confettiAt(rowRefs.current[c.id], 1.2);
-          setJustSolved(c.id);
-        }
-      }
-    }
-  };
-
-  return (
-    <div>
-      <Eyebrow>{ne ? "चलाएर हेर्नुहोस्" : "🧪 Hands-on"}</Eyebrow>
-      {chunk.title && <Title>{chunk.title}</Title>}
-      {chunk.intro && (
-        <Coach className="mb-4">
-          {splitStory(chunk.intro).map((s, i) => (
-            <Bubble key={i} tone="indigo">
-              <Rich text={s} />
-            </Bubble>
-          ))}
-        </Coach>
-      )}
-      {Widget ? <Widget {...chunk.props} onState={onState} /> : <p className="text-rose-600">Unknown widget "{chunk.widget}"</p>}
-
-      {chunk.challenges && chunk.challenges.length > 0 && (
-        <div className="mt-6">
-          <div className="mb-2 flex items-center justify-between font-display text-lg font-semibold text-slate-800">
-            <span>🏆 {ne ? "चुनौती" : chunk.challenges.some((c) => (c.xp ?? 5) >= 50) ? "Missions" : "Challenges"}</span>
-            <span className="text-slate-400">
-              {chunk.challenges.filter((c) => done.has(c.id)).length}/{chunk.challenges.length}
-            </span>
-          </div>
-          <ul className="space-y-2">
-            {chunk.challenges.map((c) => {
-              const ok = done.has(c.id);
-              return (
-                <li
-                  key={c.id}
-                  ref={(el) => {
-                    rowRefs.current[c.id] = el;
-                  }}
-                  className={cx(
-                    "flex items-center gap-3 rounded-2xl border-2 px-4 py-3 text-lg transition-colors duration-300",
-                    ok ? "border-emerald-300 bg-emerald-50" : "border-slate-200 bg-white",
-                    justSolved === c.id && "animate-celebrate",
-                  )}
-                >
-                  <span
-                    className={cx(
-                      "grid size-7 shrink-0 place-items-center rounded-full text-base font-extrabold",
-                      ok ? "bg-emerald-500 text-white" : "border-2 border-dashed border-slate-300 text-slate-300",
-                    )}
-                    aria-hidden
-                  >
-                    {ok ? "✓" : "?"}
-                  </span>
-                  <Rich text={c.text} className={cx("min-w-0 flex-1", ok ? "text-emerald-900" : "text-slate-700")} />
-                  <span className={cx("shrink-0 text-sm font-extrabold", ok ? "text-emerald-600" : "text-amber-600")}>
-                    {ok ? (ne ? "भयो!" : "Done!") : `+${c.xp ?? 5} XP`}
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      )}
-      {chunk.tasks && chunk.tasks.length > 0 && <Tasks tasks={chunk.tasks} />}
-    </div>
-  );
-}
 
 /** "Try this" checklist under a widget; ticking is just for the student. */
 /** "Think about it" prompts, asked by the coach. Tapping one ticks it off. */

@@ -850,7 +850,7 @@
         },
         "challenges": {
           "type": "array",
-          "description": "Auto-checked sandbox challenges (+5 XP each, once). Solved when every key in goal equals the widget's state. State keys: equivalentFractions a, b, k, top, bottom; mixedNumberTank n, d, wholes, rest; gridMerger a1, b1, a2, b2, phase (0-2), over (1 if the sum is more than 1); areaOverlap a, b, c, d, green, total. Physics: gridRunner distance, disp, atShop, steps; vectorSorter sorted, mistakes; skateTrack u, finished, time, turned; cratePush surface, net, people, accel, moving; workDetector scenario, force, distance, work, pushed. Chemistry: indicatorLab foundBase, mystery, tested; phScale ph; neutralization acid, base, ph, neutral, crystallized, overshoot; cureGame cured; reactionLab zinc, popped, limeMilky, minutes, signs; equationBalancer eq, balanced, solved.",
+          "description": "The FIRST challenge is the lab's Goal (shown in the banner; Next unlocks when it's solved). The rest are bonus goals. Auto-checked sandbox challenges (+5 XP each, once). Solved when every key in goal equals the widget's state. State keys: equivalentFractions a, b, k, top, bottom; mixedNumberTank n, d, wholes, rest; gridMerger a1, b1, a2, b2, phase (0-2), over (1 if the sum is more than 1); areaOverlap a, b, c, d, green, total. Physics: gridRunner distance, disp, atShop, steps; vectorSorter sorted, mistakes; skateTrack u, finished, time, turned; cratePush surface, net, people, accel, moving; workDetector scenario, force, distance, work, pushed. Chemistry: indicatorLab foundBase, mystery, tested; phScale ph; neutralization acid, base, ph, neutral, crystallized, overshoot; cureGame cured; reactionLab zinc, popped, limeMilky, minutes, signs; equationBalancer eq, balanced, solved.",
           "items": {
             "type": "object",
             "required": [
@@ -864,7 +864,7 @@
                 "$ref": "#/$defs/id"
               },
               "text": {
-                "$ref": "#/$defs/richText"
+                "type": "string"
               },
               "goal": {
                 "type": "object",
@@ -896,6 +896,10 @@
                 "minimum": 1,
                 "maximum": 200,
                 "default": 5
+              },
+              "explain": {
+                "$ref": "#/$defs/richText",
+                "description": "One sentence shown in the green banner once solved: why it worked."
               }
             }
           }

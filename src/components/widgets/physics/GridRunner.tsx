@@ -1,6 +1,6 @@
 import { useState, type KeyboardEvent } from "react";
 import { Button } from "../../ui/primitives";
-import { StatBadge, Tex, WidgetPanel, useReportState, type WidgetState } from "../controls";
+import { SvgPill, Tex, WidgetPanel, useReportState, type WidgetState } from "../controls";
 import { Arrow, P } from "./shared";
 
 /**
@@ -76,14 +76,9 @@ export default function GridRunner({ onState }: { onState?: (s: WidgetState) => 
 
   return (
     <WidgetPanel>
-      <StatBadge
-        parts={[
-          { icon: "👣", label: "Distance", value: `${distance} m`, tone: "sage" },
-          { icon: "🧭", label: "Displacement", value: disp === 0 ? "0 m" : `${disp.toFixed(1)} m ${direction}`, tone: "periwinkle" },
-        ]}
-      />
 
       <div
+        data-start
         tabIndex={0}
         onKeyDown={onKey}
         aria-label="Map. Use the arrow keys, the arrow buttons, or click a square in the same street to walk."
@@ -152,6 +147,28 @@ export default function GridRunner({ onState }: { onState?: (s: WidgetState) => 
             <circle r={14} fill="#f59e0b" stroke="white" strokeWidth={4} />
             <circle r={4} fill="white" />
           </g>
+
+          {/* live numbers on the drawing: displacement on its arrow, distance on the walker */}
+          {disp > 0 && (
+            <SvgPill
+              x={Math.max(110, Math.min(W - 110, (start.x + now.x) / 2))}
+              y={(start.y + now.y) / 2 - 22}
+              text={`🧭 ${disp.toFixed(1)} m ${direction}`}
+              fill="#eef2ff"
+              color="#4338ca"
+              stroke="#a5b4fc"
+              size={15}
+            />
+          )}
+          <SvgPill
+            x={Math.max(70, Math.min(W - 70, now.x))}
+            y={now.y + (now.y > H - 70 ? -40 : 36)}
+            text={`👣 ${distance} m`}
+            fill="#ecfdf5"
+            color="#047857"
+            stroke="#6ee7b7"
+            size={15}
+          />
 
           {/* compass */}
           <g transform={`translate(${W - 34} 34)`}>

@@ -43,15 +43,22 @@ export default function AreaOverlap({
           <div className="mb-1 text-center text-sm font-semibold text-blue-600">← {a} of {b} columns →</div>
           <div className="flex items-center gap-1">
             <div className="text-sm font-semibold text-yellow-700 [writing-mode:vertical-rl] rotate-180">{c} of {d} rows</div>
-            <div className="flex-1 rounded-xl bg-white p-1">
-              <OverlapGrid a={[a, b]} b={[c, d]} />
+            <div data-start className="flex-1 rounded-xl bg-white p-1">
+              <OverlapGrid
+                a={[a, b]}
+                b={[c, d]}
+                onPick={(cols, rows) => {
+                  setA(cols);
+                  setC(rows);
+                }}
+              />
             </div>
           </div>
         </div>
         <div className="space-y-5">
-          <Slider label="Blue: columns shaded (a)" value={a} min={0} max={b} color={C.blue} onChange={setA} />
+
           <Slider
-            label="Blue: columns in total (b)"
+            label="Blue: columns in the square"
             value={b}
             min={1}
             max={10}
@@ -61,9 +68,9 @@ export default function AreaOverlap({
               setA((x) => Math.min(x, v));
             }}
           />
-          <Slider label="Yellow: rows shaded (c)" value={c} min={0} max={d} color="#ca8a04" onChange={setC} />
+
           <Slider
-            label="Yellow: rows in total (d)"
+            label="Yellow: rows in the square"
             value={d}
             min={1}
             max={10}
@@ -73,6 +80,7 @@ export default function AreaOverlap({
               setC((x) => Math.min(x, v));
             }}
           />
+          <p className="text-center text-base font-semibold text-slate-500">👆 Tap any square: blue fills the columns up to it, yellow fills the rows.</p>
           <ul className="space-y-1 text-base text-slate-600">
             <li className="flex items-center gap-2"><Swatch c={C.blueSoft} /> blue only</li>
             <li className="flex items-center gap-2"><Swatch c="#fef9c3" /> yellow only</li>

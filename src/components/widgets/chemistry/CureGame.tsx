@@ -110,13 +110,14 @@ export default function CureGame({ onState }: { onState?: (s: WidgetState) => vo
               <p className="mt-2 text-base text-slate-600">{done ? c.win : c.problem}</p>
               {!done && (
                 <div className="mt-3 space-y-2">
-                  {c.options.map((id) => {
+                  {c.options.map((id, oi) => {
                     const r = REMEDIES[id];
                     return (
                       <button
                         key={id}
                         type="button"
                         onClick={(e) => pick(c.id, id, e.currentTarget)}
+                        {...(c.id === "stomach" && oi === 0 ? { "data-start": true } : {})}
                         className="press flex w-full items-center justify-between gap-2 rounded-2xl border-slate-200 bg-white px-3 py-2 text-left text-base font-bold text-slate-700 hover:border-indigo-300"
                       >
                         <span>
