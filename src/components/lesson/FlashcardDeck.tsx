@@ -84,7 +84,7 @@ export default function FlashcardDeck({ lessonId, cards, onQuiz }: { lessonId: s
 
   return (
     <div className="mx-auto max-w-xl space-y-4">
-      <div className="flex flex-wrap items-center gap-3 text-sm">
+      <div className="flex flex-wrap items-center gap-3 text-base">
         <div className="min-w-40 flex-1">
           <div className="mb-1 flex justify-between font-semibold text-slate-600">
             <span>
@@ -199,7 +199,7 @@ export default function FlashcardDeck({ lessonId, cards, onQuiz }: { lessonId: s
           </div>
         </Card>
       )}
-      <p className="text-center text-xs text-slate-400">
+      <p className="text-center text-sm text-slate-400">
         {ne ? "पल्टाएपछि दायाँ स्वाइप = थाहा भयो, बायाँ = अझै सिक्दै" : "After flipping: swipe right = got it, left = still learning"} · Space · ← → · 1 · 2
       </p>
     </div>
@@ -215,12 +215,12 @@ function Face({ side, tag, footer, children }: { side: "front" | "back"; tag?: s
         side === "front" ? "border-slate-200 bg-white" : "flip-back border-indigo-200 bg-indigo-50",
       )}
     >
-      <div className="flex justify-between text-xs font-bold uppercase tracking-wide">
+      <div className="flex justify-between text-sm font-bold uppercase tracking-wide">
         <span className={side === "front" ? "text-slate-400" : "text-indigo-500"}>{side === "front" ? (ne ? "प्रश्न" : "Question") : ne ? "उत्तर" : "Answer"}</span>
         {tag && <span className="rounded-full bg-slate-100 px-2 py-0.5 text-slate-500 normal-case">{tag}</span>}
       </div>
       <div className="flex flex-1 items-center justify-center py-6">{children}</div>
-      <div className="text-center text-xs text-slate-400">{footer}</div>
+      <div className="text-center text-sm text-slate-400">{footer}</div>
     </div>
   );
 }

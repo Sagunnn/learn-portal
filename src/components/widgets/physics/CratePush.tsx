@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { Button } from "../../ui/primitives";
-import { EquationBar, WidgetPanel, useReportState, type WidgetState } from "../controls";
-import { Arrow, Chip, P, Person, Readout, round1, useAnimationLoop } from "./shared";
+import { EquationBar, StatBadge, WidgetPanel, useReportState, type WidgetState } from "../controls";
+import Face from "../Face";
+import { Arrow, Chip, P, Person, round1, useAnimationLoop } from "./shared";
 
 /**
  * Lab 3 — "Tug-of-War & Crate Pusher". Teams pull a 50 kg crate left and right.
@@ -93,7 +94,7 @@ export default function CratePush({ surface: s0 = 0, onState }: { surface?: numb
   return (
     <WidgetPanel>
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-sm font-bold text-slate-600">Surface:</span>
+        <span className="text-base font-bold text-slate-600">Surface:</span>
         {SURFACES.map((s, i) => (
           <Chip key={s.name} active={surface === i} onClick={() => setSurface(i)} tone="slate">
             {s.icon} {s.name} <span className="font-semibold opacity-70">· friction up to {s.friction} N</span>
@@ -101,7 +102,15 @@ export default function CratePush({ surface: s0 = 0, onState }: { surface?: numb
         ))}
       </div>
 
-      <div className="rounded-2xl border-2 border-b-4 border-slate-200 bg-gradient-to-b from-sky-50 to-white p-2">
+      <StatBadge
+        parts={[
+          { icon: "➡️", label: "Right", value: `${fRight} N`, tone: "honey" },
+          { icon: "⬅️", label: "Left", value: `${fLeft} N`, tone: "honey" },
+          { icon: "🧲", label: "Friction", value: `${Math.abs(Math.round(friction))} N`, tone: "brick" },
+          { icon: "🚀", label: "a", value: `${Math.abs(net) <= fmax ? 0 : accel} m/s²`, tone: "periwinkle" },
+        ]}
+      />
+      <div className="rounded-3xl border-2 border-slate-200 bg-gradient-to-b from-sky-50 to-white p-2">
         <svg viewBox="0 0 800 300" className="block h-auto w-full select-none">
           <rect x={0} y={ground} width={800} height={50} fill={SURFACES[surface].fill} />
           {surface === 1 && Array.from({ length: 10 }, (_, i) => <line key={i} x1={i * 80} x2={i * 80} y1={ground} y2={ground + 50} stroke="#a16207" strokeWidth={2} />)}
@@ -118,8 +127,9 @@ export default function CratePush({ surface: s0 = 0, onState }: { surface?: numb
           <g>
             <rect x={cx - 50} y={crateTop} width={100} height={90} rx={6} fill="#b45309" stroke="#78350f" strokeWidth={4} />
             <path d={`M${cx - 50} ${crateTop} L${cx + 50} ${crateTop + 90} M${cx + 50} ${crateTop} L${cx - 50} ${crateTop + 90}`} stroke="#78350f" strokeWidth={4} />
-            <rect x={cx - 26} y={crateTop + 32} width={52} height={26} rx={6} fill="#fef3c7" stroke="#78350f" strokeWidth={2} />
-            <text x={cx} y={crateTop + 51} textAnchor="middle" fontSize={15} fontWeight={800} fill="#78350f">
+            <rect x={cx - 34} y={crateTop + 20} width={68} height={52} rx={12} fill="#FFF3C9" stroke="#78350f" strokeWidth={2.5} />
+            <Face x={cx} y={crateTop + 40} scale={0.9} mood={moving ? "wow" : net !== 0 && Math.abs(net) <= fmax ? "strain" : "happy"} />
+            <text x={cx} y={crateTop + 68} textAnchor="middle" fontSize={12} fontWeight={800} fill="#78350f">
               50 kg
             </text>
           </g>
@@ -146,13 +156,6 @@ export default function CratePush({ surface: s0 = 0, onState }: { surface?: numb
         </svg>
       </div>
 
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-        <Readout tone="force" label="Pull right →" value={`${fRight} N`} sub={`${right.length} on the right`} />
-        <Readout tone="force" label="← Pull left" value={`${fLeft} N`} sub={`${left.length} on the left`} />
-        <Readout tone="friction" label="Friction" value={`${Math.abs(Math.round(friction))} N`} sub={fmax === 0 ? "Ice: none" : `up to ${fmax} N`} />
-        <Readout tone="vector" label="Acceleration" value={`${Math.abs(net) <= fmax ? 0 : accel}`} sub="m/s² (+ is right)" />
-      </div>
-
       <EquationBar
         tex={
           `\\begin{gathered}F_{\\text{net}} = F_{\\text{right}} - F_{\\text{left}} = ${fRight} - ${fLeft} = ${net}\\text{ N} \\\\ ` +
@@ -175,7 +178,7 @@ export default function CratePush({ surface: s0 = 0, onState }: { surface?: numb
           const set = side === "L" ? setLeft : setRight;
           return (
             <div key={side} className="rounded-2xl border-2 border-b-4 border-slate-200 bg-white p-3">
-              <div className="mb-2 text-sm font-extrabold" style={{ color: side === "L" ? "#0284c7" : "#9333ea" }}>
+              <div className="mb-2 text-base font-extrabold" style={{ color: side === "L" ? "#0284c7" : "#9333ea" }}>
                 {side === "L" ? "← Left team" : "Right team →"}
               </div>
               <div className="flex flex-wrap gap-2">
@@ -205,7 +208,7 @@ export default function CratePush({ surface: s0 = 0, onState }: { surface?: numb
         <Button variant="secondary" onClick={reset}>
           ↺ Reset
         </Button>
-        {motion.edge && <span className="text-sm font-bold text-rose-600">The crate reached the edge. Reset to go again.</span>}
+        {motion.edge && <span className="text-base font-bold text-rose-600">The crate reached the edge. Reset to go again.</span>}
       </div>
     </WidgetPanel>
   );

@@ -10,9 +10,9 @@ export function WhyBubble({ id, children, title }: { id?: string; children: Reac
     <div
       id={id}
       role="status"
-      className="relative mt-2 animate-rise rounded-2xl border-b-4 border-rose-500 bg-slate-900 px-4 py-3 text-sm text-slate-100 shadow-lg before:absolute before:-top-1.5 before:left-6 before:size-3 before:rotate-45 before:bg-slate-900"
+      className="relative mt-2 animate-rise rounded-2xl border-b-4 border-rose-500 bg-slate-900 px-4 py-3 text-base text-slate-100 shadow-lg before:absolute before:-top-1.5 before:left-6 before:size-3 before:rotate-45 before:bg-slate-900"
     >
-      <div className="mb-1 text-xs font-bold uppercase tracking-wide text-rose-300">
+      <div className="mb-1 text-sm font-bold uppercase tracking-wide text-rose-300">
         {title ?? (lang === "ne" ? "किन मिलेन?" : "Why not?")}
       </div>
       <div className="[&_strong]:text-white [&_mark]:bg-amber-300/90">{children}</div>

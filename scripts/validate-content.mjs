@@ -39,6 +39,20 @@ function formatAjv(errors = []) {
     .filter((m) => !seen.has(m) && seen.add(m));
 }
 
+// Kid-friendly rule: one speech bubble / explanation line ≤ 20 words (math counts as one word).
+const WORD_LIMIT = 20;
+const wordCount = (t) =>
+  t
+    .replace(/\$\$[\s\S]*?\$\$/g, "M")
+    .replace(/\$[^$]*\$/g, "M")
+    .replace(/[*=`]/g, "")
+    .split(/\s+/)
+    .filter((w) => w && !["-", "—", "→", "+", "=", "·"].includes(w)).length;
+function checkWords(value, where, warnings) {
+  const lines = Array.isArray(value) ? value : typeof value === "string" ? value.split("\n") : [];
+  for (const l of lines) if (typeof l === "string" && wordCount(l) > WORD_LIMIT) warnings.push(`${where}: ${wordCount(l)} words: "${l.slice(0, 60)}…"`);
+}
+
 function checkQuestion(q, where, errors, ids) {
   if (ids.has(q.id)) errors.push(`${where}: duplicate question id "${q.id}"`);
   ids.add(q.id);
@@ -63,9 +77,10 @@ function checkQuestion(q, where, errors, ids) {
   }
 }
 
-/** Returns { errors: string[], lessons: number }. Never throws. */
+/** Returns { errors: string[], warnings: string[], lessons: number }. Never throws. */
 export function validateAll() {
   const errors = [];
+  const warnings = [];
   const v = makeValidators();
 
   let subjectIds = new Set();
@@ -101,6 +116,8 @@ export function validateAll() {
     const qIds = new Set();
     lesson.chunks.forEach((c, i) => c.type === "check" && checkQuestion(c.question, `${rel} chunk ${i + 1}`, errors, qIds));
     lesson.quiz?.questions.forEach((q, i) => checkQuestion(q, `${rel} quiz question ${i + 1}`, errors, qIds));
+    lesson.chunks.forEach((c, i) => ["body", "intro", "caption"].forEach((k) => checkWords(c[k], `${rel} chunk ${i + 1} ${k}`, warnings)));
+
     const challengeIds = new Set();
     lesson.chunks.forEach((c) =>
       c.challenges?.forEach((ch) => {
@@ -114,11 +131,12 @@ export function validateAll() {
       cardIds.add(card.id);
     });
   }
-  return { errors, lessons: files.length };
+  return { errors, warnings, lessons: files.length };
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
-  const { errors, lessons } = validateAll();
+  const { errors, warnings, lessons } = validateAll();
+  if (warnings.length) console.warn(`⚠ ${warnings.length} long line(s), keep bubbles to ${WORD_LIMIT} words:\n  ${warnings.join("\n  ")}`);
   if (errors.length) {
     console.error(`✗ Content has ${errors.length} problem(s):\n  ${errors.join("\n  ")}`);
     process.exit(1);

@@ -3,13 +3,13 @@ import { cx } from "../../ui/primitives";
 
 /** Physics colour roles: vectors/direction indigo, scalars emerald, force/energy amber, friction rose. */
 export const P = {
-  vector: "#4f46e5",
-  scalar: "#10b981",
-  force: "#f59e0b",
-  friction: "#f43f5e",
-  ink: "#0f172a",
-  line: "#334155",
-  muted: "#94a3b8",
+  vector: "#7C83BC", // periwinkle
+  scalar: "#529E72", // sage
+  force: "#E9B44C", // honey
+  friction: "#D97B74", // soft brick
+  ink: "#3D405B",
+  line: "#3D405B",
+  muted: "#ADA79A",
 };
 
 /**
@@ -73,34 +73,6 @@ export function Arrow({
   );
 }
 
-/** A live number card: colour-coded, with the "how much / which way" question it answers. */
-export function Readout({
-  label,
-  value,
-  sub,
-  tone,
-}: {
-  label: string;
-  value: ReactNode;
-  sub?: ReactNode;
-  tone: "vector" | "scalar" | "force" | "friction" | "plain";
-}) {
-  const tones = {
-    vector: "border-indigo-300 bg-indigo-50 text-indigo-900",
-    scalar: "border-emerald-300 bg-emerald-50 text-emerald-900",
-    force: "border-amber-300 bg-amber-50 text-amber-900",
-    friction: "border-rose-300 bg-rose-50 text-rose-900",
-    plain: "border-slate-200 bg-white text-slate-900",
-  };
-  return (
-    <div className={cx("rounded-2xl border-2 border-b-4 px-3 py-2", tones[tone])}>
-      <div className="text-[11px] font-extrabold uppercase tracking-wider opacity-70">{label}</div>
-      <div className="text-xl font-extrabold tabular-nums sm:text-2xl">{value}</div>
-      {sub && <div className="text-xs font-semibold opacity-75">{sub}</div>}
-    </div>
-  );
-}
-
 /** Small 3D toggle chip (scenario tabs, surface picker). */
 export function Chip({ active, onClick, children, tone = "indigo" }: { active: boolean; onClick: () => void; children: ReactNode; tone?: "indigo" | "slate" }) {
   return (
@@ -109,7 +81,7 @@ export function Chip({ active, onClick, children, tone = "indigo" }: { active: b
       aria-pressed={active}
       onClick={onClick}
       className={cx(
-        "rounded-2xl border-2 border-b-4 px-3 py-1.5 text-sm font-bold transition-all duration-200 ease-out active:mb-[2px] active:translate-y-[2px] active:border-b-2",
+        "min-h-[48px] rounded-2xl border-2 border-b-4 px-4 py-2 font-display text-base font-semibold transition-all duration-200 ease-out active:mb-[2px] active:translate-y-[2px] active:border-b-2",
         active
           ? tone === "indigo"
             ? "border-indigo-700 bg-indigo-600 text-white"

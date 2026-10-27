@@ -2,7 +2,7 @@
  * Small dependency-free confetti burst on a temporary full-screen canvas.
  * Skipped entirely when the student prefers reduced motion.
  */
-const COLORS = ["#4f46e5", "#10b981", "#f59e0b", "#f43f5e", "#0ea5e9", "#a855f7"];
+const COLORS = ["#E07A5F", "#529E72", "#E9B44C", "#7C83BC", "#A8DADC", "#F4A261", "#FFD6A5"];
 
 interface Particle {
   x: number;

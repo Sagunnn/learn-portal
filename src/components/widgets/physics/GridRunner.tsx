@@ -1,7 +1,7 @@
 import { useState, type KeyboardEvent } from "react";
 import { Button } from "../../ui/primitives";
-import { Tex, WidgetPanel, useReportState, type WidgetState } from "../controls";
-import { Arrow, P, Readout } from "./shared";
+import { StatBadge, Tex, WidgetPanel, useReportState, type WidgetState } from "../controls";
+import { Arrow, P } from "./shared";
 
 /**
  * Lab 1 — "Neighborhood Grid Runner". Walk from the House to the Shop around a
@@ -76,15 +76,12 @@ export default function GridRunner({ onState }: { onState?: (s: WidgetState) => 
 
   return (
     <WidgetPanel>
-      <div className="grid gap-3 sm:grid-cols-2">
-        <Readout tone="scalar" label="Distance · scalar" value={`${distance} m`} sub="How much? Every step you walked." />
-        <Readout
-          tone="vector"
-          label="Displacement · vector"
-          value={disp === 0 ? "0 m" : `${disp.toFixed(1)} m ${direction}`}
-          sub={disp === 0 ? "How much + which way? You're back where you started." : `How much + which way? Bearing ${Math.round(bearing).toString().padStart(3, "0")}°`}
-        />
-      </div>
+      <StatBadge
+        parts={[
+          { icon: "👣", label: "Distance", value: `${distance} m`, tone: "sage" },
+          { icon: "🧭", label: "Displacement", value: disp === 0 ? "0 m" : `${disp.toFixed(1)} m ${direction}`, tone: "periwinkle" },
+        ]}
+      />
 
       <div
         tabIndex={0}
@@ -198,7 +195,7 @@ export default function GridRunner({ onState }: { onState?: (s: WidgetState) => 
         </div>
       </div>
 
-      <p className="min-h-6 text-sm font-semibold" role="status">
+      <p className="min-h-6 text-base font-semibold" role="status">
         {msg ? (
           <span className="text-rose-600">{msg}</span>
         ) : atShop ? (

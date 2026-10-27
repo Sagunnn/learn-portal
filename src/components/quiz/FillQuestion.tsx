@@ -119,7 +119,7 @@ export default function FillQuestion({
       </div>
 
       {isFraction && !solved && (
-        <p className="min-h-8 text-sm text-slate-500" aria-live="polite">
+        <p className="min-h-8 text-base text-slate-500" aria-live="polite">
           {typed ? (
             <>
               You typed: <Tex tex={typed} className="text-base text-slate-900" />
@@ -133,7 +133,7 @@ export default function FillQuestion({
       )}
 
       {mixedScripts && !solved && (
-        <p className="text-sm text-slate-500">
+        <p className="text-base text-slate-500">
           {ne ? "नेपाली युनिकोड वा रोमन (English) अक्षरमा लेख्न सकिन्छ।" : "You can type in Nepali (Unicode) or Roman letters."}
         </p>
       )}

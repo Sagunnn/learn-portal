@@ -40,7 +40,7 @@ export default function EquivalentFractions({ a: a0 = 2, b: b0 = 3, k: k0 = 1, o
       <div className="grid items-center gap-4 sm:grid-cols-[2fr_1fr]">
         <div className="space-y-2">
           <FractionBar n={a} d={b} k={k} />
-          <p className="text-center text-xs font-medium text-slate-500">
+          <p className="text-center text-sm font-medium text-slate-500">
             {k > 1 ? `Each of the ${b} pieces is cut into ${k}: ${bottom} pieces, ${top} shaded.` : `${b} equal pieces, ${a} shaded.`}
           </p>
         </div>
@@ -50,10 +50,10 @@ export default function EquivalentFractions({ a: a0 = 2, b: b0 = 3, k: k0 = 1, o
       </div>
 
       <EquationBar tex={tex}>
-        Shaded: <strong className="text-white">{pct}%</strong> of the whole, however many cuts you make.
+        Shaded: <strong className="text-emerald-700">{pct}%</strong> of the whole, however many cuts you make.
       </EquationBar>
 
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid gap-5">
         <Slider
           label="Shaded pieces (top)"
           value={a}
@@ -98,7 +98,7 @@ export default function EquivalentFractions({ a: a0 = 2, b: b0 = 3, k: k0 = 1, o
         <Button size="sm" variant="secondary" onClick={glue} disabled={!canGlue}>
           🧴 Glue to simplest form
         </Button>
-        <span className="text-sm text-slate-500" role="status">
+        <span className="text-base text-slate-500" role="status">
           {glued ? (
             <>
               Glued <Tex tex={`\\tfrac{${glued.from[0]}}{${glued.from[1]}}`} /> into <Tex tex={`\\tfrac{${glued.to[0]}}{${glued.to[1]}}`} /> by

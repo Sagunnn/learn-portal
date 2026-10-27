@@ -70,7 +70,7 @@ function ChunkBody({ chunk, onResolved, review, reveal }: ChunkViewProps) {
         <figure>
           <img src={chunk.src} alt={chunk.alt} loading="lazy" className="mx-auto max-h-96 rounded-xl" />
           {chunk.caption && (
-            <figcaption className="mt-2 text-center text-sm text-slate-500">
+            <figcaption className="mt-2 text-center text-base text-slate-500">
               <Rich text={chunk.caption} inline />
             </figcaption>
           )}
@@ -88,7 +88,7 @@ function Story({ chunk, reveal }: { chunk: TextChunk; reveal?: number }) {
   return (
     <div>
       {chunk.title && (
-        <h3 className="mb-3 ml-14 text-xl font-extrabold tracking-tight text-slate-900">
+        <h3 className="mb-4 text-2xl font-semibold text-slate-800 sm:text-3xl">
           <Rich text={chunk.title} inline />
         </h3>
       )}
@@ -129,7 +129,7 @@ function Interactive({ chunk }: { chunk: InteractiveChunk }) {
 
   return (
     <div>
-      <Eyebrow>{ne ? "चलाएर हेर्नुहोस्" : "Interactive sandbox"}</Eyebrow>
+      <Eyebrow>{ne ? "चलाएर हेर्नुहोस्" : "🧪 Hands-on"}</Eyebrow>
       {chunk.title && <Title>{chunk.title}</Title>}
       {chunk.intro && (
         <Coach className="mb-4">
@@ -143,8 +143,8 @@ function Interactive({ chunk }: { chunk: InteractiveChunk }) {
       {Widget ? <Widget {...chunk.props} onState={onState} /> : <p className="text-rose-600">Unknown widget "{chunk.widget}"</p>}
 
       {chunk.challenges && chunk.challenges.length > 0 && (
-        <div className="mt-4">
-          <div className="mb-2 flex items-center justify-between text-sm font-extrabold text-slate-800">
+        <div className="mt-6">
+          <div className="mb-2 flex items-center justify-between font-display text-lg font-semibold text-slate-800">
             <span>🏆 {ne ? "चुनौती" : chunk.challenges.some((c) => (c.xp ?? 5) >= 50) ? "Missions" : "Challenges"}</span>
             <span className="text-slate-400">
               {chunk.challenges.filter((c) => done.has(c.id)).length}/{chunk.challenges.length}
@@ -160,14 +160,14 @@ function Interactive({ chunk }: { chunk: InteractiveChunk }) {
                     rowRefs.current[c.id] = el;
                   }}
                   className={cx(
-                    "flex items-center gap-3 rounded-2xl border-2 border-b-4 px-4 py-2.5 transition-colors duration-300",
-                    ok ? "border-emerald-400 bg-emerald-50" : "border-slate-200 bg-white",
+                    "flex items-center gap-3 rounded-2xl border-2 px-4 py-3 text-lg transition-colors duration-300",
+                    ok ? "border-emerald-300 bg-emerald-50" : "border-amber-200 bg-amber-50/60",
                     justSolved === c.id && "animate-celebrate",
                   )}
                 >
                   <span
                     className={cx(
-                      "grid size-7 shrink-0 place-items-center rounded-full text-sm font-extrabold",
+                      "grid size-7 shrink-0 place-items-center rounded-full text-base font-extrabold",
                       ok ? "bg-emerald-500 text-white" : "border-2 border-dashed border-slate-300 text-slate-300",
                     )}
                     aria-hidden
@@ -175,7 +175,7 @@ function Interactive({ chunk }: { chunk: InteractiveChunk }) {
                     {ok ? "✓" : "?"}
                   </span>
                   <Rich text={c.text} className={cx("min-w-0 flex-1", ok ? "text-emerald-900" : "text-slate-700")} />
-                  <span className={cx("shrink-0 text-xs font-extrabold", ok ? "text-emerald-600" : "text-amber-600")}>
+                  <span className={cx("shrink-0 text-sm font-extrabold", ok ? "text-emerald-600" : "text-amber-600")}>
                     {ok ? (ne ? "भयो!" : "Done!") : `+${c.xp ?? 5} XP`}
                   </span>
                 </li>
@@ -190,52 +190,44 @@ function Interactive({ chunk }: { chunk: InteractiveChunk }) {
 }
 
 /** "Try this" checklist under a widget; ticking is just for the student. */
+/** "Think about it" prompts, asked by the coach. Tapping one ticks it off. */
 function Tasks({ tasks }: { tasks: string[] | (string | string[])[] }) {
-  const ne = useLang() === "ne";
   const [done, setDone] = useState<Set<number>>(() => new Set());
   return (
-    <div className="mt-4">
-      <div className="mb-2 text-sm font-extrabold text-slate-800">
-        🤔 {ne ? "सोचौँ" : "Think about it"} <span className="text-slate-400">· {done.size}/{tasks.length}</span>
-      </div>
-      <ul className="space-y-2">
-        {tasks.map((t, i) => (
-          <li key={i}>
-            <label
-              className={cx(
-                "press flex cursor-pointer items-start gap-3 rounded-2xl px-4 py-2.5",
-                done.has(i) ? "border-indigo-300 bg-indigo-50" : "border-slate-200 bg-white hover:bg-slate-50",
-              )}
-            >
-              <input
-                type="checkbox"
-                className="mt-1 size-4 shrink-0 accent-indigo-600"
-                checked={done.has(i)}
-                onChange={() => {
-                  const next = new Set(done);
-                  next.has(i) ? next.delete(i) : next.add(i);
-                  setDone(next);
-                }}
-              />
-              <Rich text={t} className={cx("text-slate-700", done.has(i) && "text-slate-400 line-through")} />
-            </label>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Coach className="mt-6" mood="think">
+      {tasks.map((t, i) => (
+        <button
+          key={i}
+          type="button"
+          aria-pressed={done.has(i)}
+          onClick={() => {
+            const next = new Set(done);
+            next.has(i) ? next.delete(i) : next.add(i);
+            setDone(next);
+          }}
+          className={cx(
+            "flex w-fit max-w-full items-start gap-2 rounded-3xl rounded-tl-md border-2 px-5 py-3 text-left font-sans text-lg font-semibold transition-colors",
+            done.has(i) ? "border-emerald-200 bg-emerald-50 text-emerald-800" : "border-orange-200 bg-orange-50 text-slate-800 hover:bg-orange-100",
+          )}
+        >
+          <span aria-hidden>{done.has(i) ? "✅" : "🤔"}</span>
+          <Rich text={t} inline />
+        </button>
+      ))}
+    </Coach>
   );
 }
 
 function Title({ children }: { children: string }) {
   return (
-    <h3 className="mb-2 text-xl font-bold tracking-tight text-slate-900">
+    <h3 className="mb-3 text-2xl font-semibold text-slate-800 sm:text-3xl">
       <Rich text={children} inline />
     </h3>
   );
 }
 
 function Eyebrow({ children }: { children: string }) {
-  return <div className="mb-2 text-xs font-bold uppercase tracking-wider text-indigo-500">{children}</div>;
+  return <div className="mb-1 font-display text-base font-semibold uppercase tracking-widest text-indigo-600">{children}</div>;
 }
 
 const CALLOUTS: Record<CalloutChunk["variant"], { icon: string; en: string; ne: string; className: string }> = {
@@ -272,7 +264,7 @@ function Formula({ chunk }: { chunk: FormulaChunk }) {
               className="overflow-x-auto py-1 text-slate-900"
               dangerouslySetInnerHTML={{ __html: renderRich(`$$${f.tex}$$`) }}
             />
-            {f.label && <Rich text={f.label} inline className="text-sm font-medium text-indigo-700" />}
+            {f.label && <Rich text={f.label} inline className="text-base font-medium text-indigo-700" />}
           </div>
         ))}
       </div>
@@ -300,7 +292,7 @@ function WordBreakdown({ chunk }: { chunk: WordBreakdownChunk }) {
       {chunk.title && <Title>{chunk.title}</Title>}
       {chunk.intro && <Rich text={chunk.intro} className="mb-3 text-slate-700" />}
       <div className="mb-3 flex items-center justify-between gap-2">
-        <p className="text-sm text-slate-500">{ne ? "शब्दमा थिचेर टुक्र्याउनुहोस्।" : "Tap a word to break it apart."}</p>
+        <p className="text-base text-slate-500">{ne ? "शब्दमा थिचेर टुक्र्याउनुहोस्।" : "Tap a word to break it apart."}</p>
         <Button
           variant="ghost"
           size="sm"
@@ -347,7 +339,7 @@ function WordBreakdown({ chunk }: { chunk: WordBreakdownChunk }) {
                         </span>
                       ))}
                     </div>
-                    {item.meaning && <Rich text={item.meaning} className="mt-2 text-sm text-slate-600" />}
+                    {item.meaning && <Rich text={item.meaning} className="mt-2 text-base text-slate-600" />}
                   </div>
                 )}
               </button>
@@ -365,7 +357,7 @@ function Table({ chunk }: { chunk: TableChunk }) {
     <div>
       {chunk.title && <Title>{chunk.title}</Title>}
       <div className="overflow-x-auto rounded-2xl border border-slate-200">
-        <table lang={lp.lang} className={cx("w-full min-w-max border-collapse text-left text-sm", lp.className)}>
+        <table lang={lp.lang} className={cx("w-full min-w-max border-collapse text-left text-base", lp.className)}>
           <thead className="bg-slate-50 text-slate-600">
             <tr>
               {chunk.headers.map((h, i) => (
@@ -402,7 +394,7 @@ function Practice({ chunk }: { chunk: PracticeChunk }) {
     <div className="rounded-2xl border-2 border-dashed border-slate-300 bg-white p-5">
       <Eyebrow>{chunk.title ?? (ne ? "अभ्यास गरौँ" : "Try it yourself")}</Eyebrow>
       <Rich text={chunk.problem} className="text-lg font-semibold text-slate-900" />
-      <p className="mt-1 text-sm text-slate-500">
+      <p className="mt-1 text-base text-slate-500">
         {ne ? "पहिले कापीमा आफैँ हल गर्नुहोस्, अनि मिलाउनुहोस्।" : "Work it out on paper first, then check below."}
       </p>
       <div className="mt-4 space-y-2">
@@ -415,7 +407,7 @@ function Practice({ chunk }: { chunk: PracticeChunk }) {
           <ol className="space-y-3">
             {chunk.steps.slice(0, shown).map((step, i) => (
               <li key={i} className="flex animate-rise gap-3">
-                <span className="grid size-6 shrink-0 place-items-center rounded-full bg-emerald-600 text-xs font-bold text-white">{i + 1}</span>
+                <span className="grid size-6 shrink-0 place-items-center rounded-full bg-emerald-600 text-sm font-bold text-white">{i + 1}</span>
                 <Rich text={step} className="min-w-0 flex-1 text-slate-700" />
               </li>
             ))}

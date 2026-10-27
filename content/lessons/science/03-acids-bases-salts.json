@@ -1,0 +1,859 @@
+{
+  "$schema": "../../../schema/lesson.schema.json",
+  "meta": {
+    "id": "science-acids-bases-salts",
+    "subject": "science",
+    "chapter": 3,
+    "title": "Acids, Bases, Salts & Chemical Reactions",
+    "titleLocal": "अम्ल, क्षार, लवण र रासायनिक प्रतिक्रिया",
+    "summary": "Indicators and pH, neutralisation and salts, reaction signs and gas tests, and balancing equations, in four virtual lab stations.",
+    "estMinutes": 50,
+    "tags": [
+      "chemistry",
+      "interactive"
+    ]
+  },
+  "chunks": [
+    {
+      "type": "text",
+      "title": "Sour, bitter, slippery",
+      "body": [
+        "Lemons and vinegar taste **sour**: they contain **acids**.",
+        "Soap feels **slippery** and baking soda tastes **bitter**: they are **bases**.",
+        "We never taste lab chemicals! Instead we use **indicators**: dyes that change colour."
+      ]
+    },
+    {
+      "type": "interactive",
+      "widget": "indicatorLab",
+      "title": "Station 1 · Dropper & Colour Detective",
+      "intro": [
+        "Pick an indicator, then click a tube to test it.",
+        "Fill in the detective's notebook, then try **Mystery mode**!"
+      ],
+      "challenges": [
+        {
+          "id": "m-mystery-base",
+          "text": "**Mission:** in Mystery mode, find a tube that turns phenolphthalein **pink** and red litmus **blue**.",
+          "goal": {
+            "mystery": 1,
+            "foundBase": 1
+          },
+          "xp": 50
+        },
+        {
+          "id": "m-test-all",
+          "text": "Test all **six** tubes with at least one indicator.",
+          "goal": {
+            "tested": 6
+          },
+          "xp": 25
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Indicator colour chart",
+      "headers": [
+        "Indicator",
+        "In acid",
+        "In neutral",
+        "In base"
+      ],
+      "rows": [
+        [
+          "Blue litmus",
+          "Red",
+          "Blue (no change)",
+          "Blue (no change)"
+        ],
+        [
+          "Red litmus",
+          "Red (no change)",
+          "Red (no change)",
+          "Blue"
+        ],
+        [
+          "Phenolphthalein",
+          "Colourless",
+          "Colourless",
+          "Pink"
+        ],
+        [
+          "Methyl orange",
+          "Red",
+          "Yellow",
+          "Yellow"
+        ],
+        [
+          "Turmeric (बेसार)",
+          "Yellow",
+          "Yellow",
+          "Reddish-brown"
+        ],
+        [
+          "China rose (घण्टी फूल)",
+          "Dark pink (magenta)",
+          "No change",
+          "Green"
+        ]
+      ]
+    },
+    {
+      "type": "check",
+      "question": {
+        "id": "check-phenol",
+        "type": "mcq",
+        "prompt": "A solution turns **phenolphthalein pink**. What kind of solution is it?",
+        "options": [
+          {
+            "text": "A base",
+            "correct": true
+          },
+          {
+            "text": "An acid",
+            "why": "Acids keep phenolphthalein **colourless**."
+          },
+          {
+            "text": "Neutral",
+            "why": "Neutral solutions like pure water keep it colourless too."
+          },
+          {
+            "text": "You can't tell",
+            "why": "You can! Phenolphthalein turns pink **only** in a base."
+          }
+        ],
+        "explanation": "Phenolphthalein: colourless in acids and neutral solutions, **pink in bases**."
+      }
+    },
+    {
+      "type": "interactive",
+      "widget": "phScale",
+      "title": "Zoom in: the pH scale",
+      "intro": "Slide from 0 to 14 and zoom into the liquid. Acids are crowded with $\\text{H}^+$ ions; bases with $\\text{OH}^-$ ions.",
+      "props": {
+        "ph": 3
+      },
+      "challenges": [
+        {
+          "id": "m-ph-seven",
+          "text": "Find the pH where $\\text{H}^+$ and $\\text{OH}^-$ balance out.",
+          "goal": {
+            "ph": 7
+          },
+          "xp": 10
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "title": "Neutralisation",
+      "body": [
+        "Add a base to an acid and they cancel each other out. This is **neutralisation**.",
+        "$$\\text{Acid} + \\text{Base} \\rightarrow \\text{Salt} + \\text{Water} + \\text{Heat}$$",
+        "It gives out heat, so it is **exothermic**."
+      ]
+    },
+    {
+      "type": "interactive",
+      "widget": "neutralization",
+      "title": "Station 2 · The Salt Factory",
+      "intro": [
+        "The beaker holds acid with **universal indicator** (red, pH 1). Add base from the burette.",
+        "Aim for **green, pH 7**. Go drop by drop near the end!"
+      ],
+      "props": {
+        "acid": 0,
+        "base": 0
+      },
+      "challenges": [
+        {
+          "id": "m-table-salt",
+          "text": "**Mission:** neutralise the $\\text{HCl}$ beaker with $\\text{NaOH}$ to exactly pH 7 and crystallise common table salt, $\\text{NaCl}$!",
+          "goal": {
+            "acid": 0,
+            "base": 0,
+            "crystallized": 1
+          },
+          "xp": 50
+        },
+        {
+          "id": "m-sulphate",
+          "text": "Make and crystallise a **sulphate** salt.",
+          "goal": {
+            "acid": 1,
+            "crystallized": 1
+          },
+          "xp": 25
+        },
+        {
+          "id": "m-rescue",
+          "text": "Overshoot to purple, rescue it with acid drops, then crystallise.",
+          "goal": {
+            "overshoot": 1,
+            "crystallized": 1
+          },
+          "xp": 25
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Naming salts",
+      "headers": [
+        "Acid",
+        "Salt name ends in",
+        "Example"
+      ],
+      "rows": [
+        [
+          "Hydrochloric acid, $\\text{HCl}$",
+          "**chloride**",
+          "sodium chloride, $\\text{NaCl}$"
+        ],
+        [
+          "Sulphuric acid, $\\text{H}_2\\text{SO}_4$",
+          "**sulphate**",
+          "sodium sulphate, $\\text{Na}_2\\text{SO}_4$"
+        ],
+        [
+          "Nitric acid, $\\text{HNO}_3$",
+          "**nitrate**",
+          "potassium nitrate, $\\text{KNO}_3$"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "variant": "tip",
+      "title": "Salt name = metal + acid ending",
+      "body": [
+        "The **first** word comes from the metal in the base (sodium, potassium, magnesium).",
+        "The **second** comes from the acid (chloride, sulphate, nitrate)."
+      ]
+    },
+    {
+      "type": "interactive",
+      "widget": "cureGame",
+      "title": "Mini-game · Real-life cures",
+      "intro": "Neutralisation fixes everyday problems. Pick the right remedy for each one.",
+      "challenges": [
+        {
+          "id": "m-cure-all",
+          "text": "**Mission:** cure all three problems.",
+          "goal": {
+            "cured": 3
+          },
+          "xp": 50
+        }
+      ]
+    },
+    {
+      "type": "check",
+      "question": {
+        "id": "check-name-salt",
+        "type": "fill",
+        "prompt": "Hydrochloric acid + potassium hydroxide → potassium ___ + water",
+        "answers": [
+          "chloride"
+        ],
+        "mistakes": [
+          {
+            "answers": [
+              "hydroxide"
+            ],
+            "why": "The hydroxide comes from the base, and it turns into **water**. The salt's second word comes from the acid."
+          },
+          {
+            "answers": [
+              "sulphate",
+              "sulfate",
+              "nitrate"
+            ],
+            "why": "That ending belongs to a different acid. **Hydro-chlor-ic** acid makes **chlor-ide** salts."
+          }
+        ],
+        "explanation": "$\\text{HCl} + \\text{KOH} \\rightarrow \\text{KCl} + \\text{H}_2\\text{O}$: potassium **chloride**."
+      }
+    },
+    {
+      "type": "text",
+      "title": "Is it a chemical reaction?",
+      "body": [
+        "A chemical reaction makes **new substances**.",
+        "Look for these signs:",
+        "- Colour change",
+        "- Gas given off (bubbles)",
+        "- Temperature change",
+        "- A precipitate (a solid that appears in a liquid)"
+      ]
+    },
+    {
+      "type": "interactive",
+      "widget": "reactionLab",
+      "title": "Station 3 · Bubble, Pop & Precipitate",
+      "intro": "Try all three reactions and spot every sign of a chemical change.",
+      "challenges": [
+        {
+          "id": "m-pop",
+          "text": "**Mission:** make hydrogen gas and prove it with the **pop test**.",
+          "goal": {
+            "popped": 1
+          },
+          "xp": 50
+        },
+        {
+          "id": "m-milky",
+          "text": "**Mission:** produce a gas that turns clear lime water **milky**!",
+          "goal": {
+            "limeMilky": 1
+          },
+          "xp": 50
+        },
+        {
+          "id": "m-nail",
+          "text": "Fast-forward the iron nail a full **20 minutes**.",
+          "goal": {
+            "minutes": 20
+          },
+          "xp": 25
+        },
+        {
+          "id": "m-signs",
+          "text": "Spot all **4 signs** of a chemical reaction.",
+          "goal": {
+            "signs": 4
+          },
+          "xp": 25
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "The 3 master acid reactions",
+      "headers": [
+        "Acid + …",
+        "Makes",
+        "Test"
+      ],
+      "rows": [
+        [
+          "a metal (e.g. zinc)",
+          "salt + hydrogen, $\\text{H}_2\\uparrow$",
+          "Burning match → squeaky **POP**"
+        ],
+        [
+          "a carbonate (e.g. marble, $\\text{CaCO}_3$)",
+          "salt + water + $\\text{CO}_2\\uparrow$",
+          "Lime water turns **milky**"
+        ],
+        [
+          "a base (e.g. $\\text{NaOH}$)",
+          "salt + water",
+          "No gas, but it gets **warm**"
+        ]
+      ]
+    },
+    {
+      "type": "check",
+      "question": {
+        "id": "check-limewater",
+        "type": "mcq",
+        "prompt": "Which gas turns lime water **milky**?",
+        "options": [
+          {
+            "text": "Carbon dioxide, $\\text{CO}_2$",
+            "correct": true
+          },
+          {
+            "text": "Hydrogen, $\\text{H}_2$",
+            "why": "Hydrogen's test is the squeaky **pop** with a burning match. It doesn't change lime water."
+          },
+          {
+            "text": "Oxygen, $\\text{O}_2$",
+            "why": "Oxygen's test is relighting a **glowing** splint."
+          },
+          {
+            "text": "Nitrogen, $\\text{N}_2$",
+            "why": "Nitrogen does nothing to lime water."
+          }
+        ],
+        "explanation": "$\\text{CO}_2$ reacts with lime water to make white, insoluble calcium carbonate: $\\text{Ca(OH)}_2 + \\text{CO}_2 \\rightarrow \\text{CaCO}_3\\downarrow + \\text{H}_2\\text{O}$."
+      }
+    },
+    {
+      "type": "text",
+      "title": "Atoms are never lost",
+      "body": [
+        "In a reaction, atoms are only **rearranged**. None are made or destroyed.",
+        "So the total mass stays the same: the **law of conservation of mass**.",
+        "A **balanced equation** has the same number of each kind of atom on both sides."
+      ]
+    },
+    {
+      "type": "interactive",
+      "widget": "equationBalancer",
+      "title": "Station 4 · The Seesaw Equation Builder",
+      "intro": [
+        "Reactant atoms sit on the left, product atoms on the right.",
+        "Change the big numbers in front of each formula until the seesaw levels out."
+      ],
+      "props": {
+        "eq": 0
+      },
+      "challenges": [
+        {
+          "id": "m-water",
+          "text": "**Mission:** balance hydrogen + oxygen → water.",
+          "goal": {
+            "eq": 0,
+            "balanced": 1
+          },
+          "xp": 50
+        },
+        {
+          "id": "m-three",
+          "text": "Balance **3** different equations.",
+          "goal": {
+            "solved": {
+              "min": 3
+            }
+          },
+          "xp": 50
+        },
+        {
+          "id": "m-six",
+          "text": "Balance all **6** equations.",
+          "goal": {
+            "solved": 6
+          },
+          "xp": 50
+        }
+      ]
+    },
+    {
+      "type": "check",
+      "question": {
+        "id": "check-products",
+        "type": "mcq",
+        "prompt": "In $\\text{Zn} + 2\\text{HCl} \\rightarrow \\text{ZnCl}_2 + \\text{H}_2$, which are the **products**?",
+        "options": [
+          {
+            "text": "$\\text{ZnCl}_2$ and $\\text{H}_2$",
+            "correct": true
+          },
+          {
+            "text": "$\\text{Zn}$ and $\\text{HCl}$",
+            "why": "Those are the **reactants**: they're on the left, before the arrow."
+          },
+          {
+            "text": "$\\text{Zn}$ and $\\text{H}_2$",
+            "why": "Zinc is a reactant (left of the arrow). Products are everything on the right."
+          },
+          {
+            "text": "$\\text{HCl}$ and $\\text{ZnCl}_2$",
+            "why": "HCl is a reactant. Products are made **by** the reaction, after the arrow."
+          }
+        ],
+        "explanation": "Reactants → products. The arrow means \"turns into\"."
+      }
+    }
+  ],
+  "flashcards": [
+    {
+      "id": "acid",
+      "front": "Acid",
+      "back": "Tastes sour, pH below 7, turns blue litmus **red**.\nLemon juice, vinegar, $\\text{HCl}$",
+      "tag": "Basics"
+    },
+    {
+      "id": "base",
+      "front": "Base",
+      "back": "Tastes bitter, feels soapy, pH above 7, turns red litmus **blue**.\nSoap, baking soda, $\\text{NaOH}$",
+      "tag": "Basics"
+    },
+    {
+      "id": "phenol",
+      "front": "Phenolphthalein",
+      "back": "Colourless in acid and neutral.\n**Pink** in base.",
+      "tag": "Indicators"
+    },
+    {
+      "id": "methyl",
+      "front": "Methyl orange",
+      "back": "**Red** in acid.\nYellow in neutral and base.",
+      "tag": "Indicators"
+    },
+    {
+      "id": "turmeric",
+      "front": "Turmeric (बेसार) indicator",
+      "back": "Yellow in acid and neutral.\n**Reddish-brown** in base.",
+      "tag": "Indicators"
+    },
+    {
+      "id": "rose",
+      "front": "China rose (घण्टी फूल) indicator",
+      "back": "**Dark pink** in acid.\n**Green** in base.",
+      "tag": "Indicators"
+    },
+    {
+      "id": "neutralisation",
+      "front": "Neutralisation",
+      "back": "$\\text{acid} + \\text{base} \\rightarrow \\text{salt} + \\text{water}$ (+ heat)",
+      "tag": "Station 2"
+    },
+    {
+      "id": "naming",
+      "front": "Which acid makes sulphate salts?",
+      "back": "Sulphuric acid, $\\text{H}_2\\text{SO}_4$.\n(HCl → chloride, $\\text{HNO}_3$ → nitrate)",
+      "tag": "Station 2"
+    },
+    {
+      "id": "h2-test",
+      "front": "Test for hydrogen",
+      "back": "Burning match → squeaky **POP**.",
+      "tag": "Station 3"
+    },
+    {
+      "id": "co2-test",
+      "front": "Test for carbon dioxide",
+      "back": "Bubble it through lime water → turns **milky**.",
+      "tag": "Station 3"
+    },
+    {
+      "id": "conservation",
+      "front": "Law of conservation of mass",
+      "back": "Atoms are rearranged, never created or destroyed.\nBalanced equation: same atoms on both sides.",
+      "tag": "Station 4"
+    }
+  ],
+  "quiz": {
+    "passPercent": 70,
+    "questions": [
+      {
+        "id": "p-colourless-trap",
+        "type": "mcq",
+        "prompt": "You add phenolphthalein to a clear solution and it **stays colourless**. What can you say?",
+        "options": [
+          {
+            "text": "It is acidic or neutral",
+            "correct": true
+          },
+          {
+            "text": "It must be an acid",
+            "why": "Careful! Phenolphthalein is also colourless in **neutral** solutions like pure water. Use litmus to tell them apart."
+          },
+          {
+            "text": "It is a base",
+            "why": "A base would turn phenolphthalein **pink**."
+          },
+          {
+            "text": "It must be pure water",
+            "why": "It could be water, but an acid also keeps phenolphthalein colourless."
+          }
+        ],
+        "hints": [
+          "Which kinds of solution turn phenolphthalein pink?",
+          "Only bases turn it pink. So if it stays colourless, it isn't a base.",
+          "Not a base → it's an **acid or neutral**. Phenolphthalein alone can't tell which."
+        ],
+        "explanation": "Colourless phenolphthalein rules out a base, but can't separate acid from neutral."
+      },
+      {
+        "id": "p-methyl-base",
+        "type": "mcq",
+        "prompt": "A few drops of **methyl orange** are added to soap water (a base). What colour do you see?",
+        "options": [
+          {
+            "text": "Yellow",
+            "correct": true
+          },
+          {
+            "text": "Red",
+            "why": "Methyl orange turns **red in acids**. Soap water is a base."
+          },
+          {
+            "text": "Pink",
+            "why": "Pink in a base is **phenolphthalein**, not methyl orange."
+          },
+          {
+            "text": "Green",
+            "why": "Green in a base is the **China rose** indicator."
+          }
+        ],
+        "hints": [
+          "Is soap water an acid or a base?",
+          "Methyl orange is red in acid and changes colour above about pH 4.",
+          "In a base methyl orange is **yellow**."
+        ],
+        "explanation": "Methyl orange: red in acid, yellow in neutral and basic solutions."
+      },
+      {
+        "id": "p-sulphate",
+        "type": "fill",
+        "prompt": "Sulphuric acid + sodium hydroxide → sodium ___ + water",
+        "answers": [
+          "sulphate",
+          "sulfate"
+        ],
+        "mistakes": [
+          {
+            "answers": [
+              "chloride"
+            ],
+            "why": "Chloride salts come from **hydrochloric** acid."
+          },
+          {
+            "answers": [
+              "sulphide",
+              "sulfide"
+            ],
+            "why": "Close! But sulphuric acid ($\\text{H}_2\\text{SO}_4$) contains oxygen, so its salts are **sulphates**."
+          },
+          {
+            "answers": [
+              "nitrate"
+            ],
+            "why": "Nitrate salts come from **nitric** acid."
+          }
+        ],
+        "hints": [
+          "The second word of a salt's name comes from the acid.",
+          "Sulphuric acid has $\\text{SO}_4$ in it. That group is called sulph-___.",
+          "$\\text{H}_2\\text{SO}_4 + 2\\text{NaOH} \\rightarrow \\text{Na}_2\\text{SO}_4 + 2\\text{H}_2\\text{O}$: sodium **sulphate**."
+        ],
+        "explanation": "Sulphuric acid makes **sulphate** salts: sodium sulphate, $\\text{Na}_2\\text{SO}_4$."
+      },
+      {
+        "id": "p-nitrate",
+        "type": "fill",
+        "prompt": "Nitric acid + potassium hydroxide → potassium ___ + water",
+        "answers": [
+          "nitrate"
+        ],
+        "mistakes": [
+          {
+            "answers": [
+              "nitride"
+            ],
+            "why": "Nitric acid ($\\text{HNO}_3$) contains oxygen, so its salts end in **-ate**."
+          },
+          {
+            "answers": [
+              "chloride"
+            ],
+            "why": "Chloride comes from hydrochloric acid, not nitric acid."
+          },
+          {
+            "answers": [
+              "hydroxide"
+            ],
+            "why": "The hydroxide turns into water. The salt's second word comes from the acid."
+          }
+        ],
+        "hints": [
+          "Which part of the name comes from the acid?",
+          "Nitric acid → nitr-___ salts.",
+          "$\\text{HNO}_3 + \\text{KOH} \\rightarrow \\text{KNO}_3 + \\text{H}_2\\text{O}$: potassium **nitrate**."
+        ],
+        "explanation": "Nitric acid makes **nitrate** salts: potassium nitrate, $\\text{KNO}_3$."
+      },
+      {
+        "id": "p-reactants",
+        "type": "mcq",
+        "prompt": "In $\\text{Mg} + 2\\text{HCl} \\rightarrow \\text{MgCl}_2 + \\text{H}_2$, which are the **reactants**?",
+        "options": [
+          {
+            "text": "$\\text{Mg}$ and $\\text{HCl}$",
+            "correct": true
+          },
+          {
+            "text": "$\\text{MgCl}_2$ and $\\text{H}_2$",
+            "why": "Those are the **products**: they're made by the reaction, after the arrow."
+          },
+          {
+            "text": "$\\text{Mg}$ and $\\text{H}_2$",
+            "why": "Hydrogen is a product (right of the arrow)."
+          },
+          {
+            "text": "Only $\\text{HCl}$",
+            "why": "Magnesium is a reactant too: everything on the left of the arrow reacts."
+          }
+        ],
+        "hints": [
+          "The arrow means \"turns into\".",
+          "Reactants are what you start with: everything **before** the arrow.",
+          "Left of the arrow: $\\text{Mg}$ and $\\text{HCl}$."
+        ],
+        "explanation": "Reactants (left) → products (right)."
+      },
+      {
+        "id": "p-count-h",
+        "type": "fill",
+        "prompt": "How many hydrogen atoms are on the **left** side of $2\\text{H}_2 + \\text{O}_2 \\rightarrow 2\\text{H}_2\\text{O}$? ___",
+        "answers": [
+          "4"
+        ],
+        "match": "number",
+        "mistakes": [
+          {
+            "answers": [
+              "2"
+            ],
+            "why": "The big 2 in front means **two** $\\text{H}_2$ molecules, each with 2 H atoms: $2 \\times 2$."
+          },
+          {
+            "answers": [
+              "6"
+            ],
+            "why": "Only count hydrogen, and only on the left: $2\\text{H}_2$ gives $2 \\times 2$ H atoms."
+          }
+        ],
+        "hints": [
+          "The big number in front multiplies the whole molecule.",
+          "$\\text{H}_2$ has 2 H atoms, and there are 2 of them.",
+          "$2 \\times 2 = 4$ hydrogen atoms (and 4 on the right too: it's balanced)."
+        ],
+        "explanation": "$2\\text{H}_2$ = 2 molecules × 2 atoms = 4 H atoms."
+      }
+    ]
+  },
+  "cheatSheet": {
+    "title": "Acids, Bases & Salts: 1-page revision",
+    "items": [
+      {
+        "title": "Indicator colour chart",
+        "wide": true,
+        "table": {
+          "headers": [
+            "Indicator",
+            "Acid",
+            "Neutral",
+            "Base"
+          ],
+          "rows": [
+            [
+              "Blue litmus",
+              "**Red**",
+              "Blue",
+              "Blue"
+            ],
+            [
+              "Red litmus",
+              "Red",
+              "Red",
+              "**Blue**"
+            ],
+            [
+              "Phenolphthalein",
+              "Colourless",
+              "Colourless",
+              "**Pink**"
+            ],
+            [
+              "Methyl orange",
+              "**Red**",
+              "Yellow",
+              "Yellow"
+            ],
+            [
+              "Turmeric (बेसार)",
+              "Yellow",
+              "Yellow",
+              "**Reddish-brown**"
+            ],
+            [
+              "China rose (घण्टी फूल)",
+              "**Dark pink**",
+              "No change",
+              "**Green**"
+            ]
+          ]
+        }
+      },
+      {
+        "title": "The pH scale",
+        "wide": true,
+        "visual": {
+          "kind": "ph"
+        }
+      },
+      {
+        "title": "3 master acid reactions",
+        "wide": true,
+        "table": {
+          "headers": [
+            "Reaction",
+            "Word equation",
+            "Example"
+          ],
+          "rows": [
+            [
+              "Acid + metal",
+              "salt + hydrogen",
+              "$\\text{Zn} + 2\\text{HCl} \\rightarrow \\text{ZnCl}_2 + \\text{H}_2\\uparrow$"
+            ],
+            [
+              "Acid + carbonate",
+              "salt + water + carbon dioxide",
+              "$\\text{CaCO}_3 + 2\\text{HCl} \\rightarrow \\text{CaCl}_2 + \\text{H}_2\\text{O} + \\text{CO}_2\\uparrow$"
+            ],
+            [
+              "Acid + base",
+              "salt + water (+ heat)",
+              "$\\text{HCl} + \\text{NaOH} \\rightarrow \\text{NaCl} + \\text{H}_2\\text{O}$"
+            ]
+          ]
+        }
+      },
+      {
+        "title": "Naming salts",
+        "table": {
+          "headers": [
+            "Acid",
+            "Salt ending"
+          ],
+          "rows": [
+            [
+              "Hydrochloric, $\\text{HCl}$",
+              "chloride"
+            ],
+            [
+              "Sulphuric, $\\text{H}_2\\text{SO}_4$",
+              "sulphate"
+            ],
+            [
+              "Nitric, $\\text{HNO}_3$",
+              "nitrate"
+            ]
+          ]
+        },
+        "body": "Metal from the base + ending from the acid: potassium nitrate."
+      },
+      {
+        "title": "Gas tests",
+        "table": {
+          "headers": [
+            "Gas",
+            "Test → result"
+          ],
+          "rows": [
+            [
+              "Hydrogen, $\\text{H}_2$",
+              "Burning match → squeaky pop"
+            ],
+            [
+              "Carbon dioxide, $\\text{CO}_2$",
+              "Lime water → milky"
+            ],
+            [
+              "Oxygen, $\\text{O}_2$",
+              "Glowing splint → relights"
+            ]
+          ]
+        },
+        "body": "Balanced equation: same number of each atom on both sides."
+      }
+    ]
+  }
+}

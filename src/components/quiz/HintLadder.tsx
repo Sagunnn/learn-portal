@@ -20,7 +20,7 @@ export default function HintLadder({ hints, lang }: { hints: Hint[]; lang?: "en"
         const visual = typeof h === "object" && !Array.isArray(h) ? h.visual : undefined;
         return (
           <div key={i} className="animate-rise rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
-            <div className="mb-1 text-xs font-bold uppercase tracking-wide text-amber-700">
+            <div className="mb-1 text-sm font-bold uppercase tracking-wide text-amber-700">
               💡 {ne ? "सङ्केत" : "Hint"} {i + 1}
               {labels && ` · ${labels[i]}`}
             </div>

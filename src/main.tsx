@@ -1,7 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
-import "@fontsource-variable/inter";
+import "@fontsource-variable/nunito";
+import "@fontsource-variable/fredoka";
 import "@fontsource/mukta/devanagari-400.css";
 import "@fontsource/mukta/devanagari-600.css";
 import "@fontsource/mukta/devanagari-700.css";

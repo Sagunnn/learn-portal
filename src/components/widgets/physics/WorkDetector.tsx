@@ -156,7 +156,7 @@ export default function WorkDetector({ scenario: sc0 = 0, onState }: { scenario?
       {/* energy meter */}
       <div className={cx("rounded-2xl border-2 border-b-4 p-3", zeroFlash ? "phys-flash border-rose-400 bg-rose-50" : "border-amber-300 bg-amber-50")}>
         <div className="mb-1 flex items-baseline justify-between">
-          <span className="text-sm font-extrabold text-amber-900">⚡ Work Done meter</span>
+          <span className="text-base font-extrabold text-amber-900">⚡ Work Done meter</span>
           <span className={cx("font-mono text-2xl font-extrabold tabular-nums", zeroFlash ? "text-rose-600" : "text-amber-700")}>
             {zeroFlash ? "0 J! No work done!" : `${shown.toLocaleString()} J`}
           </span>
@@ -183,7 +183,7 @@ export default function WorkDetector({ scenario: sc0 = 0, onState }: { scenario?
             : "Your upward push doesn't move the bag up. It moves sideways, at 90° to your force, so no work is done against gravity."}
       </EquationBar>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-5">
         {scenario !== 2 && <Slider label="Force F (N)" value={force} min={0} max={500} color={P.force} step={10} onChange={(v) => (reset(), setForce(v))} />}
         {scenario !== 1 && (
           <Slider label={isCart ? "Distance pushed d (m)" : "Distance walked (m)"} value={distance} min={0} max={isCart ? 20 : 50} color={P.vector} onChange={(v) => (reset(), setDistance(v))} />

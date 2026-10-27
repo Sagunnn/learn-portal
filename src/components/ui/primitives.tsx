@@ -68,12 +68,12 @@ export function Button({
       type="button"
       {...rest}
       className={cx(
-        "inline-flex select-none items-center justify-center gap-2 rounded-2xl font-bold tracking-wide transition-all duration-200 ease-out",
+        "inline-flex select-none items-center justify-center gap-2 rounded-2xl font-display font-semibold tracking-wide transition-all duration-200 ease-out",
         !flat && "border-b-4 active:mb-1 active:translate-y-1 active:border-b-0",
         "disabled:pointer-events-none disabled:opacity-40",
-        size === "sm" && "px-3.5 py-1.5 text-sm",
-        size === "md" && "px-5 py-2.5",
-        size === "lg" && "px-7 py-3.5 text-lg",
+        size === "sm" && "min-h-[44px] px-4 py-2 text-base",
+        size === "md" && "min-h-[56px] px-6 py-3 text-lg",
+        size === "lg" && "min-h-[60px] px-8 py-3.5 text-xl",
         VARIANTS[variant],
         className,
       )}
@@ -104,7 +104,7 @@ export function ProgressBar({
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={Math.round(pct)}
-      className={cx("h-2.5 w-full overflow-hidden rounded-full bg-slate-200/80", className)}
+      className={cx("h-3 w-full overflow-hidden rounded-full bg-slate-200", className)}
     >
       <div className={cx("h-full rounded-full transition-[width] duration-500 ease-out", barClass)} style={{ width: `${pct}%` }} />
     </div>
@@ -136,7 +136,7 @@ export function Accordion({
     emerald: "border-emerald-200 bg-emerald-50/60",
   };
   return (
-    <div className={cx("rounded-xl border", tones[tone])}>
+    <div className={cx("rounded-2xl border-2", tones[tone])}>
       <button
         type="button"
         aria-expanded={open}
@@ -145,7 +145,7 @@ export function Accordion({
           setOpen(!open);
           onToggle?.(!open);
         }}
-        className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-left font-semibold text-slate-800"
+        className="flex min-h-[52px] w-full items-center gap-2 rounded-2xl px-4 py-3 text-left font-display text-lg font-semibold text-slate-800"
       >
         {icon && <span aria-hidden>{icon}</span>}
         <span className="flex-1">{title}</span>
@@ -169,8 +169,9 @@ export function Accordion({
 
 // ---- Misc -------------------------------------------------------------------------
 
+/** Warm white card with a sand border and a soft, diffused shadow. */
 export function Card({ className, children }: { className?: string; children: ReactNode }) {
-  return <div className={cx("rounded-2xl border-2 border-b-4 border-slate-200 bg-white", className)}>{children}</div>;
+  return <div className={cx("rounded-3xl border-2 border-slate-200 bg-white shadow-cozy", className)}>{children}</div>;
 }
 
 export function ProgressRing({ value, max, size = 56, stroke = 6, className, children }: {

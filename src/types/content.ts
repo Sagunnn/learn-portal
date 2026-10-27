@@ -109,7 +109,13 @@ export type WidgetName =
   | "vectorSorter"
   | "skateTrack"
   | "cratePush"
-  | "workDetector";
+  | "workDetector"
+  | "indicatorLab"
+  | "phScale"
+  | "neutralization"
+  | "cureGame"
+  | "reactionLab"
+  | "equationBalancer";
 
 /** A challenge goal value: an exact number, or a range. */
 export type GoalValue = number | { min?: number; max?: number };
@@ -158,7 +164,8 @@ export type Visual =
   | { kind: "tank"; n: number; d: number }
   | { kind: "sum"; a: [number, number]; b: [number, number] }
   | { kind: "product"; a: [number, number]; b: [number, number] }
-  | { kind: "triangle"; top: string; left: string; right: string };
+  | { kind: "triangle"; top: string; left: string; right: string }
+  | { kind: "ph" };
 
 export interface McqOption {
   text: RichText;

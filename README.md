@@ -118,10 +118,15 @@ To add a widget: build it in `src/components/widgets/`, register it in `registry
 
 ## Design system
 
-- **Tactile**: buttons use a chunky `border-b-4` that squashes on click (`active:border-b-0 active:translate-y-1`, plus `active:mb-1` so nothing below moves). Cards and answer options use the `.press` class in `index.css` for the same effect.
-- **Colour roles**: indigo = direction / primary action, emerald = success / done, amber = energy (XP, streak, hints), rose = opposing (wrong answers, traps). Background `#F8FAFC`.
-- **No walls of text**: `text` chunks are told by **Tara**, the coach (`components/ui/Coach.tsx`), as speech bubbles, one per Continue (`lib/story.ts` does the splitting). Keep each line of `body` to about 3 lines. Lists render as icon badges, not bullet points.
-- **Rewards**: the sticky HUD shows the streak, XP/level bar and one badge per lesson section (each interactive module, all flashcards known, quiz passed) that pops when it lights up. `lib/confetti.ts` fires on correct answers, solved challenges, finished lessons, passed quizzes and a fully known deck. It's off when the device asks for reduced motion.
+Cozy, calm and playful, for a 12-year-old to spend an hour in.
+
+- **One thing at a time**: the Learn path is a wizard. One activity card on stage (`max-w-3xl`), a sage-to-teal progress bar on top, and big **⬅ Back / Next Activity ➔** buttons at the bottom. Text is told by **Tara** the coach in speech bubbles, one per Next.
+- **Short bubbles**: each line of a lesson's `body` / `intro` / `caption` becomes one bubble. Keep each one to **20 words or fewer**. `npm run validate` warns when a line is longer.
+- **Palette** (storybook paper): cream page `#FDFBF7`, warm white cards with sand borders `#E8E2D5`, charcoal text `#3D405B`, coral actions `#E07A5F`, sage success `#529E72`, honey energy `#E9B44C`, periwinkle vectors `#7C83BC`, soft brick for wrong answers. It's applied by remapping Tailwind's colour scales in `src/index.css` (`slate` = oat→charcoal, `indigo` = coral, `emerald` = sage, `amber` = honey, `rose` = brick, `violet` = periwinkle, `sky` = teal), so `bg-indigo-600` means coral everywhere. Drawings use pastels with charcoal outlines (`C` in `widgets/figures.tsx`, `P` in `widgets/physics/shared.tsx`).
+- **Type**: Nunito for reading, Fredoka for headings and buttons (self-hosted via `@fontsource`), Mukta for Devanagari. Base size is 17px on phones, 18px on larger screens.
+- **Toy-like controls**: buttons are at least 56px tall with a chunky `border-b-4` that squashes on click. Sliders have a big round thumb plus **[−] / [+]** arcade buttons.
+- **Drawings first**: labs show ONE colour-coded `StatBadge` above a large drawing instead of tables. Labels float on the drawing, and test tubes, beakers, flasks and the crate have faces (`widgets/Face.tsx`) that react to what's happening.
+- **Rewards**: the sticky HUD shows the streak, XP/level bar and one badge per lesson section (dots on phones). Confetti fires on correct answers, missions, finished lessons and passed quizzes, and is skipped when the device asks for reduced motion. The coach gently "breathes".
 
 ## How progress works
 

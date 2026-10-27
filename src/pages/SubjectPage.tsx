@@ -25,14 +25,14 @@ export default function SubjectPage() {
 
   return (
     <div className="space-y-6">
-      <Link to="/" className="text-sm font-semibold text-slate-500 hover:text-slate-800">
+      <Link to="/" className="text-base font-semibold text-slate-500 hover:text-slate-800">
         ← Dashboard
       </Link>
 
-      <header className={cx("rounded-2xl border-b-[6px] border-black/20 bg-gradient-to-br p-6 text-white", t.gradient)}>
+      <header className={cx("rounded-3xl bg-gradient-to-br p-6 text-white shadow-cozy sm:p-8", t.gradient)}>
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">{subject.name}</h1>
+            <h1 className="text-3xl font-semibold sm:text-4xl">{subject.name}</h1>
             {subject.nameLocal && <p className="font-deva text-lg text-white/85">{subject.nameLocal}</p>}
             <p className="mt-2 max-w-prose text-white/90">{subject.description}</p>
           </div>
@@ -42,7 +42,7 @@ export default function SubjectPage() {
         </div>
         <div className="mt-5 flex items-center gap-3">
           <ProgressBar value={completed} max={total || 1} barClass="bg-white" className="bg-white/25" label="Subject progress" />
-          <span className="shrink-0 text-sm font-semibold">
+          <span className="shrink-0 text-base font-semibold">
             {completed}/{total}
           </span>
         </div>
@@ -62,7 +62,7 @@ export default function SubjectPage() {
               <li key={e.meta.id}>
                 <Link
                   to={`/lesson/${e.meta.id}`}
-                  className="press flex items-center gap-4 rounded-2xl border-slate-200 bg-white p-4 hover:-translate-y-0.5 hover:border-indigo-200"
+                  className="press flex items-center gap-4 rounded-3xl border-slate-200 bg-white p-5 shadow-cozy hover:-translate-y-0.5 hover:border-orange-200"
                 >
                   <span
                     className={cx(
@@ -73,10 +73,10 @@ export default function SubjectPage() {
                     {status === "mastered" ? "✓" : e.meta.chapter}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block font-semibold text-slate-900">{e.meta.title}</span>
+                    <span className="block font-display text-xl font-semibold text-slate-800">{e.meta.title}</span>
                     {e.meta.titleLocal && <span className="block font-deva text-slate-500">{e.meta.titleLocal}</span>}
-                    <span className="mt-1 block text-sm text-slate-500">{e.meta.summary}</span>
-                    <span className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-slate-400">
+                    <span className="mt-1 block text-base text-slate-500">{e.meta.summary}</span>
+                    <span className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-sm text-slate-400">
                       {e.meta.estMinutes && <span>⏱ {e.meta.estMinutes} min</span>}
                       <span>📖 {e.counts.chunks} steps</span>
                       {e.counts.flashcards > 0 && <span>🃏 {e.counts.flashcards} cards</span>}
@@ -84,7 +84,7 @@ export default function SubjectPage() {
                       {p?.quizBest !== undefined && <span className="font-semibold text-slate-600">Best quiz: {p.quizBest}%</span>}
                     </span>
                   </span>
-                  <span className={cx("hidden shrink-0 rounded-full px-3 py-1 text-xs font-semibold sm:inline", s.className)}>{s.label}</span>
+                  <span className={cx("hidden shrink-0 rounded-full px-3 py-1 text-sm font-semibold sm:inline", s.className)}>{s.label}</span>
                 </Link>
               </li>
             );

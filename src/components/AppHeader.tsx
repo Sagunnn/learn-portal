@@ -27,13 +27,13 @@ export default function AppHeader() {
 
   return (
     <header className="sticky top-0 z-30 border-b-2 border-slate-200 bg-slate-50/90 backdrop-blur print:hidden">
-      <div className="mx-auto flex h-16 max-w-5xl items-center gap-2 px-3 sm:gap-3 sm:px-6">
+      <div className="mx-auto flex h-16 max-w-3xl items-center gap-2 px-3 sm:gap-3 sm:px-6">
         <Link to="/" className="flex shrink-0 items-center gap-2 rounded-xl font-extrabold tracking-tight text-slate-900" aria-label="Kakshya 7 home">
-          <span className="grid size-9 place-items-center rounded-xl border-b-4 border-indigo-900 bg-indigo-600 font-deva text-lg text-amber-300" aria-hidden>
+          <span className="grid size-10 place-items-center rounded-2xl border-b-4 border-indigo-800 bg-indigo-600 font-deva text-xl text-amber-100" aria-hidden>
             ७
           </span>
-          <span className="hidden sm:inline">
-            Kakshya <span className="text-indigo-500">7</span>
+          <span className="hidden font-display text-xl font-semibold sm:inline">
+            Kakshya <span className="text-indigo-600">7</span>
           </span>
         </Link>
 
@@ -42,7 +42,7 @@ export default function AppHeader() {
         <span
           title={`${streak}-day streak (best ${state.streak.longest})`}
           className={cx(
-            "flex h-10 shrink-0 items-center gap-1 rounded-2xl border-2 border-b-4 px-2.5 text-sm font-extrabold",
+            "flex h-10 shrink-0 items-center gap-1 rounded-2xl border-2 border-b-4 px-2.5 text-base font-extrabold",
             streak > 0 ? "border-orange-200 bg-orange-50 text-orange-600" : "border-slate-200 bg-white text-slate-400",
           )}
         >
@@ -77,7 +77,7 @@ export default function AppHeader() {
             </div>
           </div>
           {pops.map((p) => (
-            <span key={p.id} aria-hidden className="pointer-events-none absolute right-1 top-full animate-float-up text-sm font-extrabold text-amber-600">
+            <span key={p.id} aria-hidden className="pointer-events-none absolute right-1 top-full animate-float-up text-base font-extrabold text-amber-600">
               +{p.amount}
             </span>
           ))}
@@ -118,14 +118,29 @@ function SectionBadges({ lesson, state }: { lesson: HudLesson; state: ProgressSt
     first.current = false;
   });
 
+  const litCount = lit.filter(Boolean).length;
   return (
-    <ol className="flex items-center gap-1 sm:gap-1.5" aria-label="Lesson sections">
+    <>
+      {/* Phones: compact dots so many sections still fit next to the streak and XP. */}
+      <ol className="flex items-center gap-1 sm:hidden" aria-label={`Lesson sections: ${litCount} of ${lit.length} done`}>
+        {lesson.sections.map((s, i) => (
+          <li
+            key={s.id}
+            className={cx(
+              "size-2.5 rounded-full transition-colors duration-300",
+              lit[i] ? (s.kind === "quiz" ? "bg-amber-400" : "bg-emerald-500") : "bg-slate-300",
+              fresh[i] && "animate-badge",
+            )}
+          />
+        ))}
+      </ol>
+    <ol className="hidden items-center gap-1.5 sm:flex" aria-label="Lesson sections">
       {lesson.sections.map((s, i) => (
         <li
           key={s.id}
           title={`${s.label}${lit[i] ? " ✓" : ""}`}
           className={cx(
-            "grid size-8 place-items-center rounded-xl border-2 border-b-4 text-sm font-extrabold transition-colors duration-300 sm:size-9",
+            "grid size-8 place-items-center rounded-xl border-2 border-b-4 text-base font-extrabold transition-colors duration-300 sm:size-9",
             lit[i]
               ? s.kind === "quiz"
                 ? "border-amber-500 bg-amber-400 text-amber-950"
@@ -143,5 +158,6 @@ function SectionBadges({ lesson, state }: { lesson: HudLesson; state: ProgressSt
         </li>
       ))}
     </ol>
+    </>
   );
 }

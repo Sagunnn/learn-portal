@@ -89,7 +89,7 @@ export default function LessonPage() {
     <LangProvider value={lang}>
       {lesson?.cheatSheet && <PrintSheet sheet={lesson.cheatSheet} title={entry.meta.title} subject={subject?.name} />}
       <div className="space-y-6 print:hidden">
-        <nav className="flex items-center gap-2 text-sm font-semibold text-slate-500">
+        <nav className="flex items-center gap-2 text-base font-semibold text-slate-500">
           <Link to="/" className="hover:text-slate-800">
             Dashboard
           </Link>
@@ -103,10 +103,10 @@ export default function LessonPage() {
 
         <header className="space-y-4">
           <div>
-            <p className={cx("text-sm font-bold uppercase tracking-wider", theme.text)}>
+            <p className={cx("text-base font-bold uppercase tracking-wider", theme.text)}>
               {ne ? "पाठ" : "Chapter"} {entry.meta.chapter}
             </p>
-            <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">{entry.meta.title}</h1>
+            <h1 className="text-3xl font-semibold text-slate-800 sm:text-4xl">{entry.meta.title}</h1>
             {entry.meta.titleLocal && (
               <p lang="ne" className="lang-ne text-lg text-slate-500">
                 {entry.meta.titleLocal}
@@ -115,7 +115,7 @@ export default function LessonPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-          <div role="tablist" aria-label="Lesson sections" className="inline-flex gap-1 rounded-2xl border-2 border-slate-200 bg-slate-100 p-1">
+          <div role="tablist" aria-label="Lesson sections" className="inline-flex gap-1 rounded-3xl border-2 border-slate-200 bg-white p-1.5">
             {tabs.map((t) => (
               <button
                 key={t.id}
@@ -125,13 +125,13 @@ export default function LessonPage() {
                 onClick={() => setTab(t.id)}
                 lang={titleLang.lang}
                 className={cx(
-                  "rounded-xl border-b-4 px-4 py-1.5 text-sm font-bold transition-all duration-200 ease-out active:mb-1 active:translate-y-1 active:border-b-0",
+                  "min-h-[48px] rounded-2xl border-b-4 px-5 py-2 text-base font-semibold transition-all duration-200 ease-out active:mb-1 active:translate-y-1 active:border-b-0",
                   titleLang.className,
                   tab === t.id ? "border-indigo-800 bg-indigo-600 text-white" : "border-transparent text-slate-600 hover:bg-white hover:text-slate-900",
                 )}
               >
                 {t.label}
-                {t.count !== undefined && <span className={cx("ml-1.5 text-xs", tab === t.id ? "text-indigo-200" : "text-slate-400")}>{t.count}</span>}
+                {t.count !== undefined && <span className={cx("ml-1.5 text-sm", tab === t.id ? "text-indigo-200" : "text-slate-400")}>{t.count}</span>}
               </button>
             ))}
           </div>
@@ -151,7 +151,7 @@ export default function LessonPage() {
           {error ? (
             <div className="mx-auto max-w-md rounded-2xl border border-rose-200 bg-rose-50 p-6 text-center">
               <p className="font-semibold text-rose-800">Couldn't load this lesson.</p>
-              <p className="mt-1 text-sm text-rose-700">{error}</p>
+              <p className="mt-1 text-base text-rose-700">{error}</p>
               <Button className="mt-4" onClick={() => setRetry((r) => r + 1)}>
                 Try again
               </Button>

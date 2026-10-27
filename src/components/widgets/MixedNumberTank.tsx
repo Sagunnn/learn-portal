@@ -49,7 +49,7 @@ export default function MixedNumberTank({ n: n0 = 11, d: d0 = 4, onState }: { n?
       </div>
 
       <EquationBar tex={tex}>{story}</EquationBar>
-      <p className="text-center text-xs text-slate-500">
+      <p className="text-center text-sm text-slate-500">
         <span className="mr-3 inline-flex items-center gap-1">
           <span className="inline-block size-3 rounded-sm" style={{ background: C.blue }} /> full container = 1 whole
         </span>

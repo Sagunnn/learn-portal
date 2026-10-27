@@ -795,7 +795,7 @@
       }
     },
     "interactiveChunk": {
-      "description": "A hands-on visualizer. Widgets: equivalentFractions (props a, b, k), mixedNumberTank (n, d), gridMerger (a1, b1, a2, b2), areaOverlap (a, b, c, d). Physics: gridRunner (no props), vectorSorter (no props), skateTrack (u, a), cratePush (surface 0-2), workDetector (scenario 0-2).",
+      "description": "A hands-on visualizer. Widgets: equivalentFractions (props a, b, k), mixedNumberTank (n, d), gridMerger (a1, b1, a2, b2), areaOverlap (a, b, c, d). Physics: gridRunner (no props), vectorSorter (no props), skateTrack (u, a), cratePush (surface 0-2), workDetector (scenario 0-2). Chemistry: indicatorLab, phScale (ph), neutralization (acid 0-2, base 0-2), cureGame, reactionLab, equationBalancer (eq 0-5).",
       "type": "object",
       "required": [
         "type",
@@ -816,7 +816,13 @@
             "vectorSorter",
             "skateTrack",
             "cratePush",
-            "workDetector"
+            "workDetector",
+            "indicatorLab",
+            "phScale",
+            "neutralization",
+            "cureGame",
+            "reactionLab",
+            "equationBalancer"
           ]
         },
         "title": {
@@ -844,7 +850,7 @@
         },
         "challenges": {
           "type": "array",
-          "description": "Auto-checked sandbox challenges (+5 XP each, once). Solved when every key in goal equals the widget's state. State keys: equivalentFractions a, b, k, top, bottom; mixedNumberTank n, d, wholes, rest; gridMerger a1, b1, a2, b2, phase (0-2), over (1 if the sum is more than 1); areaOverlap a, b, c, d, green, total. Physics: gridRunner distance, disp, atShop, steps; vectorSorter sorted, mistakes; skateTrack u, finished, time, turned; cratePush surface, net, people, accel, moving; workDetector scenario, force, distance, work, pushed.",
+          "description": "Auto-checked sandbox challenges (+5 XP each, once). Solved when every key in goal equals the widget's state. State keys: equivalentFractions a, b, k, top, bottom; mixedNumberTank n, d, wholes, rest; gridMerger a1, b1, a2, b2, phase (0-2), over (1 if the sum is more than 1); areaOverlap a, b, c, d, green, total. Physics: gridRunner distance, disp, atShop, steps; vectorSorter sorted, mistakes; skateTrack u, finished, time, turned; cratePush surface, net, people, accel, moving; workDetector scenario, force, distance, work, pushed. Chemistry: indicatorLab foundBase, mystery, tested; phScale ph; neutralization acid, base, ph, neutral, crystallized, overshoot; cureGame cured; reactionLab zinc, popped, limeMilky, minutes, signs; equationBalancer eq, balanced, solved.",
           "items": {
             "type": "object",
             "required": [
@@ -1023,6 +1029,18 @@
             },
             "right": {
               "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "ph"
             }
           }
         }

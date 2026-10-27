@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
-import { Button, cx } from "../../ui/primitives";
-import { EquationBar, Slider, WidgetPanel, useReportState, type WidgetState } from "../controls";
-import { Arrow, P, Readout, fmt, round1, useAnimationLoop } from "./shared";
+import { Button } from "../../ui/primitives";
+import { EquationBar, Slider, StatBadge, WidgetPanel, useReportState, type WidgetState } from "../controls";
+import { Arrow, P, fmt, round1, useAnimationLoop } from "./shared";
 
 /**
  * Lab 2 — "Nitro Skateboard Track". Set the starting velocity u, press Go, and
@@ -83,8 +83,6 @@ export default function SkateTrack({ u: u0 = 0, a: a0 = 2, onState }: { u?: numb
   const sx = X0 + sim.x * PX;
   const facing = v < -0.01 ? -1 : 1;
   const avgA = sim.t > 0 ? (sim.v - u) / sim.t : 0;
-  const GAUGE_MAX = 30; // top speed from rest with a = 5 over 90 m is 30 m/s
-  const gaugeAngle = Math.PI * (1 - Math.min(speed, GAUGE_MAX) / GAUGE_MAX);
   const vLabelX = Math.max(X0 + 50, Math.min(X1 - 60, sx));
 
   const status = sim.finished
@@ -103,7 +101,15 @@ export default function SkateTrack({ u: u0 = 0, a: a0 = 2, onState }: { u?: numb
 
   return (
     <WidgetPanel>
-      <div className="rounded-2xl border-2 border-b-4 border-slate-200 bg-gradient-to-b from-sky-50 to-white p-2">
+      <StatBadge
+        parts={[
+          { icon: v < -0.05 ? "⬅️" : "➡️", label: "Velocity", value: `${v > 0.05 ? "+" : v < -0.05 ? "−" : ""}${fmt(Math.abs(v))} m/s ${v > 0.05 ? "East" : v < -0.05 ? "West" : ""}`, tone: "periwinkle" },
+          { icon: "🏁", label: "Speed", value: `${fmt(speed)} m/s`, tone: "sage" },
+          { icon: "⚡", label: "a", value: `${a > 0 ? "+" : ""}${a} m/s²`, tone: "honey" },
+          { icon: "⏱", label: "Time", value: `${sim.t.toFixed(1)} s`, tone: "plain" },
+        ]}
+      />
+      <div className="rounded-3xl border-2 border-slate-200 bg-gradient-to-b from-sky-50 to-white p-2">
         <svg viewBox="0 0 820 250" className="block h-auto w-full select-none">
           {/* track + metre marks */}
           <rect x={X0} y={160} width={X1 - X0} height={14} rx={7} fill="#cbd5e1" />
@@ -154,7 +160,9 @@ export default function SkateTrack({ u: u0 = 0, a: a0 = 2, onState }: { u?: numb
               <rect x={-10} y={-70} width={20} height={34} rx={9} fill={P.force} />
               <line x1={-6} y1={-62} x2={-24} y2={-50} stroke={P.line} strokeWidth={4} strokeLinecap="round" />
               <line x1={6} y1={-62} x2={24} y2={-56} stroke={P.line} strokeWidth={4} strokeLinecap="round" />
-              <circle cx={0} cy={-82} r={11} fill="#fcd9b8" stroke={P.line} strokeWidth={1.5} />
+              <circle cx={0} cy={-82} r={11} fill="#fcd9b8" stroke={P.line} strokeWidth={2} />
+              <circle cx={4} cy={-81} r={1.8} fill={P.ink} />
+              <path d="M2 -76 q3 2 6 -1" fill="none" stroke={P.ink} strokeWidth={1.5} />
               <path d="M-11 -85 a11 11 0 0 1 22 0 z" fill={P.vector} />
             </g>
             {running && a > 0 && (
@@ -167,45 +175,6 @@ export default function SkateTrack({ u: u0 = 0, a: a0 = 2, onState }: { u?: numb
         </svg>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-[150px_1fr]">
-        {/* speedometer */}
-        <div className="rounded-2xl border-2 border-b-4 border-slate-200 bg-slate-900 p-2 text-center text-white">
-          <svg viewBox="0 0 140 80" className="mx-auto block w-full max-w-40">
-            <path d="M10 70 A60 60 0 0 1 130 70" fill="none" stroke="#334155" strokeWidth={10} strokeLinecap="round" />
-            <path
-              d="M10 70 A60 60 0 0 1 130 70"
-              fill="none"
-              stroke={P.scalar}
-              strokeWidth={10}
-              strokeLinecap="round"
-              pathLength={100}
-              strokeDasharray={`${(Math.min(speed, GAUGE_MAX) / GAUGE_MAX) * 100} 100`}
-            />
-            <line x1={70} y1={70} x2={70 + 48 * Math.cos(gaugeAngle)} y2={70 - 48 * Math.sin(gaugeAngle)} stroke="white" strokeWidth={3} strokeLinecap="round" />
-            <circle cx={70} cy={70} r={5} fill="white" />
-          </svg>
-          <div className="font-mono text-2xl font-extrabold tabular-nums text-emerald-300">{fmt(speed)}</div>
-          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">speed · m/s</div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-          <Readout tone="vector" label="Velocity" value={`${v > 0.05 ? "+" : v < -0.05 ? "−" : ""}${fmt(Math.abs(v))}`} sub="m/s · has a sign" />
-          <Readout tone="scalar" label="Speed" value={fmt(speed)} sub="m/s · never negative" />
-          <Readout tone="force" label="Acceleration" value={`${a > 0 ? "+" : ""}${a}`} sub="m/s²" />
-          <Readout tone="plain" label="⏱ Stopwatch" value={sim.t.toFixed(1)} sub="seconds" />
-        </div>
-      </div>
-
-      <div className="flex flex-wrap items-center gap-2 text-sm font-bold">
-        <span className={cx("rounded-xl border-2 border-b-4 px-3 py-1", v < -0.05 ? "border-indigo-600 bg-indigo-600 text-white" : "border-slate-200 bg-white text-slate-400")}>
-          ← − West
-        </span>
-        <span className={cx("rounded-xl border-2 border-b-4 px-3 py-1", v > 0.05 ? "border-indigo-600 bg-indigo-600 text-white" : "border-slate-200 bg-white text-slate-400")}>
-          East + →
-        </span>
-        <span className="text-slate-500">The sign of velocity is its direction.</span>
-      </div>
-
       <EquationBar
         tex={
           sim.t > 0
@@ -216,7 +185,7 @@ export default function SkateTrack({ u: u0 = 0, a: a0 = 2, onState }: { u?: numb
         {status}
       </EquationBar>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-5">
         <Slider
           label={started ? "Initial velocity u (m/s) · reset to change" : "Initial velocity u (m/s)"}
           value={u}

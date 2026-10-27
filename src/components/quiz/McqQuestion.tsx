@@ -103,7 +103,7 @@ export default function McqQuestion({
                 <span
                   aria-hidden
                   className={cx(
-                    "grid size-7 shrink-0 place-items-center rounded-lg border-2 text-sm font-extrabold",
+                    "grid size-7 shrink-0 place-items-center rounded-lg border-2 text-base font-extrabold",
                     isRight ? "border-emerald-500 bg-emerald-500 text-white" : isWrong ? "border-rose-300 bg-rose-100 text-rose-600" : "border-slate-200 text-slate-400",
                   )}
                 >

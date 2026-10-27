@@ -82,13 +82,13 @@ export default function QuizRunner({ lessonId, quiz, onReviewCards }: { lessonId
         <p className="mt-2 text-slate-600">
           {total} {ne ? "प्रश्न" : total === 1 ? "question" : "questions"} · {ne ? "पास" : "pass mark"} {pass}%
         </p>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-base text-slate-500">
           {ne
             ? "पहिलो प्रयासमा सही भएमा मात्र अङ्क गनिन्छ। गलत उत्तरले किन गलत भयो भनेर देखाउँछ।"
             : "Only first tries count toward your score. Wrong answers tell you why they're wrong, then you can try again."}
         </p>
         {best !== undefined && (
-          <p className="mt-4 inline-block rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-slate-700">
+          <p className="mt-4 inline-block rounded-full bg-slate-100 px-3 py-1 text-base font-semibold text-slate-700">
             {ne ? "उत्कृष्ट" : "Best"}: {best}%
           </p>
         )}
@@ -97,7 +97,7 @@ export default function QuizRunner({ lessonId, quiz, onReviewCards }: { lessonId
             {ne ? "सुरु गरौँ" : best !== undefined ? "Try again" : "Start quiz"}
           </Button>
         </div>
-        <p className="mt-3 text-xs text-slate-400">{ne ? "किबोर्ड: 1–4 छान्न, Enter अगाडि बढ्न" : "Keyboard: 1–4 to choose, Enter to continue"}</p>
+        <p className="mt-3 text-sm text-slate-400">{ne ? "किबोर्ड: 1–4 छान्न, Enter अगाडि बढ्न" : "Keyboard: 1–4 to choose, Enter to continue"}</p>
       </Card>
     );
   }
@@ -122,7 +122,7 @@ export default function QuizRunner({ lessonId, quiz, onReviewCards }: { lessonId
                 ? ne ? "राम्रो! तपाईं पास हुनुभयो।" : "Nice work — you passed."
                 : ne ? `पास हुन ${pass}% चाहिन्छ। फेरि प्रयास गर्नुहोस्!` : `You need ${pass}% to pass. Have another go!`}
           </p>
-          <div className="mt-4 flex flex-wrap justify-center gap-2 text-sm font-semibold">
+          <div className="mt-4 flex flex-wrap justify-center gap-2 text-base font-semibold">
             <span className="rounded-2xl border-2 border-b-4 border-amber-300 bg-amber-100 px-3 py-1 font-extrabold text-amber-800">⚡ +{summary.xp} XP</span>
             {summary.isBest && summary.previousBest !== undefined && (
               <span className="rounded-full bg-emerald-100 px-3 py-1 text-emerald-800">
@@ -147,7 +147,7 @@ export default function QuizRunner({ lessonId, quiz, onReviewCards }: { lessonId
               {missed.map((q) => (
                 <li key={q.id} className="py-3">
                   <Rich text={q.prompt} lang={q.lang} className="text-slate-700" />
-                  <div className="mt-1 text-sm">
+                  <div className="mt-1 text-base">
                     <span className="font-semibold text-emerald-700">{ne ? "उत्तर" : "Answer"}: </span>
                     <Rich text={correctAnswer(q)} inline lang={q.lang} />
                   </div>
@@ -176,7 +176,7 @@ export default function QuizRunner({ lessonId, quiz, onReviewCards }: { lessonId
             />
           ))}
         </ol>
-        <span className="text-sm font-semibold tabular-nums text-slate-500">
+        <span className="text-base font-semibold tabular-nums text-slate-500">
           {index + 1}/{total}
         </span>
       </div>

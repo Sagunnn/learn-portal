@@ -38,17 +38,17 @@ export default function AreaOverlap({
 
   return (
     <WidgetPanel>
-      <div className="grid items-start gap-5 sm:grid-cols-[1fr_1.1fr]">
-        <div className="mx-auto w-full max-w-72">
-          <div className="mb-1 text-center text-xs font-semibold text-blue-600">← {a} of {b} columns →</div>
+      <div className="grid gap-6">
+        <div className="mx-auto w-full max-w-md">
+          <div className="mb-1 text-center text-sm font-semibold text-blue-600">← {a} of {b} columns →</div>
           <div className="flex items-center gap-1">
-            <div className="text-xs font-semibold text-yellow-700 [writing-mode:vertical-rl] rotate-180">{c} of {d} rows</div>
+            <div className="text-sm font-semibold text-yellow-700 [writing-mode:vertical-rl] rotate-180">{c} of {d} rows</div>
             <div className="flex-1 rounded-xl bg-white p-1">
               <OverlapGrid a={[a, b]} b={[c, d]} />
             </div>
           </div>
         </div>
-        <div className="space-y-4">
+        <div className="space-y-5">
           <Slider label="Blue: columns shaded (a)" value={a} min={0} max={b} color={C.blue} onChange={setA} />
           <Slider
             label="Blue: columns in total (b)"
@@ -73,7 +73,7 @@ export default function AreaOverlap({
               setC((x) => Math.min(x, v));
             }}
           />
-          <ul className="space-y-1 text-sm text-slate-600">
+          <ul className="space-y-1 text-base text-slate-600">
             <li className="flex items-center gap-2"><Swatch c={C.blueSoft} /> blue only</li>
             <li className="flex items-center gap-2"><Swatch c="#fef9c3" /> yellow only</li>
             <li className="flex items-center gap-2"><Swatch c={C.green} /> <strong>both = the answer:</strong> {top} of {bottom} squares</li>

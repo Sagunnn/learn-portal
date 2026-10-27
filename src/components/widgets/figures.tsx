@@ -7,19 +7,20 @@ import type { Visual } from "../../types/content";
  * these; hints and the print cheat sheet use them as still pictures.
  */
 
+// Soft watercolour pastels with warm charcoal outlines.
 export const C = {
-  blue: "#3b82f6",
-  blueSoft: "#bfdbfe",
-  orange: "#f97316",
-  orangeSoft: "#fed7aa",
-  yellow: "#fde047",
-  green: "#22c55e",
-  ink: "#0f172a",
-  line: "#334155",
-  grid: "#94a3b8",
-  cut: "#7c3aed",
-  empty: "#ffffff",
-  frame: "#e2e8f0",
+  blue: "#8FB3E3",
+  blueSoft: "#DCE7F5",
+  orange: "#F4A86E",
+  orangeSoft: "#FFD6A5",
+  yellow: "#FFE08A",
+  green: "#78C59A",
+  ink: "#3D405B",
+  line: "#3D405B",
+  grid: "#C9C2B3",
+  cut: "#9B8FD1",
+  empty: "#FFFEFB",
+  frame: "#E8E2D5",
 };
 
 /** Stacked fraction drawn in SVG (numerator over a bar over denominator). */
@@ -27,7 +28,7 @@ export function SvgFrac({ x, y, n, d, size = 18, color = C.ink }: { x: number; y
   const digits = Math.max(String(n).length, String(d).length);
   const half = (digits * size * 0.6 + 6) / 2;
   return (
-    <g fill={color} fontSize={size} fontWeight={700} textAnchor="middle" fontFamily="Inter Variable, Inter, sans-serif">
+    <g fill={color} fontSize={size} fontWeight={700} textAnchor="middle" fontFamily="Fredoka Variable, Nunito Variable, sans-serif">
       <text x={x} y={y - 5}>{n}</text>
       <line x1={x - half} x2={x + half} y1={y} y2={y} stroke={color} strokeWidth={2} strokeLinecap="round" />
       <text x={x} y={y + size + 1}>{d}</text>
@@ -48,7 +49,7 @@ export function FractionBar({ n, d, k = 1, color = C.blue, title }: { n: number;
   const cuts: { x: number; key: string; delay: number }[] = [];
   for (let i = 0; i < d; i++)
     for (let j = 1; j < k; j++) cuts.push({ x: pad + (i + j / k) * w, key: `${k}-${i}-${j}`, delay: j * 60 });
-  const clip = useId();
+  const clip = "bar" + useId().replace(/[^a-zA-Z0-9]/g, "");
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className="block h-auto w-full" role="img" aria-label={title ?? `${n * k} of ${d * k} equal pieces shaded`}>
       <clipPath id={clip}>
@@ -70,9 +71,9 @@ export function FractionBar({ n, d, k = 1, color = C.blue, title }: { n: number;
         <line key={c.key} className="fig-cut" style={cutStyle(c.delay)} x1={c.x} x2={c.x} y1={pad + 4} y2={H - pad - 4} stroke={C.cut} strokeWidth={2} strokeDasharray="6 5" />
       ))}
       {Array.from({ length: d - 1 }, (_, i) => (
-        <line key={`b${d}-${i}`} x1={pad + (i + 1) * w} x2={pad + (i + 1) * w} y1={pad} y2={H - pad} stroke={C.line} strokeWidth={3} />
+        <line key={`b${d}-${i}`} x1={pad + (i + 1) * w} x2={pad + (i + 1) * w} y1={pad} y2={H - pad} stroke={C.line} strokeWidth={3.5} />
       ))}
-      <rect x={pad} y={pad} width={W - 2 * pad} height={H - 2 * pad} rx={10} fill="none" stroke={C.line} strokeWidth={3} />
+      <rect x={pad} y={pad} width={W - 2 * pad} height={H - 2 * pad} rx={10} fill="none" stroke={C.line} strokeWidth={3.5} />
     </svg>
   );
 }
@@ -124,9 +125,9 @@ export function FractionPie({ n, d, k = 1, color = C.blue, title }: { n: number;
       {d > 1 &&
         Array.from({ length: d }, (_, i) => {
           const [x, y] = polar(cx, cy, r, i / d);
-          return <line key={`r${d}-${i}`} x1={cx} y1={cy} x2={x} y2={y} stroke={C.line} strokeWidth={3} />;
+          return <line key={`r${d}-${i}`} x1={cx} y1={cy} x2={x} y2={y} stroke={C.line} strokeWidth={3.5} />;
         })}
-      <circle cx={cx} cy={cy} r={r} fill="none" stroke={C.line} strokeWidth={3} />
+      <circle cx={cx} cy={cy} r={r} fill="none" stroke={C.line} strokeWidth={3.5} />
     </svg>
   );
 }
@@ -213,7 +214,7 @@ export function MergeGrids({ a, b, phase = 2, title }: { a: [number, number]; b:
     <g>
       <rect x={x} y={y} width={S} height={S} fill={C.empty} />
       {children}
-      <rect x={x} y={y} width={S} height={S} fill="none" stroke={C.line} strokeWidth={3} />
+      <rect x={x} y={y} width={S} height={S} fill="none" stroke={C.line} strokeWidth={3.5} />
     </g>
   );
   const vLines = (x: number, y: number, overlay: boolean) =>
@@ -310,7 +311,7 @@ export function MergeGrids({ a, b, phase = 2, title }: { a: [number, number]; b:
                 {Array.from({ length: b2 - 1 }, (_, i) => (
                   <line key={`rh${i}`} x1={x0} x2={x0 + S} y1={row2 + (i + 1) * rh} y2={row2 + (i + 1) * rh} stroke={C.grid} strokeWidth={1.5} />
                 ))}
-                <rect x={x0} y={row2} width={S} height={S} fill="none" stroke={C.line} strokeWidth={3} />
+                <rect x={x0} y={row2} width={S} height={S} fill="none" stroke={C.line} strokeWidth={3.5} />
                 <SvgFrac x={x0 + S / 2} y={row2 + S + 32} n={Math.min(cells, total - r * cells)} d={cells} color={C.ink} size={22} />
               </g>
             );
@@ -355,7 +356,7 @@ export function OverlapGrid({ a, b, title }: { a: [number, number]; b: [number, 
       {/* Outline the blue columns and the yellow rows so both stay visible under the green. */}
       {n1 > 0 && <rect x={pad} y={pad} width={n1 * cw} height={S} fill="none" stroke={C.blue} strokeWidth={4} />}
       {n2 > 0 && <rect x={pad} y={pad} width={S} height={n2 * rh} fill="none" stroke="#ca8a04" strokeWidth={4} strokeDasharray="10 6" />}
-      <rect x={pad} y={pad} width={S} height={S} fill="none" stroke={C.line} strokeWidth={3} />
+      <rect x={pad} y={pad} width={S} height={S} fill="none" stroke={C.line} strokeWidth={3.5} />
     </svg>
   );
 }
@@ -384,6 +385,47 @@ export function FormulaTriangle({ top, left, right }: { top: string; left: strin
   );
 }
 
+// ---- pH scale ---------------------------------------------------------------------------
+
+const PH_COLORS = ["#C2453A", "#D4574A", "#E07A5F", "#EE8F4D", "#E9B44C", "#F2D35B", "#B7D36A", "#529E72", "#4F9FA1", "#6488C4", "#7C83BC", "#8A72B6", "#8E64AA", "#7F5599", "#6E4787"];
+
+/** 0–14 universal-indicator strip with acid / neutral / base labels and examples. */
+export function PhStrip() {
+  const W = 560;
+  const cell = W / 15;
+  const ex: [number, string][] = [
+    [1, "stomach acid"],
+    [2, "lemon"],
+    [7, "pure water"],
+    [8, "baking soda"],
+    [10, "soap"],
+    [14, "drain cleaner"],
+  ];
+  return (
+    <svg viewBox={`0 0 ${W} 120`} className="block h-auto w-full" role="img" aria-label="pH scale from 0 to 14">
+      {PH_COLORS.map((c, i) => (
+        <g key={i}>
+          <rect x={i * cell} y={30} width={cell} height={34} fill={c} />
+          <text x={i * cell + cell / 2} y={53} textAnchor="middle" fontSize={14} fontWeight={800} fill="white">
+            {i}
+          </text>
+        </g>
+      ))}
+      <text x={0} y={20} fontSize={13} fontWeight={800} fill="#be123c">← ACID (more H⁺)</text>
+      <text x={7.5 * cell} y={20} textAnchor="middle" fontSize={13} fontWeight={800} fill="#059669">NEUTRAL</text>
+      <text x={W} y={20} textAnchor="end" fontSize={13} fontWeight={800} fill="#4338ca">BASE (more OH⁻) →</text>
+      {ex.map(([p, label], i) => (
+        <g key={label}>
+          <line x1={p * cell + cell / 2} x2={p * cell + cell / 2} y1={64} y2={i % 2 ? 98 : 80} stroke="#475569" strokeWidth={1.5} />
+          <text x={p * cell + cell / 2} y={i % 2 ? 112 : 94} textAnchor="middle" fontSize={11} fontWeight={700} fill="#334155">
+            {label}
+          </text>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
 // ---- Dispatcher for hints / cheat sheet ---------------------------------------------------
 
 export function VisualFigure({ visual }: { visual: Visual }) {
@@ -406,6 +448,8 @@ export function VisualFigure({ visual }: { visual: Visual }) {
           <OverlapGrid a={visual.a} b={visual.b} />
         </div>
       );
+    case "ph":
+      return <PhStrip />;
     case "triangle":
       return (
         <div className="mx-auto max-w-40">

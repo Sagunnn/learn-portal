@@ -9,6 +9,12 @@ import GridRunner from "./physics/GridRunner";
 import SkateTrack from "./physics/SkateTrack";
 import VectorSorter from "./physics/VectorSorter";
 import WorkDetector from "./physics/WorkDetector";
+import CureGame from "./chemistry/CureGame";
+import EquationBalancer from "./chemistry/EquationBalancer";
+import IndicatorLab from "./chemistry/IndicatorLab";
+import Neutralization from "./chemistry/Neutralization";
+import PhScale from "./chemistry/PhScale";
+import ReactionLab from "./chemistry/ReactionLab";
 
 /**
  * Interactive widgets a lesson can place with
@@ -27,4 +33,10 @@ export const WIDGETS: Record<WidgetName, ComponentType<any>> = {
   skateTrack: SkateTrack,
   cratePush: CratePush,
   workDetector: WorkDetector,
+  indicatorLab: IndicatorLab,
+  phScale: PhScale,
+  neutralization: Neutralization,
+  cureGame: CureGame,
+  reactionLab: ReactionLab,
+  equationBalancer: EquationBalancer,
 };

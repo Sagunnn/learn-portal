@@ -70,16 +70,16 @@ export default function VectorSorter({ onState }: { onState?: (s: WidgetState) =
           picked && "cursor-pointer",
         )}
       >
-        <div className={cx("text-sm font-extrabold", isScalar ? "text-emerald-800" : "text-indigo-800")}>
+        <div className={cx("text-base font-extrabold", isScalar ? "text-emerald-800" : "text-indigo-800")}>
           {isScalar ? "🟢 SCALAR" : "🧭 VECTOR"}
         </div>
-        <div className="mb-2 text-xs font-semibold text-slate-600">{isScalar ? "Asks only: How much?" : "Asks: How much + which way?"}</div>
+        <div className="mb-2 text-sm font-semibold text-slate-600">{isScalar ? "Asks only: How much?" : "Asks: How much + which way?"}</div>
         <div className="flex flex-wrap gap-1.5">
           {items.map((c) => (
             <span
               key={c.id}
               className={cx(
-                "animate-pop rounded-xl border-b-4 px-2.5 py-1 text-sm font-bold text-white",
+                "animate-pop rounded-xl border-b-4 px-2.5 py-1 text-base font-bold text-white",
                 isScalar ? "border-emerald-700 bg-emerald-500" : "border-indigo-800 bg-indigo-600",
               )}
             >
@@ -93,7 +93,7 @@ export default function VectorSorter({ onState }: { onState?: (s: WidgetState) =
 
   return (
     <WidgetPanel>
-      <div className="flex items-center justify-between text-sm font-bold text-slate-600">
+      <div className="flex items-center justify-between text-base font-bold text-slate-600">
         <span>{sorted === CARDS.length ? "🎉 All sorted!" : picked ? "Now tap a bucket." : "Drag a card into a bucket, or tap a card then a bucket."}</span>
         <span className="tabular-nums">
           {sorted}/{CARDS.length}
@@ -120,14 +120,14 @@ export default function VectorSorter({ onState }: { onState?: (s: WidgetState) =
             )}
           >
             <div className="font-extrabold text-slate-900">{c.name}</div>
-            <div className="text-xs font-semibold text-slate-500">{c.example}</div>
+            <div className="text-sm font-semibold text-slate-500">{c.example}</div>
           </button>
         ))}
-        {loose.length === 0 && <p className="text-sm font-semibold text-emerald-700">Every card is in the right bucket. Nice sorting!</p>}
+        {loose.length === 0 && <p className="text-base font-semibold text-emerald-700">Every card is in the right bucket. Nice sorting!</p>}
       </div>
 
       {wrong && (
-        <div role="status" className="animate-rise rounded-2xl border-b-4 border-rose-500 bg-slate-900 px-4 py-3 text-sm text-slate-100">
+        <div role="status" className="animate-rise rounded-2xl border-b-4 border-rose-500 bg-slate-900 px-4 py-3 text-base text-slate-100">
           <span className="mr-1 font-extrabold text-rose-300">Not that bucket:</span> {wrong.why}
         </div>
       )}

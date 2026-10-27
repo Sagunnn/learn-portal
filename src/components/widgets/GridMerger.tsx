@@ -74,7 +74,7 @@ export default function GridMerger({
         </Button>
       </div>
 
-      <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-slate-700">
+      <div className="rounded-3xl border-2 border-rose-200 bg-rose-50 px-5 py-3 text-base text-slate-700">
         <div className="mb-1 font-bold text-rose-700">⚠️ The classic trap</div>
         Adding straight across gives <Tex tex={`\\dfrac{${a1}+${a2}}{${b1}+${b2}} = \\dfrac{${wrongN}}{${wrongD}}`} />. But{" "}
         <Tex tex={`\\tfrac{${wrongN}}{${wrongD}}`} /> is {wrongN / wrongD < bigger[0] / bigger[1] ? "smaller than" : "no bigger than"}{" "}
@@ -82,7 +82,7 @@ export default function GridMerger({
       </div>
 
       {phase === 2 && lowest !== cells && (
-        <p className="text-sm text-slate-600">
+        <p className="text-base text-slate-600">
           💡 The grid always gives <em>a</em> common denominator ({b1} × {b2} = {cells}). The <strong>lowest</strong> common
           denominator is {lowest}, and simplifying the answer lands you in the same place.
         </p>
@@ -94,7 +94,7 @@ export default function GridMerger({
 function FractionPicker({ label, color, n, d, onN, onD }: { label: string; color: string; n: number; d: number; onN: (v: number) => void; onD: (v: number) => void }) {
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl border bg-white p-3" style={{ borderColor: color + "55" }}>
-      <span className="w-full text-sm font-bold sm:w-auto" style={{ color }}>
+      <span className="w-full text-base font-bold sm:w-auto" style={{ color }}>
         {label}
       </span>
       <Stepper label="top" value={n} min={1} max={d - 1} onChange={onN} color={color} />
