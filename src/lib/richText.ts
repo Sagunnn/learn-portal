@@ -27,7 +27,7 @@ function inlineMarks(s: string) {
   return s
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/==(.+?)==/g, "<mark>$1</mark>")
-    .replace(/(^|[^*\w])\*(?=\S)(.+?)(?<=\S)\*(?!\*)/g, "$1<em>$2</em>")
+    .replace(/(^|[^*\w])\*(?=\S)([^*\n]*?\S)\*(?!\*)/g, "$1<em>$2</em>")
     .replace(/`(.+?)`/g, "<code>$1</code>");
 }
 
