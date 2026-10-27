@@ -70,7 +70,8 @@ export interface WordBreakdownChunk extends ChunkBase {
   type: "wordBreakdown";
   title?: string;
   intro?: RichText;
-  items: { word: string; parts: { text: string; role: MorphemeRole }[]; meaning?: RichText }[];
+  /** `en`: an English meaning pill next to the word (Nepali lessons) */
+  items: { word: string; en?: string; parts: { text: string; role: MorphemeRole }[]; meaning?: RichText }[];
 }
 
 export interface TableChunk extends ChunkBase {
@@ -112,12 +113,14 @@ export type WidgetName =
   | "skateTrack"
   | "cratePush"
   | "workDetector"
+  | "sorter"
   | "indicatorLab"
-  | "phScale"
-  | "neutralization"
   | "cureGame"
-  | "reactionLab"
-  | "equationBalancer";
+  | "waterActivation"
+  | "dissolveTest"
+  | "alkaliVenn"
+  | "wordMagnet"
+  | "avyayaShield";
 
 /** A challenge goal value: an exact number, or a range. */
 export type GoalValue = number | { min?: number; max?: number };
@@ -166,8 +169,7 @@ export type Visual =
   | { kind: "tank"; n: number; d: number }
   | { kind: "sum"; a: [number, number]; b: [number, number] }
   | { kind: "product"; a: [number, number]; b: [number, number] }
-  | { kind: "triangle"; top: string; left: string; right: string }
-  | { kind: "ph" };
+  | { kind: "triangle"; top: string; left: string; right: string };
 
 export interface McqOption {
   text: RichText;

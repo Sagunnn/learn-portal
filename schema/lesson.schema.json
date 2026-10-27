@@ -405,6 +405,10 @@
               },
               "meaning": {
                 "$ref": "#/$defs/richText"
+              },
+              "en": {
+                "type": "string",
+                "description": "English meaning, shown as a small pill next to the word."
               }
             }
           }
@@ -795,7 +799,7 @@
       }
     },
     "interactiveChunk": {
-      "description": "A hands-on visualizer. Widgets: equivalentFractions (props a, b, k), mixedNumberTank (n, d), gridMerger (a1, b1, a2, b2), areaOverlap (a, b, c, d). Physics: gridRunner (no props), vectorSorter (no props), skateTrack (u, a), cratePush (surface 0-2), workDetector (scenario 0-2). Chemistry: indicatorLab, phScale (ph), neutralization (acid 0-2, base 0-2), cureGame, reactionLab, equationBalancer (eq 0-5).",
+      "description": "A hands-on lab. Fractions: equivalentFractions (a, b, k), mixedNumberTank (n, d), gridMerger (a1, b1, a2, b2), areaOverlap (a, b, c, d). Physics: gridRunner, skateTrack (u, a), cratePush (surface 0-2), workDetector (scenario 0-2). Sorting game: sorter (deck: 0 scalar/vector, 1 acid/base, 2 अव्यय types; vectorSorter = deck 0). Chemistry: indicatorLab, cureGame, waterActivation, dissolveTest, alkaliVenn. Nepali: wordMagnet, avyayaShield.",
       "type": "object",
       "required": [
         "type",
@@ -814,15 +818,17 @@
             "areaOverlap",
             "gridRunner",
             "vectorSorter",
+            "sorter",
             "skateTrack",
             "cratePush",
             "workDetector",
             "indicatorLab",
-            "phScale",
-            "neutralization",
             "cureGame",
-            "reactionLab",
-            "equationBalancer"
+            "wordMagnet",
+            "avyayaShield",
+            "waterActivation",
+            "dissolveTest",
+            "alkaliVenn"
           ]
         },
         "title": {
@@ -850,7 +856,7 @@
         },
         "challenges": {
           "type": "array",
-          "description": "The FIRST challenge is the lab's Goal (shown in the banner; Next unlocks when it's solved). The rest are bonus goals. Auto-checked sandbox challenges (+5 XP each, once). Solved when every key in goal equals the widget's state. State keys: equivalentFractions a, b, k, top, bottom; mixedNumberTank n, d, wholes, rest; gridMerger a1, b1, a2, b2, phase (0-2), over (1 if the sum is more than 1); areaOverlap a, b, c, d, green, total. Physics: gridRunner distance, disp, atShop, steps; vectorSorter sorted, mistakes; skateTrack u, finished, time, turned; cratePush surface, net, people, accel, moving; workDetector scenario, force, distance, work, pushed. Chemistry: indicatorLab foundBase, mystery, tested; phScale ph; neutralization acid, base, ph, neutral, crystallized, overshoot; cureGame cured; reactionLab zinc, popped, limeMilky, minutes, signs; equationBalancer eq, balanced, solved.",
+          "description": "The FIRST challenge is the lab's Goal (shown in the banner; Next unlocks when it's solved). The rest are bonus goals. Auto-checked sandbox challenges (+5 XP each, once). Solved when every key in goal equals the widget's state. State keys: equivalentFractions a, b, k, top, bottom; mixedNumberTank n, d, wholes, rest; gridMerger a1, b1, a2, b2, phase (0-2), over (1 if the sum is more than 1); areaOverlap a, b, c, d, green, total. Physics: gridRunner distance, disp, atShop, steps; vectorSorter sorted, mistakes; skateTrack u, finished, time, turned; cratePush surface, net, people, accel, moving; workDetector scenario, force, distance, work, pushed. Sorter: sorted, mistakes. Chemistry: indicatorLab foundBase, mystery, tested; cureGame cured; waterActivation acidDry, acidWet, baseWet, safePour, dangerPour; dissolveTest tested, alkalis; alkaliVenn placed, mistakes. Nepali: wordMagnet prefixFound, suffixFound, found, morph; avyayaShield toggles, seen, sentence.",
           "items": {
             "type": "object",
             "required": [
@@ -1033,18 +1039,6 @@
             },
             "right": {
               "type": "string"
-            }
-          }
-        },
-        {
-          "type": "object",
-          "required": [
-            "kind"
-          ],
-          "additionalProperties": false,
-          "properties": {
-            "kind": {
-              "const": "ph"
             }
           }
         }

@@ -26,8 +26,8 @@ const TOOLS: { id: Tool; label: string; icon: string; kind: "strip" | "drop" }[]
   { id: "blueLitmus", label: "Blue litmus", icon: "🟦", kind: "strip" },
   { id: "phenol", label: "Phenolphthalein", icon: "💧", kind: "drop" },
   { id: "methyl", label: "Methyl orange", icon: "🟠", kind: "drop" },
-  { id: "turmeric", label: "Turmeric (बेसार)", icon: "🟡", kind: "drop" },
-  { id: "rose", label: "China rose (घण्टी फूल)", icon: "🌺", kind: "drop" },
+  { id: "turmeric", label: "Turmeric", icon: "🟡", kind: "drop" },
+  { id: "rose", label: "China rose", icon: "🌺", kind: "drop" },
 ];
 
 /** Colour and name each indicator shows at a pH. `null` colour = no change (stays colourless). */

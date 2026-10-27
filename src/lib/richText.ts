@@ -5,6 +5,7 @@ import type { RichText } from "../types/content";
  * Turns lesson text into HTML. Supported markup:
  *   $x^2$  inline math      $$...$$  display math     \$  literal dollar
  *   **bold**   *italic*   ==highlight==   `code`
+ *   {{उपसर्ग|prefix}}  a Nepali word with a small English meaning pill (Nepali lessons)
  *   lines starting with "- " or "1. " become lists; every other line is a paragraph.
  * All non-math text is HTML-escaped, so content can't inject markup.
  */
@@ -25,6 +26,7 @@ function renderMath(tex: string, displayMode: boolean) {
 
 function inlineMarks(s: string) {
   return s
+    .replace(/\{\{([^|{}]+)\|([^{}]+)\}\}/g, '<span class="gloss" title="$2">$1<span class="gloss-en" lang="en">$2</span></span>')
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/==(.+?)==/g, "<mark>$1</mark>")
     .replace(/(^|[^*\w])\*(?=\S)([^*\n]*?\S)\*(?!\*)/g, "$1<em>$2</em>")

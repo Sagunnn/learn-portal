@@ -435,47 +435,6 @@ export function FormulaTriangle({ top, left, right }: { top: string; left: strin
   );
 }
 
-// ---- pH scale ---------------------------------------------------------------------------
-
-const PH_COLORS = ["#b91c1c", "#dc2626", "#ea580c", "#f97316", "#f59e0b", "#facc15", "#a3e635", "#10b981", "#14b8a6", "#3b82f6", "#4f46e5", "#6d28d9", "#7c3aed", "#7e22ce", "#6b21a8"];
-
-/** 0–14 universal-indicator strip with acid / neutral / base labels and examples. */
-export function PhStrip() {
-  const W = 560;
-  const cell = W / 15;
-  const ex: [number, string][] = [
-    [1, "stomach acid"],
-    [2, "lemon"],
-    [7, "pure water"],
-    [8, "baking soda"],
-    [10, "soap"],
-    [14, "drain cleaner"],
-  ];
-  return (
-    <svg viewBox={`0 0 ${W} 120`} className="block h-auto w-full" role="img" aria-label="pH scale from 0 to 14">
-      {PH_COLORS.map((c, i) => (
-        <g key={i}>
-          <rect x={i * cell} y={30} width={cell} height={34} fill={c} />
-          <text x={i * cell + cell / 2} y={53} textAnchor="middle" fontSize={14} fontWeight={800} fill="white">
-            {i}
-          </text>
-        </g>
-      ))}
-      <text x={0} y={20} fontSize={13} fontWeight={800} fill="#be123c">← ACID (more H⁺)</text>
-      <text x={7.5 * cell} y={20} textAnchor="middle" fontSize={13} fontWeight={800} fill="#059669">NEUTRAL</text>
-      <text x={W} y={20} textAnchor="end" fontSize={13} fontWeight={800} fill="#4338ca">BASE (more OH⁻) →</text>
-      {ex.map(([p, label], i) => (
-        <g key={label}>
-          <line x1={p * cell + cell / 2} x2={p * cell + cell / 2} y1={64} y2={i % 2 ? 98 : 80} stroke="#475569" strokeWidth={1.5} />
-          <text x={p * cell + cell / 2} y={i % 2 ? 112 : 94} textAnchor="middle" fontSize={11} fontWeight={700} fill="#334155">
-            {label}
-          </text>
-        </g>
-      ))}
-    </svg>
-  );
-}
-
 // ---- Dispatcher for hints / cheat sheet ---------------------------------------------------
 
 export function VisualFigure({ visual }: { visual: Visual }) {
@@ -498,8 +457,6 @@ export function VisualFigure({ visual }: { visual: Visual }) {
           <OverlapGrid a={visual.a} b={visual.b} />
         </div>
       );
-    case "ph":
-      return <PhStrip />;
     case "triangle":
       return (
         <div className="mx-auto max-w-40">

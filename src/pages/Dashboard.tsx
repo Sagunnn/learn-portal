@@ -39,7 +39,7 @@ export default function Dashboard() {
         <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
             <p className="font-display text-2xl font-semibold leading-tight">
-              {greeting()}! <span className="font-deva font-semibold">नमस्ते</span>
+              {greeting()}!
             </p>
             <p className="mt-0.5 text-base text-indigo-100">
               {todayXp >= DAILY_GOAL ? "Daily goal done. Great work!" : `${todayXp} / ${DAILY_GOAL} XP today`}
@@ -106,7 +106,7 @@ export default function Dashboard() {
                 </div>
                 <div className="flex flex-1 flex-col p-5">
                   <div className="font-display text-2xl font-semibold text-slate-900">{s.name}</div>
-                  {s.nameLocal && <div className="font-deva text-lg text-slate-500">{s.nameLocal}</div>}
+                  <div className="text-base text-slate-500">{s.description}</div>
 
                   <div className="mt-4">
                     <div className="flex gap-1" aria-hidden>

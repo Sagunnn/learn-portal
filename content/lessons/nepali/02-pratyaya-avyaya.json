@@ -1,0 +1,259 @@
+{
+  "$schema": "../../../schema/lesson.schema.json",
+  "meta": {
+    "id": "nepali-word-building-avyaya",
+    "subject": "nepali",
+    "chapter": 2,
+    "title": "Word Building & Indeclinable Words",
+    "titleLocal": "उपसर्ग, प्रत्यय र अव्यय",
+    "summary": "उपसर्ग र प्रत्यय जोडेर शब्द बनाऔँ, अनि कहिल्यै नफेरिने अव्यय चिनौँ।",
+    "lang": "ne",
+    "estMinutes": 30,
+    "tags": ["शब्द निर्माण", "अव्यय", "interactive"]
+  },
+  "chunks": [
+    {
+      "type": "text",
+      "title": "शब्द कसरी बन्छन्?",
+      "body": [
+        "नयाँ शब्द बनाउन {{मूल शब्द|root word}}मा सानो टुक्रा जोडिन्छ।",
+        "अगाडि जोडिने टुक्रा {{उपसर्ग|prefix}} हो: अप + मान = {{अपमान|insult}}।",
+        "पछाडि जोडिने टुक्रा {{प्रत्यय|suffix}} हो: धन + ई = {{धनी|rich}}।"
+      ]
+    },
+    {
+      "type": "interactive",
+      "widget": "wordMagnet",
+      "title": "Lab 1 · {{शब्द चुम्बक|Word Magnet}}",
+      "intro": "पहिले {{मूल शब्द|root word}} छान्नुहोस्, अनि टुक्रा टाँस्नुहोस्।",
+      "challenges": [
+        {
+          "id": "m-prefix-three",
+          "text": "**Mission:** {{उपसर्ग|prefix}} जोडेर ३ वटा शब्द बनाउनुहोस्।",
+          "goal": { "prefixFound": { "min": 3 } },
+          "xp": 50,
+          "explain": "{{उपसर्ग|prefix}} अगाडि जोडिँदा शब्दको अर्थ फेरिन्छ।"
+        },
+        { "id": "m-suffix-three", "text": "{{प्रत्यय|suffix}} जोडेर ३ वटा शब्द बनाउनुहोस्।", "goal": { "suffixFound": { "min": 3 } }, "xp": 25 },
+        { "id": "m-morph", "text": "हिज्जे फेरिने एउटा शब्द भेट्टाउनुहोस् (इक जोडेर)।", "goal": { "morph": 1 }, "xp": 25 }
+      ]
+    },
+    {
+      "type": "callout",
+      "variant": "remember",
+      "title": "इक जोड्दा हिज्जे फेरिन्छ",
+      "body": [
+        "{{इक|related to}} जोड्दा पहिलो अक्षर लामो हुन्छ:",
+        "- समाज + इक = {{==सा==माजिक|social}}",
+        "- इतिहास + इक = {{==ऐ==तिहासिक|historical}}",
+        "- विज्ञान + इक = {{==वै==ज्ञानिक|scientific}}"
+      ]
+    },
+    {
+      "type": "check",
+      "question": {
+        "id": "check-dayalu",
+        "type": "fill",
+        "prompt": "दया + आलु = ___",
+        "answers": ["दयालु", "dayalu"],
+        "mistakes": [{ "answers": ["दयाआलु", "दया आलु"], "why": "दुईवटा 'आ' मिलेर एउटै हुन्छ: दयालु।" }],
+        "explanation": "दया + आलु = {{दयालु|kind-hearted}}।"
+      }
+    },
+    {
+      "type": "text",
+      "title": "{{अव्यय|indeclinable word}} भनेको के हो?",
+      "body": [
+        "{{लिङ्ग|gender}}, {{वचन|number}} वा {{काल|tense}} फेरिँदा पनि नफेरिने शब्द {{अव्यय|indeclinable}} हो।",
+        "जस्तै: {{बिस्तारै|slowly}}, {{माथि|above}}, {{र|and}}, {{ओहो!|wow!}}, {{पो|so…!}}"
+      ]
+    },
+    {
+      "type": "interactive",
+      "widget": "avyayaShield",
+      "title": "Lab 2 · {{नटुट्ने शब्द|The Unbreakable Word}}",
+      "intro": "केटा, केटी र केटाहरू फेर्नुहोस्। काल पनि फेर्नुहोस्। {{अव्यय|indeclinable}} फेरिन्छ कि?",
+      "challenges": [
+        {
+          "id": "m-shield",
+          "text": "**Mission:** कर्ता र काल ४ पटक फेरेर हेर्नुहोस्।",
+          "goal": { "toggles": { "min": 4 } },
+          "xp": 50,
+          "explain": "नाम र क्रिया फेरिए, तर {{अव्यय|indeclinable}} कहिल्यै फेरिएन!"
+        },
+        { "id": "m-shield-all", "text": "पाँचै वटा {{अव्यय|indeclinable}} जाँच्नुहोस्।", "goal": { "seen": 5 }, "xp": 25 }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "{{अव्यय|indeclinable}}का ५ प्रकार",
+      "headers": ["{{प्रकार|type}}", "English", "{{उदाहरण|examples}}"],
+      "rows": [
+        ["क्रियाविशेषण", "Adverb", "{{बिस्तारै|slowly}}, {{चाँडै|quickly}}, {{हिजो|yesterday}}"],
+        ["नामयोगी", "Postposition", "{{माथि|above}}, {{मुनि|below}}, {{भित्र|inside}}, {{सँग|with}}"],
+        ["संयोजक", "Conjunction", "{{र|and}}, {{तर|but}}, {{अनि|then}}, {{किनभने|because}}"],
+        ["विस्मयादिबोधक", "Interjection", "{{आहा!|aha!}}, {{ऐया!|ouch!}}, {{धत्!|darn!}}"],
+        ["निपात", "Particle", "त, नि, पो, खै, लौ"]
+      ]
+    },
+    {
+      "type": "interactive",
+      "widget": "sorter",
+      "title": "Game · {{अव्यय|indeclinable}} छुट्याऔँ",
+      "intro": "हरेक शब्दलाई सही टोकरीमा राख्नुहोस्।",
+      "props": { "deck": 2 },
+      "challenges": [
+        {
+          "id": "m-avyaya-sort",
+          "text": "**Mission:** १५ वटै शब्द सही टोकरीमा राख्नुहोस्।",
+          "goal": { "sorted": 15 },
+          "xp": 50,
+          "explain": "हरेक {{अव्यय|indeclinable}}को आफ्नै काम छ: कसरी, कहाँ, जोड्ने, भावना वा जोड दिने।"
+        },
+        { "id": "m-avyaya-perfect", "text": "एउटा पनि गल्ती नगरी छुट्याउनुहोस्।", "goal": { "sorted": 15, "mistakes": 0 }, "xp": 25 }
+      ]
+    },
+    {
+      "type": "check",
+      "question": {
+        "id": "check-tara",
+        "type": "mcq",
+        "prompt": "'तर' कुन प्रकारको {{अव्यय|indeclinable}} हो?",
+        "options": [
+          { "text": "{{संयोजक|conjunction}}", "correct": true },
+          { "text": "{{नामयोगी|postposition}}", "why": "नामयोगी नामपछि जोडिन्छ (घरभित्र)। 'तर'ले दुई वाक्य जोड्छ।" },
+          { "text": "{{निपात|particle}}", "why": "निपातले कुरामा जोड दिन्छ (पो, त)। 'तर'ले वाक्य जोड्छ।" },
+          { "text": "{{क्रियाविशेषण|adverb}}", "why": "क्रियाविशेषणले काम कसरी हुन्छ भन्छ। 'तर'ले वाक्य जोड्छ।" }
+        ],
+        "explanation": "'तर'ले दुई वाक्य जोड्छ, त्यसैले यो {{संयोजक|conjunction}} हो।"
+      }
+    }
+  ],
+  "flashcards": [
+    { "id": "upasarga", "front": "उपसर्ग", "back": "शब्दको **अगाडि** जोडिने टुक्रा\n*prefix*: अप + मान = अपमान", "tag": "Word building" },
+    { "id": "pratyaya", "front": "प्रत्यय", "back": "शब्दको **पछाडि** जोडिने टुक्रा\n*suffix*: धन + ई = धनी", "tag": "Word building" },
+    { "id": "ik", "front": "समाज + इक = ?", "back": "**सा**माजिक (*social*)\nइक जोड्दा पहिलो अक्षर लामो हुन्छ।", "tag": "Word building" },
+    { "id": "avyaya", "front": "अव्यय", "back": "लिङ्ग, वचन, काल फेरिँदा पनि नफेरिने शब्द\n*indeclinable word*", "tag": "अव्यय" },
+    { "id": "kriyavisheshan", "front": "क्रियाविशेषण", "back": "*Adverb*\nबिस्तारै, चाँडै, हिजो", "tag": "अव्यय" },
+    { "id": "namayogi", "front": "नामयोगी", "back": "*Postposition*\nमाथि, मुनि, भित्र, सँग", "tag": "अव्यय" },
+    { "id": "sanyojak", "front": "संयोजक", "back": "*Conjunction*\nर, तर, अनि, किनभने", "tag": "अव्यय" },
+    { "id": "vismayadi", "front": "विस्मयादिबोधक", "back": "*Interjection*\nआहा!, ऐया!, धत्!", "tag": "अव्यय" },
+    { "id": "nipat", "front": "निपात", "back": "*Particle*\nत, नि, पो, खै, लौ", "tag": "अव्यय" }
+  ],
+  "quiz": {
+    "passPercent": 70,
+    "questions": [
+      {
+        "id": "p-sumarg",
+        "type": "fill",
+        "prompt": "सु + मार्ग = ___",
+        "answers": ["सुमार्ग", "sumarg", "sumarga"],
+        "hints": ["'सु' भनेको {{राम्रो|good}}।", "उपसर्ग शब्दको अगाडि टाँसिन्छ।", "सु + मार्ग = {{सुमार्ग|good path}}"],
+        "explanation": "सु + मार्ग = {{सुमार्ग|good path}}।"
+      },
+      {
+        "id": "p-dhanwan",
+        "type": "fill",
+        "prompt": "धन + वान् = ___",
+        "answers": ["धनवान्", "धनवान", "dhanwan", "dhanawan"],
+        "hints": ["'वान्' भनेको {{भएको|having}}।", "प्रत्यय शब्दको पछाडि टाँसिन्छ।", "धन + वान् = {{धनवान्|wealthy}}"],
+        "explanation": "धन + वान् = {{धनवान्|wealthy}}।"
+      },
+      {
+        "id": "p-samajik",
+        "type": "fill",
+        "prompt": "समाज + इक = ___",
+        "answers": ["सामाजिक"],
+        "mistakes": [{ "answers": ["समाजिक", "समाजइक"], "why": "इक जोड्दा पहिलो अक्षर लामो हुन्छ: स → सा। त्यसैले सामाजिक।" }],
+        "hints": ["इक जोड्दा हिज्जे फेरिन्छ।", "पहिलो अक्षर लामो हुन्छ: स → ?", "स → सा: {{सामाजिक|social}}"],
+        "explanation": "समाज + इक = {{सामाजिक|social}} (स → सा)।"
+      },
+      {
+        "id": "p-mathi",
+        "type": "mcq",
+        "prompt": "'माथि' कुन प्रकारको {{अव्यय|indeclinable}} हो?",
+        "options": [
+          { "text": "{{नामयोगी|postposition}}", "correct": true },
+          { "text": "{{संयोजक|conjunction}}", "why": "संयोजकले शब्द वा वाक्य जोड्छ (र, तर)। 'माथि' नामपछि आउँछ।" },
+          { "text": "{{विस्मयादिबोधक|interjection}}", "why": "विस्मयादिबोधकले भावना देखाउँछ (आहा!)। 'माथि'ले ठाउँ देखाउँछ।" },
+          { "text": "{{निपात|particle}}", "why": "निपातले जोड दिन्छ (पो)। 'माथि' नामसँग जोडिन्छ: टेबलमाथि।" }
+        ],
+        "hints": ["'टेबलमाथि' भन्दा 'माथि' कहाँ जोडिन्छ?", "नामपछि जोडिने अव्ययलाई के भनिन्छ?", "{{नामयोगी|postposition}}"],
+        "explanation": "'माथि' नामपछि जोडिन्छ (टेबलमाथि), त्यसैले {{नामयोगी|postposition}}।"
+      },
+      {
+        "id": "p-unchanging",
+        "type": "mcq",
+        "prompt": "कुन शब्द {{लिङ्ग|gender}}, {{वचन|number}} वा {{काल|tense}} फेरिँदा पनि फेरिँदैन?",
+        "options": [
+          { "text": "{{बिस्तारै|slowly}}", "correct": true },
+          { "text": "{{हिँड्छ|walks}}", "why": "यो क्रिया हो: हिँड्छे, हिँड्छन्, हिँड्यो बन्छ।" },
+          { "text": "{{केटा|boy}}", "why": "यो नाम हो: केटी, केटाहरू बन्छ।" },
+          { "text": "{{राम्रो|good}}", "why": "यो विशेषण हो: केटीका लागि 'राम्री' बन्छ।" }
+        ],
+        "hints": ["Lab 2 को ढाल सम्झनुहोस्।", "नाम र क्रिया फेरिन्छन्।", "अव्यय फेरिँदैन: {{बिस्तारै|slowly}}"],
+        "explanation": "'बिस्तारै' अव्यय हो, त्यसैले कहिल्यै फेरिँदैन।"
+      },
+      {
+        "id": "p-aiya",
+        "type": "mcq",
+        "prompt": "'ऐया!' कुन प्रकारको {{अव्यय|indeclinable}} हो?",
+        "options": [
+          { "text": "{{विस्मयादिबोधक|interjection}}", "correct": true },
+          { "text": "{{क्रियाविशेषण|adverb}}", "why": "क्रियाविशेषणले काम कसरी हुन्छ भन्छ। 'ऐया!'ले दुखाइ देखाउँछ।" },
+          { "text": "{{संयोजक|conjunction}}", "why": "संयोजकले जोड्छ। 'ऐया!'ले भावना देखाउँछ।" },
+          { "text": "{{नामयोगी|postposition}}", "why": "नामयोगी नामपछि जोडिन्छ। 'ऐया!' एक्लै भावना हो।" }
+        ],
+        "hints": ["'ऐया!' कहिले भनिन्छ?", "दुख्दा निस्कने भावना।", "भावना देखाउने: {{विस्मयादिबोधक|interjection}}"],
+        "explanation": "'ऐया!'ले दुखाइको भावना देखाउँछ: {{विस्मयादिबोधक|interjection}}।"
+      }
+    ]
+  },
+  "cheatSheet": {
+    "title": "उपसर्ग, प्रत्यय र अव्यय: एक पाने सारांश",
+    "items": [
+      {
+        "title": "उपसर्ग (prefix): अगाडि",
+        "table": {
+          "headers": ["उपसर्ग", "Meaning", "उदाहरण"],
+          "rows": [
+            ["प्र", "forward", "प्रगति, प्रहार"],
+            ["अप", "bad", "अपमान, अपयश"],
+            ["अनु", "after", "अनुशासन"],
+            ["सु", "good", "सुमार्ग, सुपुत्र"],
+            ["बे", "without", "बेइमान, बेकार"],
+            ["गैर", "non-", "गैरकानुनी"]
+          ]
+        }
+      },
+      {
+        "title": "प्रत्यय (suffix): पछाडि",
+        "table": {
+          "headers": ["प्रत्यय", "Meaning", "उदाहरण"],
+          "rows": [
+            ["ई", "having", "धनी, नेपाली"],
+            ["इक", "related to", "सामाजिक (स → सा)"],
+            ["आलु", "full of", "दयालु"],
+            ["वान् / मान्", "having", "धनवान्, बुद्धिमान्"],
+            ["ता", "-ness", "सुन्दरता"]
+          ]
+        }
+      },
+      {
+        "title": "अव्यय (indeclinable): ५ प्रकार",
+        "wide": true,
+        "table": {
+          "headers": ["प्रकार", "English", "उदाहरण"],
+          "rows": [
+            ["क्रियाविशेषण", "Adverb", "बिस्तारै, चाँडै, हिजो"],
+            ["नामयोगी", "Postposition", "माथि, मुनि, भित्र, सँग"],
+            ["संयोजक", "Conjunction", "र, तर, अनि, किनभने"],
+            ["विस्मयादिबोधक", "Interjection", "आहा!, ऐया!, धत्!"],
+            ["निपात", "Particle", "त, नि, पो, खै, लौ"]
+          ]
+        },
+        "body": "अव्यय लिङ्ग, वचन र काल फेरिँदा पनि **कहिल्यै फेरिँदैन**।"
+      }
+    ]
+  }
+}

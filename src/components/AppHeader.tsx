@@ -35,8 +35,8 @@ export default function AppHeader() {
     <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur print:hidden">
       <div className="mx-auto flex h-16 max-w-5xl items-center gap-2 px-3 sm:gap-3 sm:px-6">
         <Link to="/" className="flex shrink-0 items-center gap-2 rounded-xl" aria-label="Kakshya 7 home">
-          <span className="grid size-10 place-items-center rounded-2xl border-b-4 border-indigo-800 bg-indigo-600 font-deva text-xl text-white" aria-hidden>
-            ७
+          <span className="grid size-10 place-items-center rounded-2xl border-b-4 border-indigo-800 bg-indigo-600 font-display text-xl font-semibold text-white" aria-hidden>
+            7
           </span>
           <span className="hidden font-display text-xl font-semibold text-slate-900 sm:inline">
             Kakshya <span className="text-indigo-600">7</span>

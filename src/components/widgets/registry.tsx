@@ -7,14 +7,15 @@ import MixedNumberTank from "./MixedNumberTank";
 import CratePush from "./physics/CratePush";
 import GridRunner from "./physics/GridRunner";
 import SkateTrack from "./physics/SkateTrack";
-import VectorSorter from "./physics/VectorSorter";
 import WorkDetector from "./physics/WorkDetector";
+import Sorter from "./Sorter";
+import AvyayaShield from "./nepali/AvyayaShield";
+import WordMagnet from "./nepali/WordMagnet";
+import AlkaliVenn from "./chemistry/AlkaliVenn";
 import CureGame from "./chemistry/CureGame";
-import EquationBalancer from "./chemistry/EquationBalancer";
+import DissolveTest from "./chemistry/DissolveTest";
+import WaterActivation from "./chemistry/WaterActivation";
 import IndicatorLab from "./chemistry/IndicatorLab";
-import Neutralization from "./chemistry/Neutralization";
-import PhScale from "./chemistry/PhScale";
-import ReactionLab from "./chemistry/ReactionLab";
 
 /**
  * Interactive widgets a lesson can place with
@@ -29,14 +30,16 @@ export const WIDGETS: Record<WidgetName, ComponentType<any>> = {
   gridMerger: GridMerger,
   areaOverlap: AreaOverlap,
   gridRunner: GridRunner,
-  vectorSorter: VectorSorter,
+  vectorSorter: Sorter, // deck 0 by default
+  sorter: Sorter,
   skateTrack: SkateTrack,
   cratePush: CratePush,
   workDetector: WorkDetector,
   indicatorLab: IndicatorLab,
-  phScale: PhScale,
-  neutralization: Neutralization,
   cureGame: CureGame,
-  reactionLab: ReactionLab,
-  equationBalancer: EquationBalancer,
+  waterActivation: WaterActivation,
+  dissolveTest: DissolveTest,
+  alkaliVenn: AlkaliVenn,
+  wordMagnet: WordMagnet,
+  avyayaShield: AvyayaShield,
 };

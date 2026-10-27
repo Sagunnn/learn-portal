@@ -238,6 +238,7 @@ function WordBreakdown({ chunk }: { chunk: WordBreakdownChunk }) {
               >
                 <div lang={lp.lang} className={cx("text-2xl font-bold text-slate-900", lp.className)}>
                   {item.word}
+                  {item.en && <span className="gloss-en">{item.en}</span>}
                 </div>
                 {isOpen && (
                   <div className="mt-3 animate-rise">
@@ -250,7 +251,7 @@ function WordBreakdown({ chunk }: { chunk: WordBreakdownChunk }) {
                               {p.text}
                             </span>
                             <span lang={lp.lang} className={cx("mt-0.5 text-[11px] font-medium text-slate-500", ne && "font-deva")}>
-                              {ne ? ROLE_STYLE[p.role].ne : ROLE_STYLE[p.role].en}
+                              {ne ? `${ROLE_STYLE[p.role].ne} · ${ROLE_STYLE[p.role].en.toLowerCase()}` : ROLE_STYLE[p.role].en}
                             </span>
                           </span>
                         </span>

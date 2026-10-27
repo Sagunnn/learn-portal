@@ -43,6 +43,7 @@ function formatAjv(errors = []) {
 const WORD_LIMIT = 20;
 const wordCount = (t) =>
   t
+    .replace(/\{\{[^}]*\}\}/g, "G")
     .replace(/\$\$[\s\S]*?\$\$/g, "M")
     .replace(/\$[^$]*\$/g, "M")
     .replace(/[*=`]/g, "")

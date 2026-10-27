@@ -190,7 +190,7 @@ export default function CratePush({ surface: s0 = 0, onState }: { surface?: numb
           <SvgPill
             x={Math.max(150, Math.min(650, cx))}
             y={crateTop - 92}
-            text={`F net ${net > 0 ? "+" : ""}${net} N · a = ${Math.abs(net) <= fmax ? 0 : accel} m/s²`}
+            text={net === 0 ? "F net = 0 N · balanced" : `F net = ${Math.abs(net)} N ${net > 0 ? "→" : "←"} · unbalanced`}
             fill={net === 0 ? "#ecfdf5" : "#eef2ff"}
             color={net === 0 ? "#047857" : "#4338ca"}
             stroke={net === 0 ? "#6ee7b7" : "#a5b4fc"}
@@ -199,20 +199,12 @@ export default function CratePush({ surface: s0 = 0, onState }: { surface?: numb
         </svg>
       </div>
 
-      <EquationBar
-        tex={
-          `\\begin{gathered}F_{\\text{net}} = F_{\\text{right}} - F_{\\text{left}} = ${fRight} - ${fLeft} = ${net}\\text{ N} \\\\ ` +
-          (balanced || stuck
-            ? `a = 0\\ \\text{m/s}^2`
-            : `a = \\dfrac{F_{\\text{net}}${fmax ? " - f" : ""}}{m} = \\dfrac{${net}${fmax ? ` ${net > 0 ? "-" : "+"} ${fmax}` : ""}}{${MASS}} = ${accel}\\ \\text{m/s}^2`) +
-          `\\end{gathered}`
-        }
-      >
+      <EquationBar tex={`F_{\\text{net}} = F_{\\text{right}} - F_{\\text{left}} = ${fRight} - ${fLeft} = ${net}\\text{ N}`}>
         {balanced
-          ? "Balanced forces: the pulls cancel, so the crate doesn't speed up."
+          ? "Balanced forces: the pulls cancel, so the crate stays as it is."
           : stuck
             ? `Unbalanced, but friction (up to ${fmax} N) is strong enough to hold the crate still.`
-            : `Unbalanced! The crate accelerates to the ${net > 0 ? "right" : "left"}: F = m × a.`}
+            : `Unbalanced! The crate moves toward the ${net > 0 ? "right" : "left"}, the stronger side.`}
       </EquationBar>
 
       <div className="flex flex-wrap items-center gap-2">

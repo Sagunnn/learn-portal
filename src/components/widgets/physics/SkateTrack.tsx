@@ -86,7 +86,7 @@ export default function SkateTrack({ u: u0 = 0, a: a0 = 2, onState }: { u?: numb
   const vLabelX = Math.max(X0 + 120, Math.min(X1 - 120, sx));
 
   const status = sim.finished
-    ? `🏁 Finish! 90 m in ${sim.t.toFixed(1)} s.`
+    ? `🏁 Finish! Average speed = distance ÷ time = 90 m ÷ ${sim.t.toFixed(1)} s = ${(90 / sim.t).toFixed(1)} m/s.`
     : sim.crashed
       ? "💥 Rolled back into the West wall. Reset and try again."
       : !started

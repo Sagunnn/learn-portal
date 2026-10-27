@@ -134,3 +134,10 @@ describe("fractions", () => {
     expect(fracTex(8, 4, { mixed: true })).toBe("2");
   });
 });
+
+describe("Nepali meaning helpers", () => {
+  it("renders {{word|meaning}} as the word plus an English pill", () => {
+    const html = renderRich("{{उपसर्ग|prefix}} जोडिन्छ");
+    expect(html).toContain('<span class="gloss" title="prefix">उपसर्ग<span class="gloss-en" lang="en">prefix</span></span>');
+  });
+});

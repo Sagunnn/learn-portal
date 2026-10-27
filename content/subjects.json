@@ -4,7 +4,6 @@
     {
       "id": "science",
       "name": "Science",
-      "nameLocal": "विज्ञान",
       "description": "Living things, matter, energy and the world around you.",
       "icon": "🔬",
       "theme": "emerald",
@@ -13,7 +12,6 @@
     {
       "id": "math",
       "name": "Mathematics",
-      "nameLocal": "गणित",
       "description": "Numbers, algebra and geometry, one idea at a time.",
       "icon": "📐",
       "theme": "indigo",
@@ -23,7 +21,7 @@
       "id": "nepali",
       "name": "Nepali Grammar",
       "nameLocal": "नेपाली व्याकरण",
-      "description": "उपसर्ग, प्रत्यय, अव्यय र शब्द निर्माण।",
+      "description": "Prefixes, suffixes and indeclinable words, with English helpers.",
       "icon": "📜",
       "theme": "rose",
       "iconKey": "book"

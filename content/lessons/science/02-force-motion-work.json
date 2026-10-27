@@ -5,8 +5,7 @@
     "subject": "science",
     "chapter": 2,
     "title": "Force, Motion & Work Done",
-    "titleLocal": "बल, गति र कार्य",
-    "summary": "Scalars vs vectors, speed vs velocity, acceleration, net force and work, in four hands-on labs.",
+    "summary": "Scalars vs vectors, distance vs displacement, speed and velocity, acceleration and work, in four hands-on labs.",
     "estMinutes": 45,
     "tags": [
       "physics",
@@ -150,6 +149,48 @@
       ]
     },
     {
+      "type": "formula",
+      "title": "Speed and velocity",
+      "items": [
+        {
+          "tex": "\\text{speed} = \\frac{\\text{distance}}{\\text{time}} \\qquad v = \\frac{d}{t}",
+          "label": "how fast"
+        },
+        {
+          "tex": "\\text{velocity} = \\frac{\\text{displacement}}{\\text{time}}",
+          "label": "how fast + which way"
+        }
+      ],
+      "caption": "Both are measured in metres per second, $\\text{m/s}$."
+    },
+    {
+      "type": "check",
+      "question": {
+        "id": "check-speed",
+        "type": "fill",
+        "prompt": "A runner covers $100\\text{ m}$ in $20\\text{ s}$. Speed = ___ $\\text{m/s}$",
+        "answers": [
+          "5"
+        ],
+        "match": "number",
+        "mistakes": [
+          {
+            "answers": [
+              "2000"
+            ],
+            "why": "You multiplied. Speed is distance **÷** time: $100 \\div 20$."
+          },
+          {
+            "answers": [
+              "0.2"
+            ],
+            "why": "That's time ÷ distance. Speed is distance ÷ time: $100 \\div 20$."
+          }
+        ],
+        "explanation": "$v = \\dfrac{d}{t} = \\dfrac{100}{20} = 5\\text{ m/s}$"
+      }
+    },
+    {
       "type": "interactive",
       "widget": "skateTrack",
       "title": "Lab 2 · The Nitro Skateboard Track",
@@ -264,15 +305,6 @@
           "explain": "Equal pulls cancel out: $F_{\\text{net}} = 0\\text{ N}$, so the crate doesn't speed up."
         },
         {
-          "id": "m-ice-two",
-          "text": "**Mission:** on **ice**, make the 50 kg crate accelerate at $2\\text{ m/s}^2$ to the right.",
-          "goal": {
-            "surface": 0,
-            "accel": 2
-          },
-          "xp": 50
-        },
-        {
           "id": "m-rough-road",
           "text": "**Mission:** on the **rough road**, pull hard enough to get the crate moving.",
           "goal": {
@@ -287,19 +319,14 @@
       ]
     },
     {
-      "type": "formula",
-      "title": "Net force and F = m × a",
-      "items": [
-        {
-          "tex": "F_{\\text{net}} = F_{\\text{right}} - F_{\\text{left}}",
-          "label": "balanced when F net = 0 N"
-        },
-        {
-          "tex": "F = m \\times a \\quad\\Rightarrow\\quad a = \\frac{F}{m}",
-          "label": "bigger net force → bigger acceleration"
-        }
-      ],
-      "caption": "$1\\text{ N}$ is the force that gives a $1\\text{ kg}$ mass an acceleration of $1\\text{ m/s}^2$."
+      "type": "callout",
+      "variant": "remember",
+      "title": "Balanced or unbalanced?",
+      "body": [
+        "**Balanced** forces cancel out: $F_{\\text{net}} = 0\\text{ N}$, so the object stays as it is.",
+        "**Unbalanced** forces: the object moves toward the stronger side.",
+        "**Friction** pushes against the motion."
+      ]
     },
     {
       "type": "check",
@@ -450,14 +477,14 @@
     {
       "id": "newton",
       "front": "Unit of force",
-      "back": "newton, $\\text{N}$\n$1\\text{ N} = 1\\text{ kg} \\times 1\\text{ m/s}^2$",
+      "back": "newton, $\\text{N}$\nThe unit of force (a push or a pull).",
       "tag": "Lab 3"
     },
     {
-      "id": "fma",
-      "front": "Net force and acceleration",
-      "back": "$F = m \\times a$\nBalanced forces ($F_{\\text{net}} = 0$) → no acceleration.",
-      "tag": "Lab 3"
+      "id": "speed-formula",
+      "front": "Speed formula",
+      "back": "$v = \\dfrac{d}{t}$\nspeed = distance ÷ time, in $\\text{m/s}$",
+      "tag": "Lab 2"
     },
     {
       "id": "work",
@@ -629,40 +656,34 @@
         "explanation": "Distance = 400 m (the whole lap). Displacement = 0 m (same start and finish)."
       },
       {
-        "id": "p-fma",
+        "id": "p-speed",
         "type": "fill",
-        "prompt": "A net force of $100\\text{ N}$ acts on a $50\\text{ kg}$ crate on ice (no friction). Acceleration = ___ $\\text{m/s}^2$",
+        "prompt": "A bus travels $120\\text{ m}$ in $10\\text{ s}$. Its speed is ___ $\\text{m/s}$",
         "answers": [
-          "2"
+          "12"
         ],
         "match": "number",
         "mistakes": [
           {
             "answers": [
-              "5000"
+              "1200"
             ],
-            "why": "You multiplied. From $F = m \\times a$, acceleration is $a = F \\div m$."
+            "why": "You multiplied. Speed is distance **÷** time."
           },
           {
             "answers": [
-              "0.5"
+              "0.08",
+              "0.083"
             ],
-            "why": "That's $50 \\div 100$, mass divided by force. It's the other way round: $a = F \\div m$."
-          },
-          {
-            "answers": [
-              "150",
-              "50"
-            ],
-            "why": "Forces and masses can't be added or subtracted together. Use $a = F \\div m$."
+            "why": "That's time ÷ distance. Divide the distance by the time: $120 \\div 10$."
           }
         ],
         "hints": [
-          "Which formula links force, mass and acceleration?",
-          "$F = m \\times a$, so $a = \\dfrac{F}{m}$. Cover $a$ on the formula triangle.",
-          "$a = \\dfrac{100}{50} = 2\\text{ m/s}^2$"
+          "Which formula links speed, distance and time?",
+          "$v = \\dfrac{d}{t}$ with $d = 120\\text{ m}$ and $t = 10\\text{ s}$.",
+          "$v = \\dfrac{120}{10} = 12\\text{ m/s}$"
         ],
-        "explanation": "$a = \\dfrac{F}{m} = \\dfrac{100}{50} = 2\\text{ m/s}^2$"
+        "explanation": "$v = \\dfrac{d}{t} = \\dfrac{120}{10} = 12\\text{ m/s}$"
       }
     ]
   },
@@ -705,18 +726,18 @@
       {
         "title": "Net force",
         "tex": "F_{\\text{net}} = F_{\\text{right}} - F_{\\text{left}}",
-        "body": "Balanced ($0\\text{ N}$): no acceleration. Unbalanced: speeds up in the stronger direction. Friction opposes motion."
+        "body": "Balanced ($0\\text{ N}$): stays as it is. Unbalanced: moves toward the stronger side. Friction opposes motion."
       },
       {
-        "title": "Force triangle",
-        "tex": "F = m \\times a",
+        "title": "Speed triangle",
+        "tex": "v = \\frac{d}{t}",
         "visual": {
           "kind": "triangle",
-          "top": "F",
-          "left": "m",
-          "right": "a"
+          "top": "d",
+          "left": "v",
+          "right": "t"
         },
-        "body": "Cover what you want: $a = \\tfrac{F}{m}$, $m = \\tfrac{F}{a}$."
+        "body": "Cover what you want: $d = v \\times t$, $t = \\tfrac{d}{v}$."
       },
       {
         "title": "Work triangle",

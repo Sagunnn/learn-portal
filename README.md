@@ -61,6 +61,12 @@ No UI code changes are needed. The build fails with a clear message if a file br
 
 Set `"draft": true` in `meta` to hide a lesson while you write it. To add a subject, add an entry to `subjects.json` (themes: `emerald`, `indigo`, `rose`, `amber`, `sky`, `violet`) and create its folder.
 
+## Language rules
+
+- The dashboard, Science and Mathematics are **English only**. No Devanagari subtitles; science and maths lessons have no `titleLocal`.
+- Devanagari appears **only inside Nepali Grammar**. There, write `{{शब्द|meaning}}` in any text to show the Nepali word with a small English meaning pill (and tooltip), e.g. `{{उपसर्ग|prefix}}`. Word-breakdown items take an `en` field for the same pill.
+- Lesson `title`s are English everywhere (they appear on the dashboard). Nepali lessons put the Nepali title in `titleLocal`.
+
 ## Lesson format
 
 ```jsonc
@@ -98,8 +104,16 @@ Set `"draft": true` in `meta` to hide a lesson while you write it. To add a subj
 | `mixedNumberTank`     | `n`, `d`             | Pieces fill containers of d; improper ↔ mixed number                  |
 | `gridMerger`          | `a1`, `b1`, `a2`, `b2` | Columns vs rows, overlay to a common grid, combine (adding)          |
 | `areaOverlap`         | `a`, `b`, `c`, `d`   | Blue columns × yellow rows, green overlap (multiplying)               |
+| `sorter`              | `deck` (0–2)         | Drag/tap cards into buckets: 0 scalar vs vector, 1 acid vs base at home, 2 the 5 kinds of अव्यय |
+| `waterActivation`     | none                 | Dry acid → add water → H⁺ ions (litmus, bulb); NaOH → OH⁻; splash-safety test |
+| `dissolveTest`        | none                 | Drop NaOH / KOH / CuO / rust in water: alkalis dissolve, other bases sink |
+| `alkaliVenn`          | none                 | Egg-yolk sorter: all bases (white) vs alkalis (yolk) |
+| `indicatorLab`        | none                 | Litmus, phenolphthalein, methyl orange, turmeric, China rose on 6 liquids |
+| `cureGame`            | none                 | Pick the right mild acid/base for indigestion, a bee sting, acidic soil |
+| `wordMagnet`          | none                 | Nepali: snap उपसर्ग / प्रत्यय onto root words; spelling changes highlighted |
+| `avyayaShield`        | none                 | Nepali: change subject and tense; the अव्यय never changes |
 | `gridRunner`          | none                 | Walk a map: distance (green path) vs displacement (indigo arrow)      |
-| `vectorSorter`        | none                 | Drag/tap quantities into Scalar and Vector buckets                    |
+| `vectorSorter`        | none                 | Old name for `sorter` deck 0 (scalar vs vector); kept so older lessons still work |
 | `skateTrack`          | `u`, `a`             | 100 m track, live a = (v − u)/t, speedometer, a dot every second       |
 | `cratePush`           | `surface` (0–2)      | Tug-of-war on ice/wood/rough road, force arrows, F net and F = m × a  |
 | `workDetector`        | `scenario` (0–2)     | W = F × d: cart (work), wall (0 J), carried bag (0 J against gravity)  |
