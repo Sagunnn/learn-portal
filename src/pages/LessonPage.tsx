@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router";
 import FlashcardDeck from "../components/lesson/FlashcardDeck";
+import PrintSheet from "../components/lesson/PrintSheet";
 import LearnRunner from "../components/lesson/LearnRunner";
 import QuizRunner from "../components/quiz/QuizRunner";
 import { Button, LangProvider, cx, langProps } from "../components/ui/primitives";
@@ -63,7 +64,8 @@ export default function LessonPage() {
 
   return (
     <LangProvider value={lang}>
-      <div className="space-y-6">
+      {lesson?.cheatSheet && <PrintSheet sheet={lesson.cheatSheet} title={entry.meta.title} subject={subject?.name} />}
+      <div className="space-y-6 print:hidden">
         <nav className="flex items-center gap-2 text-sm font-semibold text-slate-500">
           <Link to="/" className="hover:text-slate-800">
             Dashboard
@@ -89,6 +91,7 @@ export default function LessonPage() {
             )}
           </div>
 
+          <div className="flex flex-wrap items-center gap-3">
           <div role="tablist" aria-label="Lesson sections" className="inline-flex rounded-xl bg-slate-200/70 p-1">
             {tabs.map((t) => (
               <button
@@ -108,6 +111,12 @@ export default function LessonPage() {
                 {t.count !== undefined && <span className="ml-1.5 text-xs text-slate-400">{t.count}</span>}
               </button>
             ))}
+          </div>
+          {lesson?.cheatSheet && (
+            <Button variant="secondary" size="sm" onClick={() => window.print()} title="Print a one-page formula and picture summary">
+              🖨 {ne ? "एक पाने सारांश प्रिन्ट" : "Print 1-page summary"}
+            </Button>
+          )}
           </div>
         </header>
 

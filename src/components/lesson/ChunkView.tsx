@@ -11,6 +11,7 @@ import type {
 import { Accordion, Button, LangProvider, Rich, cx, langProps, useLang } from "../ui/primitives";
 import QuestionView from "../quiz/QuestionView";
 import { renderRich } from "../../lib/richText";
+import { WIDGETS } from "../widgets/registry";
 
 export interface ChunkViewProps {
   chunk: Chunk;
@@ -57,6 +58,18 @@ function ChunkBody({ chunk, onResolved, review }: ChunkViewProps) {
           <QuestionView question={chunk.question} onResolved={onResolved} review={review} />
         </div>
       );
+    case "interactive": {
+      const Widget = WIDGETS[chunk.widget];
+      return (
+        <div>
+          <Eyebrow>{ne ? "चलाएर हेर्नुहोस्" : "Interactive"}</Eyebrow>
+          {chunk.title && <Title>{chunk.title}</Title>}
+          {chunk.intro && <Rich text={chunk.intro} className="mb-4 text-slate-700" />}
+          {Widget ? <Widget {...chunk.props} /> : <p className="text-rose-600">Unknown widget "{chunk.widget}"</p>}
+          {chunk.tasks && chunk.tasks.length > 0 && <Tasks tasks={chunk.tasks} />}
+        </div>
+      );
+    }
     case "image":
       return (
         <figure>
@@ -72,6 +85,38 @@ function ChunkBody({ chunk, onResolved, review }: ChunkViewProps) {
 }
 
 // ---- Pieces ----------------------------------------------------------------------
+
+/** "Try this" checklist under a widget; ticking is just for the student. */
+function Tasks({ tasks }: { tasks: string[] | (string | string[])[] }) {
+  const ne = useLang() === "ne";
+  const [done, setDone] = useState<Set<number>>(() => new Set());
+  return (
+    <div className="mt-4 rounded-xl border border-indigo-100 bg-indigo-50/60 p-4">
+      <div className="mb-2 text-sm font-bold text-indigo-800">
+        {ne ? "यो गरेर हेर्नुहोस्" : "Try this"} · {done.size}/{tasks.length}
+      </div>
+      <ul className="space-y-2">
+        {tasks.map((t, i) => (
+          <li key={i}>
+            <label className="flex cursor-pointer items-start gap-3">
+              <input
+                type="checkbox"
+                className="mt-1 size-4 shrink-0 accent-indigo-600"
+                checked={done.has(i)}
+                onChange={() => {
+                  const next = new Set(done);
+                  next.has(i) ? next.delete(i) : next.add(i);
+                  setDone(next);
+                }}
+              />
+              <Rich text={t} className={cx("text-slate-700", done.has(i) && "text-slate-400 line-through")} />
+            </label>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 function Title({ children }: { children: string }) {
   return (

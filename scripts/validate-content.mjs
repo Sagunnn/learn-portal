@@ -49,6 +49,11 @@ function checkQuestion(q, where, errors, ids) {
       if (!o.correct && !o.why) errors.push(`${where} (${q.id}): wrong option ${i + 1} has no "why" explanation`);
     });
   }
+  if (q.type === "fill" && q.match === "fraction") {
+    for (const a of [...q.answers, ...(q.mistakes ?? []).flatMap((m) => m.answers)]) {
+      if (!/^\s*-?\d+(\s+\d+\s*\/\s*\d+|\s*\/\s*\d+)?\s*$/.test(a)) errors.push(`${where} (${q.id}): "${a}" isn't a fraction like 5/6 or 2 3/4`);
+    }
+  }
   if (q.type === "fill") {
     const prompt = Array.isArray(q.prompt) ? q.prompt.join("\n") : q.prompt;
     if ((prompt.match(/___/g) || []).length > 1) errors.push(`${where} (${q.id}): only one ___ blank is supported`);

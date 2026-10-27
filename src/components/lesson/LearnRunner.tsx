@@ -181,7 +181,9 @@ export default function LearnRunner({
                 ? ne ? "अगाडि बढ्न माथिको प्रश्नको उत्तर दिनुहोस्।" : "Answer the question to continue."
                 : current.type === "practice"
                   ? ne ? "आफैँ हल गरेर हेर्नुभयो?" : "Tried it yourself?"
-                  : ne ? "तयार हुनुहुन्छ?" : "Press Enter or tap Continue"}
+                  : current.type === "interactive"
+                    ? ne ? "चलाएर हेर्नुभयो? अनि अगाडि बढ्नुहोस्।" : "Played with it? Then continue."
+                    : ne ? "तयार हुनुहुन्छ?" : "Press Enter or tap Continue"}
             </p>
             <Button size="lg" variant={revealed === last ? "success" : "primary"} disabled={locked} onClick={advance} className="min-w-40 shrink-0">
               {revealed === last ? (ne ? "पाठ सक्नुहोस्" : "Finish lesson") : ne ? "अगाडि बढौँ" : "Continue"} →

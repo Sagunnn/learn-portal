@@ -19,6 +19,7 @@ learn-portal/
 │   ├── subjects.json           subject cards (name, icon, colour theme)
 │   └── lessons/
 │       ├── math/01-indices.json
+│       ├── math/02-fractions.json   interactive fractions chapter
 │       ├── nepali/01-upasarga.json
 │       └── science/01-cell.json
 ├── schema/
@@ -34,14 +35,16 @@ learn-portal/
 │   │   ├── content.ts          loads the lesson index + lazy-loads lesson bodies
 │   │   ├── progress.ts         localStorage store: XP, streak, per-lesson progress
 │   │   ├── richText.ts         $math$, **bold**, ==highlight==, lists → safe HTML
-│   │   ├── answer.ts           fill-in matching (Unicode NFC, Devanagari digits…)
+│   │   ├── answer.ts           fill-in matching (Unicode NFC, Devanagari digits, fractions)
+│   │   ├── fraction.ts         gcd/lcm, parsing "5/6" and "2 3/4"
 │   │   ├── stats.ts, date.ts, theme.ts
 │   │   └── logic.test.ts
 │   ├── components/
 │   │   ├── AppHeader.tsx       streak / XP / level badges
 │   │   ├── ui/primitives.tsx   Button, ProgressBar, Accordion, Rich text, …
-│   │   ├── lesson/             LearnRunner, ChunkView, FlashcardDeck
-│   │   └── quiz/               QuizRunner, McqQuestion, FillQuestion, Feedback
+│   │   ├── lesson/             LearnRunner, ChunkView, FlashcardDeck, PrintSheet
+│   │   ├── widgets/            interactive visualizers + still SVG figures (registry.tsx)
+│   │   └── quiz/               QuizRunner, McqQuestion, FillQuestion, Feedback, HintLadder
 │   └── pages/                  Dashboard, SubjectPage, LessonPage, NotFound
 ├── vite.config.ts              includes the `virtual:lesson-index` plugin
 ├── vercel.json                 SPA rewrites + asset caching for Vercel
@@ -85,11 +88,26 @@ Set `"draft": true` in `meta` to hide a lesson while you write it. To add a subj
 | `practice`      | `title?`, `problem`, `hint?`, `steps[]`, `answer`          | Worked problem with Hint + step-by-step Solution accordions |
 | `check`         | `question` (an `mcq` or `fill`)                            | Quick question; Continue stays locked until answered |
 | `image`         | `src`, `alt`, `caption?`                                   | Put files in `public/images/…`               |
+| `interactive`   | `widget`, `title?`, `intro?`, `props?`, `tasks?`           | Hands-on visualizer (see below)              |
+
+**Interactive widgets** (`props` are the starting values):
+
+| `widget`              | `props`              | What it shows                                                         |
+| --------------------- | -------------------- | --------------------------------------------------------------------- |
+| `equivalentFractions` | `a`, `b`, `k`        | Knife & Glue: bar + pie, cut each piece into k; glue to simplest form |
+| `mixedNumberTank`     | `n`, `d`             | Pieces fill containers of d; improper ↔ mixed number                  |
+| `gridMerger`          | `a1`, `b1`, `a2`, `b2` | Columns vs rows, overlay to a common grid, combine (adding)          |
+| `areaOverlap`         | `a`, `b`, `c`, `d`   | Blue columns × yellow rows, green overlap (multiplying)               |
+
+To add a widget: build it in `src/components/widgets/`, register it in `registry.tsx`, and add its name to `WidgetName` and the schema's `widget` enum.
 
 **Questions**
 
+- Both types take `hints`: up to 5 shown one at a time. With three, they're labelled Nudge → Set it up → Full solution. A hint can be `{ "text": …, "visual": { "kind": "bar" | "pie" | "tank" | "sum" | "product", … } }` to include a picture.
 - `mcq`: `prompt`, `options[{text, correct?: true, why?}]`, `explanation?`, `hint?`, `shuffle?` (default true). Every wrong option needs a `why`, which is shown in a bubble under that option when it's picked.
-- `fill`: `prompt` with `___` where the blank goes, `answers[]` (the first is shown on "Show answer"), `match: "text" | "number"`, `tolerance?`, `mistakes[{answers[], why}]` for predictable wrong answers. For Nepali answers, also list romanised spellings so the student can answer without a Nepali keyboard.
+- `fill`: `prompt` with `___` where the blank goes, `answers[]` (the first is shown on "Show answer"), `match: "text" | "number"`, `tolerance?`, `mistakes[{answers[], why}]` for predictable wrong answers. `match: "fraction"` compares by value ("4/6" = "2/3") and accepts mixed numbers ("2 3/4"); add `simplest: true` to require lowest terms, or `form: "mixed" | "improper"` to require a way of writing it. Mistakes match by value too, so a `"2/5"` trap also catches `"4/10"`. For Nepali answers, also list romanised spellings so the student can answer without a Nepali keyboard.
+
+**Print summary**: add a top-level `cheatSheet` (`title?`, `intro?`, up to 8 `items` with `title`, `tex?`, `body?`, `visual?`) and the lesson gets a "Print 1-page summary" button. Only the sheet prints, sized for one A4 page.
 
 ## How progress works
 

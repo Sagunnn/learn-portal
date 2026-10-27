@@ -3,6 +3,7 @@ import { checkFill, normalize, parseNumber } from "./answer";
 import { addDays, lastDays } from "./date";
 import { emptyState, levelFor, liveStreak, withXp } from "./progress";
 import { renderRich } from "./richText";
+import { fracTex, gcd, lcm, parseFraction } from "./fraction";
 import type { FillQuestion } from "../types/content";
 
 describe("answer checking", () => {
@@ -90,5 +91,46 @@ describe("rich text", () => {
 
   it("doesn't wrap display math in a paragraph", () => {
     expect(renderRich("$$x^2$$").startsWith("<span class=\"katex-display\"")).toBe(true);
+  });
+});
+
+describe("fractions", () => {
+  const q = (extra: Partial<FillQuestion>): FillQuestion => ({ id: "f", type: "fill", prompt: "___", answers: ["2/3"], match: "fraction", ...extra });
+
+  it("parses fractions, mixed numbers and whole numbers", () => {
+    expect(parseFraction("5/6")).toMatchObject({ num: 5, den: 6, form: "fraction", lowest: true });
+    expect(parseFraction(" 2 3/4 ")).toMatchObject({ num: 11, den: 4, form: "mixed" });
+    expect(parseFraction("2+3/4")).toMatchObject({ num: 11, den: 4, form: "mixed" });
+    expect(parseFraction("३/४")).toMatchObject({ num: 3, den: 4 });
+    expect(parseFraction("4")).toMatchObject({ num: 4, den: 1, form: "integer" });
+    expect(parseFraction("1/0")).toBeNull();
+    expect(parseFraction("2 5/4")).toBeNull();
+    expect(parseFraction("abc")).toBeNull();
+  });
+
+  it("checks value, simplest form and mixed form", () => {
+    expect(checkFill(q({}), "4/6").correct).toBe(true);
+    expect(checkFill(q({ simplest: true }), "4/6").correct).toBe(false);
+    expect(checkFill(q({ simplest: true }), "2/3").correct).toBe(true);
+    const mixed = q({ answers: ["2 3/4"], form: "mixed" });
+    expect(checkFill(mixed, "2 3/4").correct).toBe(true);
+    expect(checkFill(mixed, "11/4")).toMatchObject({ correct: false });
+    expect(checkFill(q({ answers: ["11/4"] }), "2 3/4").correct).toBe(true);
+  });
+
+  it("gives the trap message for adding straight across, and exact-form mistakes first", () => {
+    const add = q({ answers: ["5/6"], mistakes: [{ answers: ["2/5"], why: "trap" }] });
+    expect(checkFill(add, "2/5")).toEqual({ correct: false, why: "trap" });
+    expect(checkFill(add, "4/10")).toEqual({ correct: false, why: "trap" });
+    const simp = q({ simplest: true, mistakes: [{ answers: ["6/9"], why: "keep gluing" }] });
+    expect(checkFill(simp, "6/9")).toEqual({ correct: false, why: "keep gluing" });
+    expect(checkFill(simp, "8/12").correct).toBe(false);
+  });
+
+  it("does gcd/lcm/fracTex", () => {
+    expect(gcd(12, 18)).toBe(6);
+    expect(lcm(4, 6)).toBe(12);
+    expect(fracTex(11, 4, { mixed: true })).toBe("2\\tfrac{3}{4}");
+    expect(fracTex(8, 4, { mixed: true })).toBe("2");
   });
 });

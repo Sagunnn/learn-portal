@@ -100,7 +100,21 @@ export interface ImageChunk extends ChunkBase {
   caption?: RichText;
 }
 
+export type WidgetName = "equivalentFractions" | "mixedNumberTank" | "gridMerger" | "areaOverlap";
+
+export interface InteractiveChunk extends ChunkBase {
+  type: "interactive";
+  widget: WidgetName;
+  title?: string;
+  intro?: RichText;
+  /** Starting values for the widget's controls. */
+  props?: Record<string, number>;
+  /** Things to try, shown under the widget. */
+  tasks?: RichText[];
+}
+
 export type Chunk =
+  | InteractiveChunk
   | TextChunk
   | CalloutChunk
   | FormulaChunk
@@ -120,6 +134,17 @@ export interface Flashcard {
   lang?: Lang;
 }
 
+/** A step in a progressive hint ladder: text, optionally with a picture. */
+export type Hint = RichText | { text: RichText; visual?: Visual };
+
+/** Static fraction pictures, usable in hints and the print cheat sheet. */
+export type Visual =
+  | { kind: "bar"; n: number; d: number; k?: number }
+  | { kind: "pie"; n: number; d: number; k?: number }
+  | { kind: "tank"; n: number; d: number }
+  | { kind: "sum"; a: [number, number]; b: [number, number] }
+  | { kind: "product"; a: [number, number]; b: [number, number] };
+
 export interface McqOption {
   text: RichText;
   correct?: true;
@@ -133,6 +158,7 @@ export interface McqQuestion {
   options: McqOption[];
   explanation?: RichText;
   hint?: RichText;
+  hints?: Hint[];
   shuffle?: boolean;
   lang?: Lang;
 }
@@ -142,13 +168,18 @@ export interface FillQuestion {
   type: "fill";
   prompt: RichText;
   answers: string[];
-  match?: "text" | "number";
+  match?: "text" | "number" | "fraction";
   tolerance?: number;
+  /** fraction match: the answer must be in lowest terms */
+  simplest?: boolean;
+  /** fraction match: required way of writing it */
+  form?: "any" | "mixed" | "improper";
   caseSensitive?: boolean;
   mistakes?: { answers: string[]; why: RichText }[];
   placeholder?: string;
   explanation?: RichText;
   hint?: RichText;
+  hints?: Hint[];
   lang?: Lang;
 }
 
@@ -159,9 +190,16 @@ export interface Quiz {
   questions: Question[];
 }
 
+export interface CheatSheet {
+  title?: string;
+  intro?: RichText;
+  items: { title: string; tex?: string; body?: RichText; visual?: Visual }[];
+}
+
 export interface Lesson {
   meta: LessonMeta;
   chunks: Chunk[];
   flashcards?: Flashcard[];
   quiz?: Quiz;
+  cheatSheet?: CheatSheet;
 }

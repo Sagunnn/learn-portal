@@ -17,7 +17,7 @@ export default function App() {
     <div className="min-h-dvh">
       <ScrollToTop />
       <AppHeader />
-      <main className="mx-auto w-full max-w-5xl px-4 pb-28 pt-6 sm:px-6">
+      <main className="mx-auto w-full max-w-5xl px-4 pb-28 pt-6 sm:px-6 print:max-w-none print:p-0">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/subject/:subjectId" element={<SubjectPage />} />

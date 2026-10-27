@@ -4,6 +4,9 @@ import { toText } from "../../lib/richText";
 import type { FillQuestion as Fill, RichText } from "../../types/content";
 import { Accordion, Button, Rich, cx, langProps, useLang } from "../ui/primitives";
 import { Feedback, WhyBubble } from "./Feedback";
+import HintLadder from "./HintLadder";
+import { parseFraction, fracTex } from "../../lib/fraction";
+import { Tex } from "../widgets/controls";
 
 const DEVANAGARI = /[ऀ-ॿ]/;
 const LATIN = /[a-z]/i;
@@ -59,6 +62,14 @@ export default function FillQuestion({
     onResolved?.({ firstTry: false });
   };
 
+  const isFraction = question.match === "fraction";
+  const parsed = isFraction ? parseFraction(value) : null;
+  const typed = parsed
+    ? parsed.form === "mixed"
+      ? fracTex(parsed.num, parsed.den, { mixed: true })
+      : fracTex(parsed.num, parsed.den)
+    : null;
+
   const mixedScripts = question.answers.some((a) => DEVANAGARI.test(a)) && question.answers.some((a) => LATIN.test(a));
   const lp = langProps(lang);
 
@@ -74,7 +85,7 @@ export default function FillQuestion({
       autoCorrect="off"
       autoCapitalize="off"
       spellCheck={false}
-      placeholder={question.placeholder ?? (ne ? "उत्तर" : "answer")}
+      placeholder={question.placeholder ?? (isFraction ? "e.g. 3/4" : ne ? "उत्तर" : "answer")}
       aria-label={ne ? "उत्तर लेख्नुहोस्" : "Your answer"}
       className={cx(
         "mx-1 inline-block w-40 rounded-lg border-2 px-3 py-1 align-baseline font-semibold outline-none transition sm:w-48",
@@ -105,6 +116,20 @@ export default function FillQuestion({
         )}
       </div>
 
+      {isFraction && !solved && (
+        <p className="min-h-8 text-sm text-slate-500" aria-live="polite">
+          {typed ? (
+            <>
+              You typed: <Tex tex={typed} className="text-base text-slate-900" />
+            </>
+          ) : value.trim() ? (
+            "Write it like 5/6, or 2 3/4 for a mixed number."
+          ) : (
+            "Type a fraction with /, like 5/6. For a mixed number leave a space: 2 3/4."
+          )}
+        </p>
+      )}
+
       {mixedScripts && !solved && (
         <p className="text-sm text-slate-500">
           {ne ? "नेपाली युनिकोड वा रोमन (English) अक्षरमा लेख्न सकिन्छ।" : "You can type in Nepali (Unicode) or Roman letters."}
@@ -116,6 +141,7 @@ export default function FillQuestion({
           <Rich text={question.hint} lang={lang} className="text-slate-700" />
         </Accordion>
       )}
+      {question.hints && !solved && <HintLadder hints={question.hints} lang={lang} />}
 
       {wrong && (
         <WhyBubble title={wrong.why ? undefined : ne ? "अझै मिलेन" : "Not quite"}>

@@ -3,6 +3,7 @@ import { shuffled } from "../../lib/answer";
 import type { McqQuestion as Mcq } from "../../types/content";
 import { Accordion, Rich, cx, useLang } from "../ui/primitives";
 import { Feedback, WhyBubble } from "./Feedback";
+import HintLadder from "./HintLadder";
 
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
 
@@ -71,6 +72,7 @@ export default function McqQuestion({
           <Rich text={question.hint} lang={question.lang} className="text-slate-700" />
         </Accordion>
       )}
+      {question.hints && !solved && <HintLadder hints={question.hints} lang={question.lang} />}
 
       <ul className="space-y-2.5" role="list">
         {order.map((optIndex, pos) => {

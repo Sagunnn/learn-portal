@@ -1,0 +1,342 @@
+{
+  "$schema": "../../../schema/lesson.schema.json",
+  "meta": {
+    "id": "math-fractions-visual",
+    "subject": "math",
+    "chapter": 2,
+    "title": "Mastering Fractions Visually",
+    "titleLocal": "भिन्न: चित्रबाट बुझौँ",
+    "summary": "See why equivalent fractions, mixed numbers, adding and multiplying work, with pictures you can drag and slice.",
+    "estMinutes": 35,
+    "tags": ["fractions", "interactive"]
+  },
+  "chunks": [
+    {
+      "type": "text",
+      "title": "What a fraction really means",
+      "body": [
+        "A fraction $\\dfrac{a}{b}$ means: cut one whole into **b equal pieces** and take **a** of them.",
+        "The bottom number (the **denominator**) tells you the *size* of the pieces. The top number (the **numerator**) *counts* them.",
+        "Everything in this chapter comes from that one idea."
+      ]
+    },
+    {
+      "type": "interactive",
+      "widget": "equivalentFractions",
+      "title": "Module 1 · The Knife & Glue",
+      "intro": [
+        "Use the knife to cut every piece into smaller pieces. The **number** of pieces changes, but the **amount** shaded never does.",
+        "That's why $\\dfrac{2}{3} = \\dfrac{8}{12}$: the top and bottom were both multiplied by the same number, $k = 4$."
+      ],
+      "props": { "a": 2, "b": 3, "k": 1 },
+      "tasks": [
+        "Drag the knife to $k = 4$. Check that $\\dfrac{2}{3}$ becomes $\\dfrac{8}{12}$ and the shaded part stays the same size.",
+        "Set the fraction to $\\dfrac{4}{6}$ (top 4, bottom 6) with $k = 1$, then press **Glue**. What do you get?",
+        "Find two different fractions that are equal to $\\dfrac{1}{2}$."
+      ]
+    },
+    {
+      "type": "callout",
+      "variant": "remember",
+      "title": "Equivalent fractions",
+      "body": [
+        "Multiply (or divide) the top **and** the bottom by the **same** number, and the value doesn't change:",
+        "$$\\frac{a}{b} = \\frac{a \\times k}{b \\times k}$$",
+        "**Simplest form**: divide the top and bottom by their HCF, so that no number except 1 goes into both."
+      ]
+    },
+    {
+      "type": "check",
+      "question": {
+        "id": "check-simplify",
+        "type": "fill",
+        "prompt": "Write $\\dfrac{12}{18}$ in its simplest form: ___",
+        "answers": ["2/3"],
+        "match": "fraction",
+        "simplest": true,
+        "mistakes": [
+          { "answers": ["6/9"], "why": "$\\dfrac{6}{9}$ is equal, but 6 and 9 can still both be divided by 3. Keep gluing!" },
+          { "answers": ["4/6"], "why": "Equal, but not simplest: 4 and 6 can both still be divided by 2." }
+        ],
+        "explanation": "The HCF of 12 and 18 is 6: $\\dfrac{12 \\div 6}{18 \\div 6} = \\dfrac{2}{3}$."
+      }
+    },
+    {
+      "type": "interactive",
+      "widget": "mixedNumberTank",
+      "title": "Module 2 · The Container Overflow Tank",
+      "intro": [
+        "An **improper fraction** has a top that is bigger than (or equal to) the bottom, like $\\dfrac{11}{4}$. It's more than one whole.",
+        "Each container holds 4 quarters. Pour in 11 quarters and watch the containers fill up one by one."
+      ],
+      "props": { "n": 11, "d": 4 },
+      "tasks": [
+        "Press **−** down to 4 pieces. The first container is full. What is $\\dfrac{4}{4}$ equal to?",
+        "Go back to $\\dfrac{11}{4}$. How many full containers are there, and how many pieces are left over?",
+        "Change the bottom to 3 and make $\\dfrac{7}{3}$. Write it as a mixed number."
+      ]
+    },
+    {
+      "type": "callout",
+      "variant": "tip",
+      "title": "The shortcut: divide",
+      "body": [
+        "To turn $\\dfrac{n}{d}$ into a mixed number, **divide** $n$ by $d$. The answer is the number of wholes; the **remainder** is the new top.",
+        "$$\\frac{11}{4}: \\quad 11 \\div 4 = 2 \\text{ remainder } 3 \\quad\\Rightarrow\\quad 2\\tfrac{3}{4}$$",
+        "Going back: $2\\tfrac{3}{4} = \\dfrac{2 \\times 4 + 3}{4} = \\dfrac{11}{4}$."
+      ]
+    },
+    {
+      "type": "check",
+      "question": {
+        "id": "check-mixed",
+        "type": "fill",
+        "prompt": "Write $\\dfrac{17}{5}$ as a mixed number: ___",
+        "answers": ["3 2/5"],
+        "match": "fraction",
+        "form": "mixed",
+        "mistakes": [
+          { "answers": ["2 2/5"], "why": "5 goes into 17 **three** times ($3 \\times 5 = 15$), not twice. Then $17 - 15 = 2$ pieces are left." },
+          { "answers": ["4 2/5"], "why": "$4 \\times 5 = 20$, which is more than 17. Only 3 containers fill up completely." }
+        ],
+        "explanation": "$17 \\div 5 = 3$ remainder $2$, so $\\dfrac{17}{5} = 3\\tfrac{2}{5}$."
+      }
+    },
+    {
+      "type": "text",
+      "title": "Why can't we just add the tops and the bottoms?",
+      "body": [
+        "Try $\\dfrac{1}{2} + \\dfrac{1}{3}$. Lots of people write $\\dfrac{2}{5}$.",
+        "But **halves** and **thirds** are different-sized pieces. You can't count them together, just as 1 metre + 1 centimetre isn't 2 of anything.",
+        "First, both fractions have to be cut into pieces of the **same size**."
+      ]
+    },
+    {
+      "type": "interactive",
+      "widget": "gridMerger",
+      "title": "Module 3 · The LCD Grid Merger",
+      "intro": "Box A is cut into columns, Box B into rows. Press **①** to give both boxes the same grid, then **②** to pour the pieces together.",
+      "props": { "a1": 1, "b1": 2, "a2": 1, "b2": 3 },
+      "tasks": [
+        "Press ① and ② for $\\dfrac{1}{2} + \\dfrac{1}{3}$. Is the answer $\\dfrac{2}{5}$?",
+        "Try $\\dfrac{1}{4} + \\dfrac{1}{6}$. The grid gives 24ths. What is the answer in simplest form?",
+        "Try $\\dfrac{2}{3} + \\dfrac{3}{4}$. Why does the answer need two boxes?"
+      ]
+    },
+    {
+      "type": "formula",
+      "title": "Adding fractions",
+      "items": [
+        { "tex": "\\frac{a}{b} + \\frac{c}{d} = \\frac{a \\times d + c \\times b}{b \\times d}", "label": "Always works (the grid method)" },
+        { "tex": "\\frac{1}{4} + \\frac{1}{6} = \\frac{3}{12} + \\frac{2}{12} = \\frac{5}{12}", "label": "Quicker with the LCD, 12" }
+      ],
+      "caption": "Only add the **tops** once the **bottoms** match. The bottom names the piece size, so it stays the same."
+    },
+    {
+      "type": "check",
+      "question": {
+        "id": "check-add",
+        "type": "mcq",
+        "prompt": "$\\dfrac{2}{5} + \\dfrac{1}{3} = \\;?$",
+        "options": [
+          { "text": "$\\dfrac{11}{15}$", "correct": true },
+          { "text": "$\\dfrac{3}{8}$", "why": "Careful! Did you add the denominators straight across? Fifths and thirds are different sizes. Check the Grid Merger above!" },
+          { "text": "$\\dfrac{3}{15}$", "why": "You found the common denominator (15) but didn't change the tops: $\\dfrac{2}{5} = \\dfrac{6}{15}$ and $\\dfrac{1}{3} = \\dfrac{5}{15}$." },
+          { "text": "$\\dfrac{2}{15}$", "why": "That's $\\dfrac{2}{5} \\times \\dfrac{1}{3}$: multiplying, not adding." }
+        ],
+        "explanation": "$\\dfrac{2}{5} + \\dfrac{1}{3} = \\dfrac{6}{15} + \\dfrac{5}{15} = \\dfrac{11}{15}$"
+      }
+    },
+    {
+      "type": "interactive",
+      "widget": "areaOverlap",
+      "title": "Module 4 · The Area Overlap Grid",
+      "intro": [
+        "What is $\\dfrac{2}{3}$ **of** $\\dfrac{3}{4}$? In maths, *of* means **×**.",
+        "Blue covers $\\dfrac{2}{3}$ of the width. Yellow covers $\\dfrac{3}{4}$ of the height. The green overlap is $\\dfrac{2}{3}$ of $\\dfrac{3}{4}$."
+      ],
+      "props": { "a": 2, "b": 3, "c": 3, "d": 4 },
+      "tasks": [
+        "Count the green squares and all the squares. Does it match $\\dfrac{2 \\times 3}{3 \\times 4} = \\dfrac{6}{12}$?",
+        "Make $\\dfrac{1}{2} \\times \\dfrac{1}{2}$. Why is the answer smaller than $\\dfrac{1}{2}$?",
+        "Set yellow to $\\dfrac{4}{4}$ (all the rows). What happens to the green, and why?"
+      ]
+    },
+    {
+      "type": "callout",
+      "variant": "remember",
+      "title": "Multiplying fractions",
+      "body": [
+        "Multiply the tops, multiply the bottoms: $\\dfrac{a}{b} \\times \\dfrac{c}{d} = \\dfrac{a \\times c}{b \\times d}$",
+        "No common denominator needed!",
+        "When both fractions are less than 1, the answer is smaller than both: you're taking a part **of** a part."
+      ]
+    },
+    {
+      "type": "check",
+      "question": {
+        "id": "check-multiply",
+        "type": "fill",
+        "prompt": "$\\dfrac{3}{5} \\times \\dfrac{2}{3} = $ ___ (simplest form)",
+        "answers": ["2/5"],
+        "match": "fraction",
+        "simplest": true,
+        "mistakes": [
+          { "answers": ["6/15"], "why": "The multiplying is right! Now simplify: 6 and 15 can both be divided by 3." },
+          { "answers": ["5/8"], "why": "You added the tops and the bottoms. To multiply, **multiply** them: $3 \\times 2$ over $5 \\times 3$." },
+          { "answers": ["19/15", "1 4/15"], "why": "That's $\\dfrac{3}{5} + \\dfrac{2}{3}$. The sign here is ×." }
+        ],
+        "explanation": "$\\dfrac{3 \\times 2}{5 \\times 3} = \\dfrac{6}{15} = \\dfrac{2}{5}$"
+      }
+    }
+  ],
+  "flashcards": [
+    { "id": "meaning", "front": "What do the top and bottom of $\\dfrac{a}{b}$ mean?", "back": "Bottom: how many equal pieces the whole is cut into.\nTop: how many of those pieces you take.", "tag": "Basics" },
+    { "id": "equivalent", "front": "How do you make an equivalent fraction?", "back": "Multiply (or divide) the top **and** the bottom by the same number.\n$\\dfrac{2}{3} = \\dfrac{8}{12}$", "tag": "Module 1" },
+    { "id": "simplest", "front": "How do you simplify $\\dfrac{12}{18}$?", "back": "Divide the top and bottom by the HCF, 6:\n$\\dfrac{2}{3}$", "tag": "Module 1" },
+    { "id": "mixed", "front": "Turn $\\dfrac{11}{4}$ into a mixed number.", "back": "$11 \\div 4 = 2$ remainder $3$\n$2\\tfrac{3}{4}$", "tag": "Module 2" },
+    { "id": "improper", "front": "Turn $3\\tfrac{1}{2}$ into an improper fraction.", "back": "$\\dfrac{3 \\times 2 + 1}{2} = \\dfrac{7}{2}$", "tag": "Module 2" },
+    { "id": "adding", "front": "$\\dfrac{1}{2} + \\dfrac{1}{3} = \\;?$", "back": "$\\dfrac{3}{6} + \\dfrac{2}{6} = \\dfrac{5}{6}$\nNot $\\dfrac{2}{5}$! Match the bottoms first.", "tag": "Module 3" },
+    { "id": "multiplying", "front": "$\\dfrac{2}{3} \\times \\dfrac{3}{4} = \\;?$", "back": "$\\dfrac{2 \\times 3}{3 \\times 4} = \\dfrac{6}{12} = \\dfrac{1}{2}$", "tag": "Module 4" },
+    { "id": "of", "front": "What does *of* mean in \"$\\dfrac{1}{2}$ of $\\dfrac{1}{3}$\"?", "back": "Multiply: $\\dfrac{1}{2} \\times \\dfrac{1}{3} = \\dfrac{1}{6}$", "tag": "Module 4" }
+  ],
+  "quiz": {
+    "passPercent": 60,
+    "questions": [
+      {
+        "id": "p-equivalent",
+        "type": "fill",
+        "prompt": "$\\dfrac{3}{4} = \\dfrac{\\square}{20}$. The missing number is ___",
+        "answers": ["15"],
+        "match": "number",
+        "mistakes": [
+          { "answers": ["19"], "why": "You **added** 16 to the top because $4 + 16 = 20$. Equivalent fractions **multiply**: $4 \\times 5 = 20$, so the top becomes $3 \\times 5$." },
+          { "answers": ["5"], "why": "5 is the multiplier ($4 \\times 5 = 20$). Now multiply the top by it too: $3 \\times 5$." }
+        ],
+        "hints": [
+          "How many times bigger is 20 than 4?",
+          "$4 \\times 5 = 20$. Whatever you do to the bottom, do to the top.",
+          { "text": "$\\dfrac{3}{4} = \\dfrac{3 \\times 5}{4 \\times 5} = \\dfrac{15}{20}$. The knife cuts each quarter into 5, so 15 of the 20 pieces are shaded.", "visual": { "kind": "bar", "n": 3, "d": 4, "k": 5 } }
+        ],
+        "explanation": "$\\dfrac{3}{4} = \\dfrac{15}{20}$"
+      },
+      {
+        "id": "p-mixed",
+        "type": "fill",
+        "prompt": "Write $\\dfrac{23}{6}$ as a mixed number: ___",
+        "answers": ["3 5/6"],
+        "match": "fraction",
+        "form": "mixed",
+        "mistakes": [
+          { "answers": ["4 1/6"], "why": "$6 \\times 4 = 24$, which is **more** than 23. Only 3 containers fill up completely." },
+          { "answers": ["3 1/6"], "why": "Check the leftovers: $3 \\times 6 = 18$, and $23 - 18 = 5$, not 1." }
+        ],
+        "hints": [
+          "How many 6s fit into 23?",
+          "$6 \\times 3 = 18$ and $23 - 18 = 5$. So 3 full containers, with 5 pieces left over.",
+          { "text": "$\\dfrac{23}{6} = 3\\tfrac{5}{6}$", "visual": { "kind": "tank", "n": 23, "d": 6 } }
+        ],
+        "explanation": "$23 \\div 6 = 3$ remainder $5$, so $\\dfrac{23}{6} = 3\\tfrac{5}{6}$."
+      },
+      {
+        "id": "p-add-unlike",
+        "type": "fill",
+        "prompt": "$\\dfrac{1}{4} + \\dfrac{2}{3} = $ ___",
+        "answers": ["11/12"],
+        "match": "fraction",
+        "simplest": true,
+        "mistakes": [
+          { "answers": ["3/7"], "why": "Careful! Did you add the denominators straight across? Quarters and thirds are different sizes. Check the Grid Merger above!" },
+          { "answers": ["3/12"], "why": "You made the bottoms match (12) but forgot to change the tops: $\\dfrac{1}{4} = \\dfrac{3}{12}$ and $\\dfrac{2}{3} = \\dfrac{8}{12}$." },
+          { "answers": ["2/12"], "why": "That's multiplying: $\\dfrac{1 \\times 2}{4 \\times 3}$. This question adds." }
+        ],
+        "hints": [
+          "Quarters and thirds are different-sized pieces. What smaller piece could both be cut into?",
+          "Both 4 and 3 go into 12: $\\dfrac{1}{4} = \\dfrac{3}{12}$ and $\\dfrac{2}{3} = \\dfrac{8}{12}$.",
+          { "text": "$\\dfrac{3}{12} + \\dfrac{8}{12} = \\dfrac{11}{12}$", "visual": { "kind": "sum", "a": [1, 4], "b": [2, 3] } }
+        ],
+        "explanation": "$\\dfrac{1}{4} + \\dfrac{2}{3} = \\dfrac{3}{12} + \\dfrac{8}{12} = \\dfrac{11}{12}$"
+      },
+      {
+        "id": "p-add-overflow",
+        "type": "mcq",
+        "prompt": "$\\dfrac{5}{6} + \\dfrac{1}{2} = \\;?$",
+        "options": [
+          { "text": "$1\\tfrac{1}{3}$", "correct": true },
+          { "text": "$\\dfrac{6}{8}$", "why": "Careful! Did you add the denominators straight across? Check the Grid Merger above!" },
+          { "text": "$\\dfrac{6}{6}$", "why": "You matched the bottoms (sixths) but didn't change $\\dfrac{1}{2}$ into $\\dfrac{3}{6}$." },
+          { "text": "$\\dfrac{5}{12}$", "why": "That's $\\dfrac{5}{6} \\times \\dfrac{1}{2}$: multiplying, not adding." }
+        ],
+        "hints": [
+          "How many sixths make one half?",
+          "$\\dfrac{1}{2} = \\dfrac{3}{6}$, so the sum is $\\dfrac{5}{6} + \\dfrac{3}{6}$.",
+          { "text": "$\\dfrac{8}{6} = \\dfrac{4}{3} = 1\\tfrac{1}{3}$. It's more than one whole, so it spills into a second box.", "visual": { "kind": "sum", "a": [5, 6], "b": [1, 2] } }
+        ],
+        "explanation": "$\\dfrac{5}{6} + \\dfrac{3}{6} = \\dfrac{8}{6} = \\dfrac{4}{3} = 1\\tfrac{1}{3}$"
+      },
+      {
+        "id": "p-multiply-of",
+        "type": "fill",
+        "prompt": "A garden covers $\\dfrac{3}{4}$ of a field. Vegetables grow on $\\dfrac{2}{5}$ of the garden. What fraction of the **whole field** grows vegetables? ___",
+        "answers": ["3/10"],
+        "match": "fraction",
+        "simplest": true,
+        "mistakes": [
+          { "answers": ["6/20"], "why": "The multiplying is right! Now simplify: divide the top and bottom by 2." },
+          { "answers": ["5/9"], "why": "You added the tops and the bottoms. *Of* means **multiply**." },
+          { "answers": ["23/20", "1 3/20"], "why": "That's $\\dfrac{3}{4} + \\dfrac{2}{5}$. A part **of** a part means multiplying." }
+        ],
+        "hints": [
+          "The word *of* means multiply. You want $\\dfrac{2}{5}$ **of** $\\dfrac{3}{4}$.",
+          "Multiply the tops and the bottoms: $\\dfrac{2 \\times 3}{5 \\times 4}$.",
+          { "text": "$\\dfrac{6}{20} = \\dfrac{3}{10}$. The green overlap is 6 of the 20 squares.", "visual": { "kind": "product", "a": [3, 4], "b": [2, 5] } }
+        ],
+        "explanation": "$\\dfrac{2}{5} \\times \\dfrac{3}{4} = \\dfrac{6}{20} = \\dfrac{3}{10}$"
+      }
+    ]
+  },
+  "cheatSheet": {
+    "title": "Fractions: formula & picture summary",
+    "items": [
+      {
+        "title": "1 · Equivalent fractions",
+        "tex": "\\frac{a}{b} = \\frac{a \\times k}{b \\times k}",
+        "visual": { "kind": "bar", "n": 2, "d": 3, "k": 4 },
+        "body": "Same amount, more cuts: $\\tfrac{2}{3} = \\tfrac{8}{12}$."
+      },
+      {
+        "title": "2 · Simplest form",
+        "tex": "\\frac{12}{18} = \\frac{12 \\div 6}{18 \\div 6} = \\frac{2}{3}",
+        "visual": { "kind": "pie", "n": 2, "d": 3 },
+        "body": "Divide the top and bottom by their HCF."
+      },
+      {
+        "title": "3 · Improper → mixed number",
+        "tex": "\\frac{11}{4} = 2\\tfrac{3}{4}",
+        "visual": { "kind": "tank", "n": 11, "d": 4 },
+        "body": "Divide: $11 \\div 4 = 2$ remainder $3$. Back again: $\\tfrac{2 \\times 4 + 3}{4}$."
+      },
+      {
+        "title": "4 · Adding (different bottoms)",
+        "tex": "\\frac{1}{2} + \\frac{1}{3} = \\frac{3}{6} + \\frac{2}{6} = \\frac{5}{6}",
+        "visual": { "kind": "sum", "a": [1, 2], "b": [1, 3] },
+        "body": "Match the bottoms first. **Never** add the bottoms: $\\tfrac{1}{2} + \\tfrac{1}{3} \\neq \\tfrac{2}{5}$."
+      },
+      {
+        "title": "5 · Multiplying",
+        "tex": "\\frac{2}{3} \\times \\frac{3}{4} = \\frac{6}{12} = \\frac{1}{2}",
+        "visual": { "kind": "product", "a": [2, 3], "b": [3, 4] },
+        "body": "Tops × tops, bottoms × bottoms. *Of* means ×."
+      },
+      {
+        "title": "6 · Trap checklist",
+        "body": [
+          "- Adding or subtracting? Make the bottoms match first.",
+          "- Multiplying? No common bottom needed.",
+          "- Is the answer in simplest form?",
+          "- Top bigger than bottom? Write a mixed number if the question asks."
+        ]
+      }
+    ]
+  }
+}
