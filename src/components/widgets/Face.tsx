@@ -5,7 +5,7 @@
 export type Mood = "happy" | "sour" | "wow" | "calm" | "strain" | "curious";
 
 export default function Face({ x, y, scale = 1, mood = "happy" }: { x: number; y: number; scale?: number; mood?: Mood }) {
-  const ink = "#3D405B";
+  const ink = "#1e293b";
   return (
     <g transform={`translate(${x} ${y}) scale(${scale})`} aria-hidden style={{ transition: "transform 300ms" }}>
       {/* cheeks */}

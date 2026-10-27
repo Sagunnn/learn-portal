@@ -7,21 +7,21 @@ export function Mascot({ size = 52, mood = "happy", className }: { size?: number
     <svg viewBox="0 0 48 48" width={size} height={size} className={cx("shrink-0 animate-breathe", className)} aria-hidden>
       <defs>
         <linearGradient id="tara-g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#E07A5F" />
-          <stop offset="1" stopColor="#E9A47F" />
+          <stop offset="0" stopColor="#6366f1" />
+          <stop offset="1" stopColor="#8b5cf6" />
         </linearGradient>
       </defs>
-      <line x1="24" y1="7" x2="24" y2="11" stroke="#E9B44C" strokeWidth="2.5" strokeLinecap="round" />
-      <polygon points="24.00,0.40 25.06,3.14 27.99,3.30 25.71,5.16 26.47,8.00 24.00,6.40 21.53,8.00 22.29,5.16 20.01,3.30 22.94,3.14" fill="#E9B44C" />
+      <line x1="24" y1="7" x2="24" y2="11" stroke="#f59e0b" strokeWidth="2.5" strokeLinecap="round" />
+      <polygon points="24.00,0.40 25.06,3.14 27.99,3.30 25.71,5.16 26.47,8.00 24.00,6.40 21.53,8.00 22.29,5.16 20.01,3.30 22.94,3.14" fill="#fbbf24" />
       <rect x="4" y="10" width="40" height="34" rx="13" fill="url(#tara-g)" />
-      <rect x="4" y="38" width="40" height="6" rx="3" fill="#C45B40" opacity="0.45" />
-      <circle cx="11" cy="31" r="3" fill="#F6C9B6" />
-      <circle cx="37" cy="31" r="3" fill="#F6C9B6" />
+      <rect x="4" y="38" width="40" height="6" rx="3" fill="#4338ca" opacity="0.45" />
+      <circle cx="11" cy="31" r="3" fill="#c4b5fd" />
+      <circle cx="37" cy="31" r="3" fill="#c4b5fd" />
       <g className="tara-eyes">
         <ellipse cx="17" cy="25" rx="4.2" ry={mood === "think" ? 3 : 5} fill="white" />
         <ellipse cx="31" cy="25" rx="4.2" ry={mood === "think" ? 3 : 5} fill="white" />
-        <circle cx={mood === "think" ? 19 : 18} cy={mood === "think" ? 24 : 26} r="2.1" fill="#3D405B" />
-        <circle cx={mood === "think" ? 33 : 32} cy={mood === "think" ? 24 : 26} r="2.1" fill="#3D405B" />
+        <circle cx={mood === "think" ? 19 : 18} cy={mood === "think" ? 24 : 26} r="2.1" fill="#1e1b4b" />
+        <circle cx={mood === "think" ? 33 : 32} cy={mood === "think" ? 24 : 26} r="2.1" fill="#1e1b4b" />
       </g>
       {mood === "cheer" ? (
         <path d="M17 33 q7 7 14 0 z" fill="white" />
@@ -51,7 +51,7 @@ export function Bubble({ children, tone = "plain", isNew = false }: { children: 
     <div
       className={cx(
         "relative w-fit max-w-full rounded-3xl rounded-tl-md border-2 px-5 py-3.5 text-lg font-semibold leading-relaxed",
-        tone === "indigo" ? "border-orange-200 bg-orange-50 text-slate-800" : "border-slate-200 bg-white text-slate-800",
+        tone === "indigo" ? "border-indigo-100 bg-indigo-50 text-slate-800" : "border-slate-200 bg-white text-slate-800",
         isNew && "animate-bubble",
       )}
     >

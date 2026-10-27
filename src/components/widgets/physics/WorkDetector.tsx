@@ -78,7 +78,7 @@ export default function WorkDetector({ scenario: sc0 = 0, onState }: { scenario?
         ))}
       </div>
 
-      <div className="rounded-2xl border-2 border-b-4 border-slate-200 bg-gradient-to-b from-amber-50/60 to-white p-2">
+      <div className="rounded-2xl border-2 border-b-4 border-slate-200 bg-gradient-to-b from-slate-50 to-white p-2">
         <svg viewBox="0 0 800 260" className="block h-auto w-full select-none">
           <rect x={0} y={ground} width={800} height={50} fill="#e2e8f0" />
           {isCart && (

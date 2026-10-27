@@ -102,7 +102,7 @@ export default function LearnRunner({ lesson, onCards, onQuiz }: { lesson: Lesso
   if (finished) {
     return (
       <div className="mx-auto max-w-3xl">
-        <div className="animate-pop rounded-3xl border-4 border-slate-100 bg-white p-8 text-center shadow-cozy sm:p-10">
+        <div className="animate-pop rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-cozy sm:p-10">
           <Mascot size={96} mood="cheer" className="mx-auto" />
           <h2 className="mt-4 text-3xl font-semibold text-slate-800">{ne ? "पाठ पूरा भयो!" : "Lesson complete!"}</h2>
           <p className="mt-2 text-lg text-slate-600">{ne ? "अब फ्ल्यासकार्ड वा क्विज?" : "Lock it in with flashcards or the quiz."}</p>
@@ -150,7 +150,7 @@ export default function LearnRunner({ lesson, onCards, onQuiz }: { lesson: Lesso
         </div>
 
         {/* the stage: one activity at a time */}
-        <section key={index} className="animate-rise rounded-3xl border-4 border-slate-100 bg-white p-5 shadow-cozy sm:p-8">
+        <section key={index} className="animate-rise rounded-3xl border border-slate-200 bg-white p-5 shadow-cozy sm:p-8">
           <ChunkView
             chunk={chunk}
             reveal={seg + 1}
@@ -163,7 +163,7 @@ export default function LearnRunner({ lesson, onCards, onQuiz }: { lesson: Lesso
         </section>
 
         {/* Duolingo-style stepper bar */}
-        <div className="sticky bottom-0 z-20 -mx-4 mt-6 border-t-2 border-slate-200 bg-slate-50/95 px-4 pb-4 pt-3 backdrop-blur sm:mx-0 sm:rounded-t-3xl sm:border-x-2 sm:px-5">
+        <div className="sticky bottom-0 z-20 -mx-4 mt-6 border-t border-slate-200 bg-white/95 px-4 pb-4 pt-3 shadow-[0_-4px_24px_rgb(15_23_42/0.06)] backdrop-blur sm:mx-0 sm:rounded-t-3xl sm:border-x sm:px-5">
           {hint && (
             <p className="mb-2 text-center text-base font-semibold text-slate-500" aria-live="polite">
               {hint}

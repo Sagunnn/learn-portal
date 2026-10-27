@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router";
+import { Printer } from "lucide-react";
+import SubjectIcon from "../components/ui/SubjectIcon";
 import FlashcardDeck from "../components/lesson/FlashcardDeck";
 import PrintSheet from "../components/lesson/PrintSheet";
 import LearnRunner from "../components/lesson/LearnRunner";
@@ -88,7 +90,7 @@ export default function LessonPage() {
   return (
     <LangProvider value={lang}>
       {lesson?.cheatSheet && <PrintSheet sheet={lesson.cheatSheet} title={entry.meta.title} subject={subject?.name} />}
-      <div className="space-y-6 print:hidden">
+      <div className="mx-auto max-w-3xl space-y-6 print:hidden">
         <nav className="flex items-center gap-2 text-base font-semibold text-slate-500">
           <Link to="/" className="hover:text-slate-800">
             Dashboard
@@ -96,7 +98,9 @@ export default function LessonPage() {
           <span aria-hidden>/</span>
           {subject && (
             <Link to={`/subject/${subject.id}`} className={cx("hover:underline", theme.text)}>
-              {subject.icon} {subject.name}
+              <span className="inline-flex items-center gap-1.5">
+                <SubjectIcon subject={subject} size={18} /> {subject.name}
+              </span>
             </Link>
           )}
         </nav>
@@ -141,7 +145,7 @@ export default function LessonPage() {
                 await document.fonts?.ready;
                 window.print();
               }} title="Print a one-page formula and picture summary">
-              🖨 {ne ? "एक पाने सारांश प्रिन्ट" : "Print 1-page summary"}
+              <Printer size={18} aria-hidden /> {ne ? "एक पाने सारांश प्रिन्ट" : "Print 1-page summary"}
             </Button>
           )}
           </div>

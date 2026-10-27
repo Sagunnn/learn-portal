@@ -7,7 +7,8 @@
       "nameLocal": "विज्ञान",
       "description": "Living things, matter, energy and the world around you.",
       "icon": "🔬",
-      "theme": "emerald"
+      "theme": "emerald",
+      "iconKey": "flask"
     },
     {
       "id": "math",
@@ -15,7 +16,8 @@
       "nameLocal": "गणित",
       "description": "Numbers, algebra and geometry, one idea at a time.",
       "icon": "📐",
-      "theme": "indigo"
+      "theme": "indigo",
+      "iconKey": "calculator"
     },
     {
       "id": "nepali",
@@ -23,7 +25,8 @@
       "nameLocal": "नेपाली व्याकरण",
       "description": "उपसर्ग, प्रत्यय, अव्यय र शब्द निर्माण।",
       "icon": "📜",
-      "theme": "rose"
+      "theme": "rose",
+      "iconKey": "book"
     }
   ]
 }

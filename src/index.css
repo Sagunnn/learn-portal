@@ -6,30 +6,12 @@
   --font-display: "Fredoka Variable", "Nunito Variable", "Mukta", ui-rounded, sans-serif;
   --font-deva: "Mukta", "Noto Sans Devanagari", "Nunito Variable", sans-serif;
 
-  /* Cozy storybook palette. Tailwind's colour names are remapped so every screen
-     shares it: slate = warm oat → charcoal, indigo = coral (primary), emerald/green = sage
-     (success), amber/yellow = honey (energy), rose/red = soft brick (wrong / opposing),
-     violet/purple = periwinkle (vectors), sky/teal/cyan = ocean teal, blue = cornflower. */
-  --color-white: #fffefb;
-  --color-black: #2c302e;
-  --color-slate-50: #FDFBF7; --color-slate-100: #F7F4EB; --color-slate-200: #E8E2D5; --color-slate-300: #D8D0BF; --color-slate-400: #ADA79A; --color-slate-500: #7A7D7B; --color-slate-600: #5F6361; --color-slate-700: #4A4E57; --color-slate-800: #3D405B; --color-slate-900: #2C302E; --color-slate-950: #232624;
-  --color-indigo-50: #FDF2EC; --color-indigo-100: #FBE3D8; --color-indigo-200: #F6C9B6; --color-indigo-300: #EFAA90; --color-indigo-400: #EB9A7F; --color-indigo-500: #E5866A; --color-indigo-600: #E07A5F; --color-indigo-700: #CF6A4E; --color-indigo-800: #C45B40; --color-indigo-900: #94432F; --color-indigo-950: #5E2A1D;
-  --color-emerald-50: #F1F8F3; --color-emerald-100: #E6F4EC; --color-emerald-200: #CCE7D6; --color-emerald-300: #A8D4B8; --color-emerald-400: #7DBB95; --color-emerald-500: #529E72; --color-emerald-600: #468A62; --color-emerald-700: #3A7351; --color-emerald-800: #2F5D42; --color-emerald-900: #254A35; --color-emerald-950: #16301F;
-  --color-green-50: #F1F8F3; --color-green-100: #E6F4EC; --color-green-200: #CCE7D6; --color-green-300: #A8D4B8; --color-green-400: #7DBB95; --color-green-500: #529E72; --color-green-600: #468A62; --color-green-700: #3A7351; --color-green-800: #2F5D42; --color-green-900: #254A35; --color-green-950: #16301F;
-  --color-amber-50: #FDF8EC; --color-amber-100: #FAEFD3; --color-amber-200: #F4DDA6; --color-amber-300: #EFCB7A; --color-amber-400: #E9B44C; --color-amber-500: #DDA138; --color-amber-600: #C0862A; --color-amber-700: #9C6A22; --color-amber-800: #7D5520; --color-amber-900: #66461D; --color-amber-950: #3A260E;
-  --color-yellow-50: #FFFBEB; --color-yellow-100: #FFF3C9; --color-yellow-200: #FFE8A3; --color-yellow-300: #FFDB7A; --color-yellow-400: #F8CC5C; --color-yellow-500: #E9B44C; --color-yellow-600: #C0862A; --color-yellow-700: #9C6A22; --color-yellow-800: #7D5520; --color-yellow-900: #66461D; --color-yellow-950: #3A260E;
-  --color-orange-50: #FFF4EC; --color-orange-100: #FFE6D3; --color-orange-200: #FFD6A5; --color-orange-300: #FCC089; --color-orange-400: #F6A667; --color-orange-500: #EE8F4D; --color-orange-600: #DB7638; --color-orange-700: #B65F2E; --color-orange-800: #8F4B27; --color-orange-900: #713E23; --color-orange-950: #40220F;
-  --color-rose-50: #FCF1F0; --color-rose-100: #F8E0DE; --color-rose-200: #F1C4C0; --color-rose-300: #E6A09A; --color-rose-400: #D97B74; --color-rose-500: #C9605A; --color-rose-600: #B04D48; --color-rose-700: #923F3B; --color-rose-800: #773634; --color-rose-900: #622F2D; --color-rose-950: #3A1A19;
-  --color-red-50: #FCF1F0; --color-red-100: #F8E0DE; --color-red-200: #F1C4C0; --color-red-300: #E6A09A; --color-red-400: #D97B74; --color-red-500: #C9605A; --color-red-600: #B04D48; --color-red-700: #923F3B; --color-red-800: #773634; --color-red-900: #622F2D; --color-red-950: #3A1A19;
-  --color-violet-50: #F3F3FA; --color-violet-100: #E6E7F4; --color-violet-200: #CDD0EA; --color-violet-300: #ADB1DA; --color-violet-400: #9298CB; --color-violet-500: #7C83BC; --color-violet-600: #686FA8; --color-violet-700: #565C8D; --color-violet-800: #474C73; --color-violet-900: #3C405F; --color-violet-950: #25283C;
-  --color-purple-50: #F3F3FA; --color-purple-100: #E6E7F4; --color-purple-200: #CDD0EA; --color-purple-300: #ADB1DA; --color-purple-400: #9298CB; --color-purple-500: #7C83BC; --color-purple-600: #686FA8; --color-purple-700: #565C8D; --color-purple-800: #474C73; --color-purple-900: #3C405F; --color-purple-950: #25283C;
-  --color-fuchsia-50: #FBF1F6; --color-fuchsia-100: #F6E1EC; --color-fuchsia-200: #EDC4D9; --color-fuchsia-300: #E1A2C1; --color-fuchsia-400: #D483AB; --color-fuchsia-500: #C26B96; --color-fuchsia-600: #A85780; --color-fuchsia-700: #8A4769; --color-fuchsia-800: #713C57; --color-fuchsia-900: #5E344A; --color-fuchsia-950: #3A1E2D;
-  --color-sky-50: #EEF7F7; --color-sky-100: #DAEFEF; --color-sky-200: #B8E0E1; --color-sky-300: #A8DADC; --color-sky-400: #6FB8BA; --color-sky-500: #4F9FA1; --color-sky-600: #3D8B8D; --color-sky-700: #33737A; --color-sky-800: #2D5E64; --color-sky-900: #284E53; --color-sky-950: #17302F;
-  --color-teal-50: #EEF7F7; --color-teal-100: #DAEFEF; --color-teal-200: #B8E0E1; --color-teal-300: #A8DADC; --color-teal-400: #6FB8BA; --color-teal-500: #4F9FA1; --color-teal-600: #3D8B8D; --color-teal-700: #33737A; --color-teal-800: #2D5E64; --color-teal-900: #284E53; --color-teal-950: #17302F;
-  --color-cyan-50: #EEF7F7; --color-cyan-100: #DAEFEF; --color-cyan-200: #B8E0E1; --color-cyan-300: #A8DADC; --color-cyan-400: #6FB8BA; --color-cyan-500: #4F9FA1; --color-cyan-600: #3D8B8D; --color-cyan-700: #33737A; --color-cyan-800: #2D5E64; --color-cyan-900: #284E53; --color-cyan-950: #17302F;
-  --color-blue-50: #EFF4FA; --color-blue-100: #DCE7F5; --color-blue-200: #BDD2EC; --color-blue-300: #96B8E0; --color-blue-400: #7C9FD3; --color-blue-500: #6488C4; --color-blue-600: #5172AE; --color-blue-700: #445E8F; --color-blue-800: #3B5075; --color-blue-900: #344561; --color-blue-950: #1F2A3C;
+  /* Crisp, vibrant palette: Tailwind's default colours on a cool off-white page.
+     indigo = primary, emerald = success / scalars, amber = energy / force,
+     rose = wrong / opposing. */
+  --color-page: #f4f6f9;
 
-  --shadow-cozy: 0 8px 30px rgb(224 122 95 / 0.08), 0 2px 6px rgb(61 64 91 / 0.04);
+  --shadow-cozy: 0 4px 24px rgb(15 23 42 / 0.06), 0 1px 2px rgb(15 23 42 / 0.05);
   --animate-breathe: breathe 3s ease-in-out infinite;
 
   --animate-pop: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -63,11 +45,11 @@
   }
   /* "positive shake": a quick happy wiggle with a green glow ring */
   @keyframes celebrate {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgb(82 158 114 / 0.5); }
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgb(16 185 129 / 0.5); }
     25% { transform: scale(1.03) rotate(-1deg); }
     50% { transform: scale(1.03) rotate(1deg); }
     75% { transform: scale(1.01) rotate(0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 16px rgb(82 158 114 / 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 16px rgb(16 185 129 / 0); }
   }
   @keyframes badge-light {
     0% { transform: scale(0.6); }
@@ -94,7 +76,7 @@
     }
   }
   body {
-    @apply bg-slate-50 leading-relaxed text-slate-800 antialiased;
+    @apply bg-page leading-relaxed text-slate-800 antialiased;
   }
   h1,
   h2,
@@ -354,7 +336,7 @@
   appearance: none;
   height: 16px;
   border-radius: 999px;
-  background: #e8e2d5;
+  background: #e2e8f0;
   outline-offset: 6px;
   cursor: pointer;
 }
@@ -363,9 +345,9 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: var(--thumb, #e07a5f);
-  border: 5px solid #fffefb;
-  box-shadow: 0 3px 0 rgb(61 64 91 / 0.25), 0 4px 12px rgb(61 64 91 / 0.15);
+  background: var(--thumb, #4f46e5);
+  border: 5px solid #ffffff;
+  box-shadow: 0 3px 0 rgb(15 23 42 / 0.2), 0 4px 12px rgb(15 23 42 / 0.12);
   cursor: grab;
   transition: transform 150ms ease;
 }
@@ -377,9 +359,9 @@
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: var(--thumb, #e07a5f);
-  border: 5px solid #fffefb;
-  box-shadow: 0 3px 0 rgb(61 64 91 / 0.25);
+  background: var(--thumb, #4f46e5);
+  border: 5px solid #ffffff;
+  box-shadow: 0 3px 0 rgb(15 23 42 / 0.2);
   cursor: grab;
 }
 

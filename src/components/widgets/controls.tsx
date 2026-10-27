@@ -15,7 +15,7 @@ export function Slider({
   min,
   max,
   onChange,
-  color = "#E07A5F",
+  color = "#4f46e5",
   hint,
   step = 1,
 }: {
@@ -57,7 +57,7 @@ export function Slider({
           aria-valuetext={hint}
           onChange={(e) => onChange(Number(e.target.value))}
           className="range min-w-0 flex-1"
-          style={{ "--thumb": color, background: `linear-gradient(to right, ${color} ${pct}%, #E8E2D5 ${pct}%)` } as CSSProperties}
+          style={{ "--thumb": color, background: `linear-gradient(to right, ${color} ${pct}%, #e2e8f0 ${pct}%)` } as CSSProperties}
         />
         <button type="button" className={btn} onClick={() => nudge(1)} disabled={value >= max} aria-label="Increase">
           +

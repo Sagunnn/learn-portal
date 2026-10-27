@@ -13,6 +13,8 @@ export interface Subject {
   nameLocal?: string;
   description: string;
   icon: string;
+  /** SVG icon name: flask, atom, calculator, compass, book, feather, globe, leaf */
+  iconKey?: string;
   theme: ThemeName;
 }
 

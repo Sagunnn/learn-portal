@@ -161,7 +161,7 @@ function Interactive({ chunk }: { chunk: InteractiveChunk }) {
                   }}
                   className={cx(
                     "flex items-center gap-3 rounded-2xl border-2 px-4 py-3 text-lg transition-colors duration-300",
-                    ok ? "border-emerald-300 bg-emerald-50" : "border-amber-200 bg-amber-50/60",
+                    ok ? "border-emerald-300 bg-emerald-50" : "border-slate-200 bg-white",
                     justSolved === c.id && "animate-celebrate",
                   )}
                 >
@@ -207,7 +207,7 @@ function Tasks({ tasks }: { tasks: string[] | (string | string[])[] }) {
           }}
           className={cx(
             "flex w-fit max-w-full items-start gap-2 rounded-3xl rounded-tl-md border-2 px-5 py-3 text-left font-sans text-lg font-semibold transition-colors",
-            done.has(i) ? "border-emerald-200 bg-emerald-50 text-emerald-800" : "border-orange-200 bg-orange-50 text-slate-800 hover:bg-orange-100",
+            done.has(i) ? "border-emerald-200 bg-emerald-50 text-emerald-800" : "border-indigo-100 bg-indigo-50 text-slate-800 hover:bg-indigo-100",
           )}
         >
           <span aria-hidden>{done.has(i) ? "✅" : "🤔"}</span>

@@ -1,3 +1,4 @@
+import { BookOpen, Flame, Layers, Star, Zap } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { useProgress } from "../hooks/useProgress";
@@ -5,7 +6,10 @@ import { useHud, type HudLesson, type HudSection } from "../lib/hud";
 import { levelFor, liveStreak, progress, type ProgressState } from "../lib/progress";
 import { cx } from "./ui/primitives";
 
-/** Sticky HUD: section badges for the open lesson, streak flame, XP + level bar. */
+/**
+ * Sticky HUD — the ONLY place streak, XP and level appear: three compact pills,
+ * plus one badge per section of the open lesson.
+ */
 export default function AppHeader() {
   const state = useProgress();
   const lesson = useHud();
@@ -25,14 +29,16 @@ export default function AppHeader() {
     [],
   );
 
+  const pill = "flex h-9 shrink-0 items-center gap-1.5 rounded-full border px-3 font-display text-base font-semibold tabular-nums";
+
   return (
-    <header className="sticky top-0 z-30 border-b-2 border-slate-200 bg-slate-50/90 backdrop-blur print:hidden">
-      <div className="mx-auto flex h-16 max-w-3xl items-center gap-2 px-3 sm:gap-3 sm:px-6">
-        <Link to="/" className="flex shrink-0 items-center gap-2 rounded-xl font-extrabold tracking-tight text-slate-900" aria-label="Kakshya 7 home">
-          <span className="grid size-10 place-items-center rounded-2xl border-b-4 border-indigo-800 bg-indigo-600 font-deva text-xl text-amber-100" aria-hidden>
+    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur print:hidden">
+      <div className="mx-auto flex h-16 max-w-5xl items-center gap-2 px-3 sm:gap-3 sm:px-6">
+        <Link to="/" className="flex shrink-0 items-center gap-2 rounded-xl" aria-label="Kakshya 7 home">
+          <span className="grid size-10 place-items-center rounded-2xl border-b-4 border-indigo-800 bg-indigo-600 font-deva text-xl text-white" aria-hidden>
             ७
           </span>
-          <span className="hidden font-display text-xl font-semibold sm:inline">
+          <span className="hidden font-display text-xl font-semibold text-slate-900 sm:inline">
             Kakshya <span className="text-indigo-600">7</span>
           </span>
         </Link>
@@ -41,47 +47,34 @@ export default function AppHeader() {
 
         <span
           title={`${streak}-day streak (best ${state.streak.longest})`}
-          className={cx(
-            "flex h-10 shrink-0 items-center gap-1 rounded-2xl border-2 border-b-4 px-2.5 text-base font-extrabold",
-            streak > 0 ? "border-orange-200 bg-orange-50 text-orange-600" : "border-slate-200 bg-white text-slate-400",
-          )}
+          className={cx(pill, streak > 0 ? "border-orange-200 bg-orange-50 text-orange-600" : "border-slate-200 bg-white text-slate-400")}
         >
-          <span aria-hidden className={cx("text-lg", streak === 0 && "grayscale")}>
-            🔥
-          </span>
+          <Flame size={18} strokeWidth={2.5} className={streak > 0 ? "fill-orange-400" : undefined} aria-hidden />
           {streak}
           <span className="sr-only">day streak</span>
         </span>
 
-        <div
-          title={`Level ${lvl.level}: ${lvl.into} / ${lvl.span} XP to the next level`}
-          className="relative flex h-10 shrink-0 items-center gap-2 rounded-2xl border-2 border-b-4 border-amber-200 bg-amber-50 px-2.5"
-        >
-          <span key={bump} aria-hidden className={cx("text-lg", bump > 0 && "animate-pop")}>
-            ⚡
-          </span>
-          <div className="w-14 sm:w-24">
-            <div className="flex items-baseline justify-between text-[11px] font-extrabold leading-none text-amber-800">
-              <span>Lv {lvl.level}</span>
-              <span className="tabular-nums">{state.xp}</span>
-            </div>
-            <div
-              className="mt-1 h-2 overflow-hidden rounded-full bg-amber-200/70"
-              role="progressbar"
-              aria-label="XP to next level"
-              aria-valuemin={0}
-              aria-valuemax={lvl.span}
-              aria-valuenow={lvl.into}
-            >
-              <div className="h-full rounded-full bg-amber-500 transition-[width] duration-700 ease-out" style={{ width: `${(lvl.into / lvl.span) * 100}%` }} />
-            </div>
-          </div>
+        <span title={`${state.xp} XP`} className={cx(pill, "relative border-amber-200 bg-amber-50 text-amber-700")}>
+          <Zap key={bump} size={18} strokeWidth={2.5} className={cx("fill-amber-400", bump > 0 && "animate-pop")} aria-hidden />
+          {state.xp}
+          <span className="hidden sm:inline">XP</span>
           {pops.map((p) => (
-            <span key={p.id} aria-hidden className="pointer-events-none absolute right-1 top-full animate-float-up text-base font-extrabold text-amber-600">
+            <span key={p.id} aria-hidden className="pointer-events-none absolute right-1 top-full animate-float-up text-base font-bold text-amber-600">
               +{p.amount}
             </span>
           ))}
-        </div>
+        </span>
+
+        <span
+          title={`Level ${lvl.level}: ${lvl.into} / ${lvl.span} XP to the next level`}
+          className={cx(pill, "relative hidden overflow-hidden border-indigo-200 bg-indigo-50 text-indigo-700 sm:flex")}
+        >
+          <Star size={17} strokeWidth={2.5} className="fill-indigo-300" aria-hidden />
+          Lv {lvl.level}
+          <span className="absolute inset-x-0 bottom-0 h-1 bg-indigo-100" aria-hidden>
+            <span className="block h-full bg-indigo-500 transition-[width] duration-700" style={{ width: `${(lvl.into / lvl.span) * 100}%` }} />
+          </span>
+        </span>
       </div>
       <span className="sr-only" aria-live="polite">
         {pops.length ? `+${pops[pops.length - 1].amount} XP` : ""}
@@ -107,6 +100,8 @@ function isLit(s: HudSection, lesson: HudLesson, state: ProgressState) {
   }
 }
 
+const KIND_ICON = { learn: BookOpen, cards: Layers, quiz: Star } as const;
+
 function SectionBadges({ lesson, state }: { lesson: HudLesson; state: ProgressState }) {
   // Remember what was already lit, so only a badge that lights up *now* gets the pop.
   const seen = useRef<Set<string>>(new Set());
@@ -117,11 +112,11 @@ function SectionBadges({ lesson, state }: { lesson: HudLesson; state: ProgressSt
     lesson.sections.forEach((s, i) => lit[i] && seen.current.add(s.id));
     first.current = false;
   });
-
   const litCount = lit.filter(Boolean).length;
+
   return (
     <>
-      {/* Phones: compact dots so many sections still fit next to the streak and XP. */}
+      {/* Phones: compact dots so many sections still fit next to the pills. */}
       <ol className="flex items-center gap-1 sm:hidden" aria-label={`Lesson sections: ${litCount} of ${lit.length} done`}>
         {lesson.sections.map((s, i) => (
           <li
@@ -134,30 +129,31 @@ function SectionBadges({ lesson, state }: { lesson: HudLesson; state: ProgressSt
           />
         ))}
       </ol>
-    <ol className="hidden items-center gap-1.5 sm:flex" aria-label="Lesson sections">
-      {lesson.sections.map((s, i) => (
-        <li
-          key={s.id}
-          title={`${s.label}${lit[i] ? " ✓" : ""}`}
-          className={cx(
-            "grid size-8 place-items-center rounded-xl border-2 border-b-4 text-base font-extrabold transition-colors duration-300 sm:size-9",
-            lit[i]
-              ? s.kind === "quiz"
-                ? "border-amber-500 bg-amber-400 text-amber-950"
-                : "border-emerald-600 bg-emerald-500 text-white"
-              : "border-slate-200 bg-white text-slate-300",
-            fresh[i] && "animate-badge",
-          )}
-        >
-          <span aria-hidden className={lit[i] ? undefined : "opacity-40 grayscale"}>
-            {s.icon}
-          </span>
-          <span className="sr-only">
-            {s.label} {lit[i] ? "done" : "not done yet"}
-          </span>
-        </li>
-      ))}
-    </ol>
+      <ol className="hidden items-center gap-1.5 sm:flex" aria-label="Lesson sections">
+        {lesson.sections.map((s, i) => {
+          const Icon = s.kind === "module" ? null : KIND_ICON[s.kind];
+          return (
+            <li
+              key={s.id}
+              title={`${s.label}${lit[i] ? " ✓" : ""}`}
+              className={cx(
+                "grid size-9 place-items-center rounded-xl border-2 border-b-4 font-display text-sm font-semibold transition-colors duration-300",
+                lit[i]
+                  ? s.kind === "quiz"
+                    ? "border-amber-500 bg-amber-400 text-amber-950"
+                    : "border-emerald-600 bg-emerald-500 text-white"
+                  : "border-slate-200 bg-white text-slate-300",
+                fresh[i] && "animate-badge",
+              )}
+            >
+              {Icon ? <Icon size={16} strokeWidth={2.5} aria-hidden /> : <span aria-hidden>{s.icon}</span>}
+              <span className="sr-only">
+                {s.label} {lit[i] ? "done" : "not done yet"}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
     </>
   );
 }

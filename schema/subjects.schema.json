@@ -3,24 +3,69 @@
   "$id": "https://learn.sagunpradhan.com.np/schema/subjects.schema.json",
   "title": "Subjects",
   "type": "object",
-  "required": ["subjects"],
+  "required": [
+    "subjects"
+  ],
   "additionalProperties": false,
   "properties": {
-    "$schema": { "type": "string" },
+    "$schema": {
+      "type": "string"
+    },
     "subjects": {
       "type": "array",
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["id", "name", "description", "icon", "theme"],
+        "required": [
+          "id",
+          "name",
+          "description",
+          "icon",
+          "theme"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Also the folder name under content/lessons/." },
-          "name": { "type": "string" },
-          "nameLocal": { "type": "string" },
-          "description": { "type": "string" },
-          "icon": { "type": "string", "description": "An emoji." },
-          "theme": { "enum": ["emerald", "indigo", "rose", "amber", "sky", "violet"] }
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+            "description": "Also the folder name under content/lessons/."
+          },
+          "name": {
+            "type": "string"
+          },
+          "nameLocal": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string",
+            "description": "An emoji."
+          },
+          "theme": {
+            "enum": [
+              "emerald",
+              "indigo",
+              "rose",
+              "amber",
+              "sky",
+              "violet"
+            ]
+          },
+          "iconKey": {
+            "enum": [
+              "flask",
+              "atom",
+              "calculator",
+              "compass",
+              "book",
+              "feather",
+              "globe",
+              "leaf"
+            ],
+            "description": "SVG icon shown in the app (the emoji `icon` is the fallback)."
+          }
         }
       }
     }

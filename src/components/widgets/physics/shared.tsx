@@ -3,13 +3,13 @@ import { cx } from "../../ui/primitives";
 
 /** Physics colour roles: vectors/direction indigo, scalars emerald, force/energy amber, friction rose. */
 export const P = {
-  vector: "#7C83BC", // periwinkle
-  scalar: "#529E72", // sage
-  force: "#E9B44C", // honey
-  friction: "#D97B74", // soft brick
-  ink: "#3D405B",
-  line: "#3D405B",
-  muted: "#ADA79A",
+  vector: "#4f46e5",
+  scalar: "#10b981",
+  force: "#f59e0b",
+  friction: "#f43f5e",
+  ink: "#0f172a",
+  line: "#334155",
+  muted: "#94a3b8",
 };
 
 /**

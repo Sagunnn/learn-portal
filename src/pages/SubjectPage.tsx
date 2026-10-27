@@ -1,4 +1,6 @@
+import { BookOpen, Clock, HelpCircle, Layers } from "lucide-react";
 import { Link, useParams } from "react-router";
+import SubjectIcon from "../components/ui/SubjectIcon";
 import { useProgress } from "../hooks/useProgress";
 import { getSubject, lessonsForSubject } from "../lib/content";
 import { lessonStatus, subjectStats, type LessonStatus } from "../lib/stats";
@@ -24,7 +26,7 @@ export default function SubjectPage() {
   const { total, completed } = subjectStats(entries, state);
 
   return (
-    <div className="space-y-6">
+    <div className="mx-auto max-w-3xl space-y-6">
       <Link to="/" className="text-base font-semibold text-slate-500 hover:text-slate-800">
         ← Dashboard
       </Link>
@@ -37,7 +39,7 @@ export default function SubjectPage() {
             <p className="mt-2 max-w-prose text-white/90">{subject.description}</p>
           </div>
           <span className="text-5xl" aria-hidden>
-            {subject.icon}
+            <SubjectIcon subject={subject} size={48} />
           </span>
         </div>
         <div className="mt-5 flex items-center gap-3">
@@ -62,7 +64,7 @@ export default function SubjectPage() {
               <li key={e.meta.id}>
                 <Link
                   to={`/lesson/${e.meta.id}`}
-                  className="press flex items-center gap-4 rounded-3xl border-slate-200 bg-white p-5 shadow-cozy hover:-translate-y-0.5 hover:border-orange-200"
+                  className="press flex items-center gap-4 rounded-3xl border-slate-200 bg-white p-5 shadow-cozy hover:-translate-y-0.5 hover:border-indigo-200"
                 >
                   <span
                     className={cx(
@@ -77,10 +79,24 @@ export default function SubjectPage() {
                     {e.meta.titleLocal && <span className="block font-deva text-slate-500">{e.meta.titleLocal}</span>}
                     <span className="mt-1 block text-base text-slate-500">{e.meta.summary}</span>
                     <span className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-sm text-slate-400">
-                      {e.meta.estMinutes && <span>⏱ {e.meta.estMinutes} min</span>}
-                      <span>📖 {e.counts.chunks} steps</span>
-                      {e.counts.flashcards > 0 && <span>🃏 {e.counts.flashcards} cards</span>}
-                      {e.counts.questions > 0 && <span>❓ {e.counts.questions} questions</span>}
+                      {e.meta.estMinutes && (
+                        <span className="inline-flex items-center gap-1">
+                          <Clock size={14} aria-hidden /> {e.meta.estMinutes} min
+                        </span>
+                      )}
+                      <span className="inline-flex items-center gap-1">
+                        <BookOpen size={14} aria-hidden /> {e.counts.chunks} steps
+                      </span>
+                      {e.counts.flashcards > 0 && (
+                        <span className="inline-flex items-center gap-1">
+                          <Layers size={14} aria-hidden /> {e.counts.flashcards} cards
+                        </span>
+                      )}
+                      {e.counts.questions > 0 && (
+                        <span className="inline-flex items-center gap-1">
+                          <HelpCircle size={14} aria-hidden /> {e.counts.questions} questions
+                        </span>
+                      )}
                       {p?.quizBest !== undefined && <span className="font-semibold text-slate-600">Best quiz: {p.quizBest}%</span>}
                     </span>
                   </span>

@@ -7,20 +7,19 @@ import type { Visual } from "../../types/content";
  * these; hints and the print cheat sheet use them as still pictures.
  */
 
-// Soft watercolour pastels with warm charcoal outlines.
 export const C = {
-  blue: "#8FB3E3",
-  blueSoft: "#DCE7F5",
-  orange: "#F4A86E",
-  orangeSoft: "#FFD6A5",
-  yellow: "#FFE08A",
-  green: "#78C59A",
-  ink: "#3D405B",
-  line: "#3D405B",
-  grid: "#C9C2B3",
-  cut: "#9B8FD1",
-  empty: "#FFFEFB",
-  frame: "#E8E2D5",
+  blue: "#3b82f6",
+  blueSoft: "#bfdbfe",
+  orange: "#f97316",
+  orangeSoft: "#fed7aa",
+  yellow: "#fde047",
+  green: "#22c55e",
+  ink: "#0f172a",
+  line: "#334155",
+  grid: "#94a3b8",
+  cut: "#7c3aed",
+  empty: "#ffffff",
+  frame: "#e2e8f0",
 };
 
 /** Stacked fraction drawn in SVG (numerator over a bar over denominator). */
@@ -387,7 +386,7 @@ export function FormulaTriangle({ top, left, right }: { top: string; left: strin
 
 // ---- pH scale ---------------------------------------------------------------------------
 
-const PH_COLORS = ["#C2453A", "#D4574A", "#E07A5F", "#EE8F4D", "#E9B44C", "#F2D35B", "#B7D36A", "#529E72", "#4F9FA1", "#6488C4", "#7C83BC", "#8A72B6", "#8E64AA", "#7F5599", "#6E4787"];
+const PH_COLORS = ["#b91c1c", "#dc2626", "#ea580c", "#f97316", "#f59e0b", "#facc15", "#a3e635", "#10b981", "#14b8a6", "#3b82f6", "#4f46e5", "#6d28d9", "#7c3aed", "#7e22ce", "#6b21a8"];
 
 /** 0–14 universal-indicator strip with acid / neutral / base labels and examples. */
 export function PhStrip() {

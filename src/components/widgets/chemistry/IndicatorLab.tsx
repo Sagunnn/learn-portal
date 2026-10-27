@@ -12,12 +12,12 @@ import { Chem, Vessel, phKind } from "./chem";
  */
 type Liquid = { id: string; name: string; short: string; ph: number; tint: string };
 const LIQUIDS: Liquid[] = [
-  { id: "lemon", name: "Lemon juice", short: "🍋 Lemon", ph: 2.2, tint: "#FFF3C9" },
-  { id: "stomach", name: "Stomach acid (HCl)", short: "Stomach acid", ph: 1.5, tint: "#F7F4EB" },
-  { id: "water", name: "Pure water", short: "💧 Water", ph: 7, tint: "#DAEFEF" },
-  { id: "soda", name: "Baking soda solution", short: "Baking soda", ph: 8.3, tint: "#FFFEFB" },
-  { id: "soap", name: "Soap water", short: "🧼 Soap", ph: 10, tint: "#E6E7F4" },
-  { id: "drain", name: "Drain cleaner (NaOH)", short: "Drain cleaner", ph: 13.5, tint: "#F7F4EB" },
+  { id: "lemon", name: "Lemon juice", short: "🍋 Lemon", ph: 2.2, tint: "#fef9c3" },
+  { id: "stomach", name: "Stomach acid (HCl)", short: "Stomach acid", ph: 1.5, tint: "#f1f5f9" },
+  { id: "water", name: "Pure water", short: "💧 Water", ph: 7, tint: "#e0f2fe" },
+  { id: "soda", name: "Baking soda solution", short: "Baking soda", ph: 8.3, tint: "#f8fafc" },
+  { id: "soap", name: "Soap water", short: "🧼 Soap", ph: 10, tint: "#e0e7ff" },
+  { id: "drain", name: "Drain cleaner (NaOH)", short: "Drain cleaner", ph: 13.5, tint: "#f1f5f9" },
 ];
 
 type Tool = "redLitmus" | "blueLitmus" | "phenol" | "methyl" | "turmeric" | "rose";
@@ -149,7 +149,7 @@ export default function IndicatorLab({ onState }: { onState?: (s: WidgetState) =
         </span>
       </div>
 
-      <div className="rounded-2xl border-2 border-b-4 border-slate-200 bg-gradient-to-b from-slate-50 to-amber-50/60 p-2">
+      <div className="rounded-2xl border-2 border-b-4 border-slate-200 bg-gradient-to-b from-slate-50 to-white p-2">
         <svg viewBox="0 -10 760 340" className="block h-auto w-full select-none">
           <rect x={0} y={292} width={760} height={38} fill="#d6a26b" />
           <rect x={20} y={262} width={720} height={30} rx={6} fill="#78350f" opacity={0.85} />
@@ -202,18 +202,18 @@ export default function IndicatorLab({ onState }: { onState?: (s: WidgetState) =
                   </g>
                 )}
                 <Face x={x + TUBE_W / 2} y={y + 122} scale={0.85} mood={verdictFor(t) ? MOOD[verdictFor(t)!] : "curious"} />
-                <text x={x + TUBE_W / 2} y={y + TUBE_H + 43} textAnchor="middle" fontSize={mystery ? 20 : 14} fontWeight={700} fill="#FFFEFB">
+                <text x={x + TUBE_W / 2} y={y + TUBE_H + 43} textAnchor="middle" fontSize={mystery ? 20 : 14} fontWeight={700} fill="#ffffff">
                   {mystery ? (found ? liquid.short.replace(/^\S+ /, "") : letters[slot]) : liquid.short}
                 </text>
                 {(t.last || verdictFor(t)) && !anim && (() => {
                   const v = verdictFor(t);
                   const label = v ? `${v}${found ? " 🔍" : ""}` : t.tests[t.last!]!;
-                  const fill = v === "Acid" ? "#F1C4C0" : v === "Base" ? "#CDD0EA" : v === "Neutral" ? "#CCE7D6" : "#FFFEFB";
+                  const fill = v === "Acid" ? "#fecdd3" : v === "Base" ? "#c7d2fe" : v === "Neutral" ? "#a7f3d0" : "#ffffff";
                   const w = Math.max(70, label.length * 8.5 + 18);
                   return (
                     <g className="chem-pop" key={label}>
-                      <rect x={x + TUBE_W / 2 - w / 2} y={y - 58} width={w} height={28} rx={14} fill={fill} stroke="#3D405B" strokeWidth={2} />
-                      <text x={x + TUBE_W / 2} y={y - 39} textAnchor="middle" fontSize={14} fontWeight={700} fill="#3D405B">
+                      <rect x={x + TUBE_W / 2 - w / 2} y={y - 58} width={w} height={28} rx={14} fill={fill} stroke="#334155" strokeWidth={2} />
+                      <text x={x + TUBE_W / 2} y={y - 39} textAnchor="middle" fontSize={14} fontWeight={700} fill="#1e293b">
                         {label}
                       </text>
                     </g>
