@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type PointerEvent, type ReactNode } from "react";
+import { confetti } from "../../lib/confetti";
 import { useProgress } from "../../hooks/useProgress";
 import { shuffled } from "../../lib/answer";
 import { progress } from "../../lib/progress";
@@ -38,7 +39,30 @@ export default function FlashcardDeck({ lessonId, cards, onQuiz }: { lessonId: s
   const mark = (isKnown: boolean) => {
     if (!card) return;
     progress.setCardKnown(lessonId, card.id, isKnown);
+    const allKnown = cards.every((c) => (c.id === card.id ? isKnown : known.has(c.id)));
+    if (isKnown && allKnown && knownCount < cards.length) confetti(innerWidth / 2, innerHeight * 0.5, 2);
     go(pos + 1);
+  };
+
+  // Swipe: once flipped, right = got it, left = still learning. Before flipping, swipe moves between cards.
+  const drag = useRef<{ x: number; id: number } | null>(null);
+  const [dx, setDx] = useState(0);
+  const swiped = useRef(false);
+  const onPointerDown = (e: PointerEvent) => {
+    drag.current = { x: e.clientX, id: e.pointerId };
+    swiped.current = false;
+  };
+  const onPointerMove = (e: PointerEvent) => {
+    if (drag.current?.id === e.pointerId) setDx(e.clientX - drag.current.x);
+  };
+  const onPointerUp = () => {
+    const d = dx;
+    drag.current = null;
+    setDx(0);
+    if (Math.abs(d) < 70) return;
+    swiped.current = true;
+    if (flipped) mark(d > 0);
+    else go(pos + (d > 0 ? -1 : 1));
   };
 
   useEffect(() => {
@@ -93,10 +117,29 @@ export default function FlashcardDeck({ lessonId, cards, onQuiz }: { lessonId: s
           <div className="flip-scene">
             <button
               type="button"
-              onClick={() => setFlipped(!flipped)}
+              onClick={() => {
+                if (swiped.current) {
+                  swiped.current = false;
+                  return;
+                }
+                setFlipped(!flipped);
+              }}
+              onPointerDown={onPointerDown}
+              onPointerMove={onPointerMove}
+              onPointerUp={onPointerUp}
+              onPointerCancel={() => {
+                drag.current = null;
+                setDx(0);
+              }}
+              style={{ translate: `${dx}px 0`, rotate: `${dx / 30}deg`, touchAction: "pan-y" }}
               aria-pressed={flipped}
               aria-label={flipped ? "Showing answer. Tap to see the question." : "Showing question. Tap to see the answer."}
-              className={cx("flip-card w-full text-left", flipped && "is-flipped")}
+              className={cx(
+                "flip-card w-full cursor-grab touch-pan-y text-left active:cursor-grabbing",
+                flipped && "is-flipped",
+                flipped && dx > 30 && "[&_.flip-back]:border-emerald-400 [&_.flip-back]:bg-emerald-50",
+                flipped && dx < -30 && "[&_.flip-back]:border-rose-300 [&_.flip-back]:bg-rose-50",
+              )}
             >
               <Face side="front" tag={card.tag} footer={ne ? "पल्टाउन थिच्नुहोस्" : "Tap or press Space to flip"}>
                 <Rich text={card.front} lang={card.lang} className="text-center text-xl font-semibold text-slate-900 sm:text-2xl" />
@@ -156,7 +199,9 @@ export default function FlashcardDeck({ lessonId, cards, onQuiz }: { lessonId: s
           </div>
         </Card>
       )}
-      <p className="text-center text-xs text-slate-400">Space flip · ← → move · 1 still learning · 2 got it</p>
+      <p className="text-center text-xs text-slate-400">
+        {ne ? "पल्टाएपछि दायाँ स्वाइप = थाहा भयो, बायाँ = अझै सिक्दै" : "After flipping: swipe right = got it, left = still learning"} · Space · ← → · 1 · 2
+      </p>
     </div>
   );
 }
@@ -166,7 +211,7 @@ function Face({ side, tag, footer, children }: { side: "front" | "back"; tag?: s
   return (
     <div
       className={cx(
-        "flip-face flex min-h-64 flex-col rounded-3xl border-2 p-6 shadow-sm",
+        "flip-face flex min-h-64 flex-col rounded-3xl border-2 border-b-[6px] p-6 transition-colors",
         side === "front" ? "border-slate-200 bg-white" : "flip-back border-indigo-200 bg-indigo-50",
       )}
     >

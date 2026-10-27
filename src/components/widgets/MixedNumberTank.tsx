@@ -1,16 +1,17 @@
 import { useState } from "react";
-import { EquationBar, Slider, Stepper, WidgetPanel } from "./controls";
+import { EquationBar, Slider, Stepper, WidgetPanel, useReportState, type WidgetState } from "./controls";
 import { C, Tank } from "./figures";
 
 const MAX_WHOLES = 5;
 
 /** Module 2 — "Container Overflow Tank": pour n pieces into containers that hold d each. */
-export default function MixedNumberTank({ n: n0 = 11, d: d0 = 4 }: { n?: number; d?: number }) {
+export default function MixedNumberTank({ n: n0 = 11, d: d0 = 4, onState }: { n?: number; d?: number; onState?: (s: WidgetState) => void }) {
   const [d, setD] = useState(Math.min(8, Math.max(2, d0)));
   const [n, setN] = useState(Math.min(MAX_WHOLES * d0, Math.max(0, n0)));
 
   const wholes = Math.floor(n / d);
   const rest = n % d;
+  useReportState({ n, d, wholes, rest }, onState);
 
   const right = n === 0 ? "0" : rest === 0 ? `${wholes}` : wholes === 0 ? `\\dfrac{${rest}}{${d}}` : `${wholes}\\dfrac{${rest}}{${d}}`;
   const tex = `\\dfrac{${n}}{${d}} = ${right}`;

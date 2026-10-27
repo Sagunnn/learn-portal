@@ -7,6 +7,7 @@ import { DAILY_GOAL, levelFor, liveStreak, progress } from "../lib/progress";
 import { resumeTarget, subjectStats } from "../lib/stats";
 import { themeFor } from "../lib/theme";
 import { Button, Card, ProgressBar, ProgressRing, cx } from "../components/ui/primitives";
+import { Bubble, Coach } from "../components/ui/Coach";
 
 function greeting() {
   const h = new Date().getHours();
@@ -27,28 +28,38 @@ export default function Dashboard() {
       {/* Hero */}
       <section className="grid gap-4 md:grid-cols-[1.4fr_1fr]">
         <Card className="relative overflow-hidden p-6">
-          <div className="pointer-events-none absolute -right-10 -top-10 size-40 rounded-full bg-amber-100/70 blur-2xl" />
-          <p className="text-sm font-medium text-slate-500">
-            {greeting()} · <span className="font-deva">नमस्ते</span> 👋
-          </p>
-          <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-            {todayXp >= DAILY_GOAL ? "Daily goal done — nice work!" : "Ready for today's lesson?"}
-          </h1>
+          <div className="pointer-events-none absolute -right-10 -top-10 size-40 rounded-full bg-indigo-100/70 blur-2xl" />
+          <h1 className="sr-only">Dashboard</h1>
+          <Coach mood={todayXp >= DAILY_GOAL ? "cheer" : "happy"}>
+            <Bubble tone="indigo">
+              <span className="font-extrabold text-slate-900">
+                {greeting()}! <span className="font-deva">नमस्ते</span> 👋
+              </span>
+              <br />
+              {todayXp >= DAILY_GOAL
+                ? "Daily goal smashed. Want to beat your streak record?"
+                : todayXp > 0
+                  ? `${DAILY_GOAL - todayXp} XP to go for today's goal.`
+                  : streak > 0
+                    ? `Keep your ${streak}-day streak alive: earn ${DAILY_GOAL} XP today.`
+                    : "Pick a subject and earn 30 XP today."}
+            </Bubble>
+          </Coach>
           <div className="mt-5 flex items-center gap-4">
             <ProgressRing value={todayXp} max={DAILY_GOAL} size={64} stroke={7}>
               <span className="text-sm font-bold text-slate-800">{Math.min(todayXp, 999)}</span>
             </ProgressRing>
             <div className="text-sm text-slate-600">
-              <div className="font-semibold text-slate-800">
+              <div className="font-extrabold text-slate-800">
                 {todayXp} / {DAILY_GOAL} XP today
               </div>
-              <div>Finish a lesson or a quiz to fill the ring.</div>
+              <div>Lessons, quizzes and challenges fill the ring.</div>
             </div>
           </div>
           {resume && (
             <Link
               to={`/lesson/${resume.e.meta.id}`}
-              className="mt-5 flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3 transition hover:border-slate-300 hover:bg-white"
+              className="press mt-5 flex items-center gap-3 rounded-2xl border-indigo-200 bg-indigo-50 p-3 hover:bg-white"
             >
               <span className="text-2xl" aria-hidden>
                 {getSubject(resume.e.meta.subject)?.icon}
@@ -57,7 +68,7 @@ export default function Dashboard() {
                 <span className="block text-xs font-semibold uppercase tracking-wide text-slate-400">Continue</span>
                 <span className="block truncate font-semibold text-slate-800">{resume.e.meta.title}</span>
               </span>
-              <span className="rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-semibold text-white">Resume →</span>
+              <span className="rounded-xl border-b-4 border-indigo-800 bg-indigo-600 px-3 py-1.5 text-sm font-bold text-white">Resume →</span>
             </Link>
           )}
         </Card>
@@ -119,14 +130,14 @@ export default function Dashboard() {
                 key={s.id}
                 to={`/subject/${s.id}`}
                 className={cx(
-                  "group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition",
-                  "hover:-translate-y-0.5 hover:shadow-md",
+                  "press group flex flex-col overflow-hidden rounded-2xl border-slate-200 bg-white",
+                  "hover:-translate-y-1 hover:border-slate-300",
                   t.ring,
                 )}
               >
                 <div className={cx("flex items-end justify-between bg-gradient-to-br p-5 text-white", t.gradient)}>
                   <div>
-                    <div className="text-xl font-bold">{s.name}</div>
+                    <div className="text-xl font-extrabold">{s.name}</div>
                     {s.nameLocal && <div className="font-deva text-white/85">{s.nameLocal}</div>}
                   </div>
                   <span className="text-4xl drop-shadow-sm transition group-hover:scale-110" aria-hidden>

@@ -109,6 +109,15 @@ To add a widget: build it in `src/components/widgets/`, register it in `registry
 
 **Print summary**: add a top-level `cheatSheet` (`title?`, `intro?`, up to 8 `items` with `title`, `tex?`, `body?`, `visual?`) and the lesson gets a "Print 1-page summary" button. Only the sheet prints, sized for one A4 page.
 
+**Sandbox challenges**: an `interactive` chunk can list `challenges: [{ "id", "text", "goal": { "top": 8, "bottom": 12 } }]`. A challenge is solved (confetti, +5 XP, saved) the moment the widget's state matches every key in `goal`. The state keys for each widget are listed in the schema's description of `challenges`.
+
+## Design system
+
+- **Tactile**: buttons use a chunky `border-b-4` that squashes on click (`active:border-b-0 active:translate-y-1`, plus `active:mb-1` so nothing below moves). Cards and answer options use the `.press` class in `index.css` for the same effect.
+- **Colour roles**: indigo = direction / primary action, emerald = success / done, amber = energy (XP, streak, hints), rose = opposing (wrong answers, traps). Background `#F8FAFC`.
+- **No walls of text**: `text` chunks are told by **Tara**, the coach (`components/ui/Coach.tsx`), as speech bubbles, one per Continue (`lib/story.ts` does the splitting). Keep each line of `body` to about 3 lines. Lists render as icon badges, not bullet points.
+- **Rewards**: the sticky HUD shows the streak, XP/level bar and one badge per lesson section (each interactive module, all flashcards known, quiz passed) that pops when it lights up. `lib/confetti.ts` fires on correct answers, solved challenges, finished lessons, passed quizzes and a fully known deck. It's off when the device asks for reduced motion.
+
 ## How progress works
 
 - **Score**: only first-try answers count. After a wrong answer the student reads why, then tries again.

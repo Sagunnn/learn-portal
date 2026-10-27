@@ -836,6 +836,34 @@
         },
         "lang": {
           "$ref": "#/$defs/lang"
+        },
+        "challenges": {
+          "type": "array",
+          "description": "Auto-checked sandbox challenges (+5 XP each, once). Solved when every key in goal equals the widget's state. State keys: equivalentFractions a, b, k, top, bottom; mixedNumberTank n, d, wholes, rest; gridMerger a1, b1, a2, b2, phase (0-2), over (1 if the sum is more than 1); areaOverlap a, b, c, d, green, total.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "goal"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/id"
+              },
+              "text": {
+                "$ref": "#/$defs/richText"
+              },
+              "goal": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
         }
       }
     },

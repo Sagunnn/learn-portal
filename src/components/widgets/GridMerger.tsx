@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { fracTex, lcm, simplify } from "../../lib/fraction";
 import { Button } from "../ui/primitives";
-import { EquationBar, Stepper, Tex, WidgetPanel } from "./controls";
+import { EquationBar, Stepper, Tex, WidgetPanel, useReportState, type WidgetState } from "./controls";
 import { C, MergeGrids, type MergePhase } from "./figures";
 
 /**
@@ -9,12 +9,19 @@ import { C, MergeGrids, type MergePhase } from "./figures";
  * Laying each box's lines over the other gives both the same b1×b2 grid, so the
  * pieces finally have the same size and can be added.
  */
-export default function GridMerger({ a1: a10 = 1, b1: b10 = 2, a2: a20 = 1, b2: b20 = 3 }: { a1?: number; b1?: number; a2?: number; b2?: number }) {
+export default function GridMerger({
+  a1: a10 = 1,
+  b1: b10 = 2,
+  a2: a20 = 1,
+  b2: b20 = 3,
+  onState,
+}: { a1?: number; b1?: number; a2?: number; b2?: number; onState?: (s: WidgetState) => void }) {
   const [b1, setB1] = useState(clampD(b10));
   const [a1, setA1] = useState(clampN(a10, b10));
   const [b2, setB2] = useState(clampD(b20));
   const [a2, setA2] = useState(clampN(a20, b20));
   const [phase, setPhase] = useState<MergePhase>(0);
+  useReportState({ a1, b1, a2, b2, phase, over: a1 * b2 + a2 * b1 > b1 * b2 ? 1 : 0 }, onState);
 
   const change = (fn: () => void) => {
     fn();

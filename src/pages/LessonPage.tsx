@@ -6,6 +6,7 @@ import LearnRunner from "../components/lesson/LearnRunner";
 import QuizRunner from "../components/quiz/QuizRunner";
 import { Button, LangProvider, cx, langProps } from "../components/ui/primitives";
 import { getLessonEntry, getSubject, loadLesson } from "../lib/content";
+import { hud, type HudSection } from "../lib/hud";
 import { progress } from "../lib/progress";
 import { themeFor } from "../lib/theme";
 import type { Lesson } from "../types/content";
@@ -34,6 +35,28 @@ export default function LessonPage() {
       alive = false;
     };
   }, [lessonId, entry, retry]);
+
+  // Section badges in the header HUD: one per interactive module, then Cards and Quiz.
+  useEffect(() => {
+    if (!lesson) return;
+    const sections: HudSection[] = [];
+    lesson.chunks.forEach((c, i) => {
+      if (c.type === "interactive") {
+        const n = sections.length + 1;
+        sections.push({ id: `m${i}`, label: c.title ?? `Module ${n}`, icon: String(n), kind: "module", chunkIndex: i });
+      }
+    });
+    if (!sections.length) sections.push({ id: "learn", label: "Learn", icon: "📖", kind: "learn" });
+    if (lesson.flashcards?.length) sections.push({ id: "cards", label: "All flashcards known", icon: "🃏", kind: "cards" });
+    if (lesson.quiz) sections.push({ id: "quiz", label: "Quiz passed", icon: "★", kind: "quiz" });
+    hud.set({
+      lessonId: lesson.meta.id,
+      sections,
+      passPercent: lesson.quiz?.passPercent ?? 70,
+      cardIds: lesson.flashcards?.map((c) => c.id) ?? [],
+    });
+    return () => hud.set(null);
+  }, [lesson]);
 
   useEffect(() => {
     if (entry) document.title = `${entry.meta.title} · Kakshya 7`;
@@ -83,7 +106,7 @@ export default function LessonPage() {
             <p className={cx("text-sm font-bold uppercase tracking-wider", theme.text)}>
               {ne ? "पाठ" : "Chapter"} {entry.meta.chapter}
             </p>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">{entry.meta.title}</h1>
+            <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">{entry.meta.title}</h1>
             {entry.meta.titleLocal && (
               <p lang="ne" className="lang-ne text-lg text-slate-500">
                 {entry.meta.titleLocal}
@@ -92,7 +115,7 @@ export default function LessonPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-          <div role="tablist" aria-label="Lesson sections" className="inline-flex rounded-xl bg-slate-200/70 p-1">
+          <div role="tablist" aria-label="Lesson sections" className="inline-flex gap-1 rounded-2xl border-2 border-slate-200 bg-slate-100 p-1">
             {tabs.map((t) => (
               <button
                 key={t.id}
@@ -102,13 +125,13 @@ export default function LessonPage() {
                 onClick={() => setTab(t.id)}
                 lang={titleLang.lang}
                 className={cx(
-                  "rounded-lg px-4 py-1.5 text-sm font-semibold transition",
+                  "rounded-xl border-b-4 px-4 py-1.5 text-sm font-bold transition-all duration-200 ease-out active:mb-1 active:translate-y-1 active:border-b-0",
                   titleLang.className,
-                  tab === t.id ? "bg-white text-slate-900 shadow-sm" : "text-slate-600 hover:text-slate-900",
+                  tab === t.id ? "border-indigo-800 bg-indigo-600 text-white" : "border-transparent text-slate-600 hover:bg-white hover:text-slate-900",
                 )}
               >
                 {t.label}
-                {t.count !== undefined && <span className="ml-1.5 text-xs text-slate-400">{t.count}</span>}
+                {t.count !== undefined && <span className={cx("ml-1.5 text-xs", tab === t.id ? "text-indigo-200" : "text-slate-400")}>{t.count}</span>}
               </button>
             ))}
           </div>

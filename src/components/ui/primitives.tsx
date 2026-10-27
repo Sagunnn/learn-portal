@@ -39,32 +39,41 @@ export function Rich({
 
 // ---- Buttons -------------------------------------------------------------------
 
-type Variant = "primary" | "secondary" | "ghost" | "success" | "custom";
+type Variant = "primary" | "secondary" | "ghost" | "success" | "danger" | "energy" | "custom";
 
+// Colour roles: indigo = direction/primary, emerald = success, amber = energy, rose = opposing.
 const VARIANTS: Record<Variant, string> = {
-  primary: "bg-slate-900 text-white hover:bg-slate-800 shadow-[0_3px_0_0_rgb(0_0_0/0.25)]",
-  success: "bg-emerald-600 text-white hover:bg-emerald-700 shadow-[0_3px_0_0_rgb(4_120_87)]",
-  secondary: "bg-white text-slate-800 border-2 border-slate-200 hover:bg-slate-50 shadow-[0_3px_0_0_rgb(226_232_240)]",
-  ghost: "text-slate-600 hover:bg-slate-100 hover:text-slate-900",
-  custom: "shadow-[0_3px_0_0_rgb(0_0_0/0.18)]",
+  primary: "bg-indigo-600 text-white border-indigo-800 hover:bg-indigo-500",
+  success: "bg-emerald-500 text-white border-emerald-700 hover:bg-emerald-400",
+  danger: "bg-rose-500 text-white border-rose-700 hover:bg-rose-400",
+  energy: "bg-amber-400 text-amber-950 border-amber-600 hover:bg-amber-300",
+  secondary: "border-2 bg-white text-slate-700 border-slate-200 border-b-slate-300 hover:bg-slate-50",
+  ghost: "border-transparent text-slate-500 hover:bg-slate-100 hover:text-slate-900",
+  custom: "",
 };
 
+/**
+ * Tactile "3D push" button: a chunky bottom edge that squashes on click
+ * (border-b-4 → 0, moved down 4px; the bottom margin keeps the layout still).
+ */
 export function Button({
   variant = "primary",
   size = "md",
   className,
   ...rest
 }: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: Variant; size?: "sm" | "md" | "lg" }) {
+  const flat = variant === "ghost";
   return (
     <button
       type="button"
       {...rest}
       className={cx(
-        "inline-flex select-none items-center justify-center gap-2 rounded-xl font-semibold transition",
-        "active:translate-y-[2px] active:shadow-none disabled:pointer-events-none disabled:opacity-40",
-        size === "sm" && "px-3 py-1.5 text-sm",
+        "inline-flex select-none items-center justify-center gap-2 rounded-2xl font-bold tracking-wide transition-all duration-200 ease-out",
+        !flat && "border-b-4 active:mb-1 active:translate-y-1 active:border-b-0",
+        "disabled:pointer-events-none disabled:opacity-40",
+        size === "sm" && "px-3.5 py-1.5 text-sm",
         size === "md" && "px-5 py-2.5",
-        size === "lg" && "px-6 py-3.5 text-lg",
+        size === "lg" && "px-7 py-3.5 text-lg",
         VARIANTS[variant],
         className,
       )}
@@ -161,7 +170,7 @@ export function Accordion({
 // ---- Misc -------------------------------------------------------------------------
 
 export function Card({ className, children }: { className?: string; children: ReactNode }) {
-  return <div className={cx("rounded-2xl border border-slate-200 bg-white shadow-sm", className)}>{children}</div>;
+  return <div className={cx("rounded-2xl border-2 border-b-4 border-slate-200 bg-white", className)}>{children}</div>;
 }
 
 export function ProgressRing({ value, max, size = 56, stroke = 6, className, children }: {

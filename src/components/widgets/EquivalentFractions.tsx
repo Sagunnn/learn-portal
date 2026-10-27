@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { gcd, simplify } from "../../lib/fraction";
 import { Button } from "../ui/primitives";
-import { EquationBar, Slider, Tex, WidgetPanel } from "./controls";
+import { EquationBar, Slider, Tex, WidgetPanel, useReportState, type WidgetState } from "./controls";
 import { C, FractionBar, FractionPie } from "./figures";
 
 /**
@@ -9,7 +9,7 @@ import { C, FractionBar, FractionPie } from "./figures";
  * (multiply top and bottom by k); glue merges pieces back to lowest terms.
  * The shaded amount never changes.
  */
-export default function EquivalentFractions({ a: a0 = 2, b: b0 = 3, k: k0 = 1 }: { a?: number; b?: number; k?: number }) {
+export default function EquivalentFractions({ a: a0 = 2, b: b0 = 3, k: k0 = 1, onState }: { a?: number; b?: number; k?: number; onState?: (s: WidgetState) => void }) {
   const [b, setB] = useState(clamp(b0, 1, 10));
   const [a, setA] = useState(clamp(a0, 1, b0));
   const [k, setK] = useState(clamp(k0, 1, 6));
@@ -19,6 +19,7 @@ export default function EquivalentFractions({ a: a0 = 2, b: b0 = 3, k: k0 = 1 }:
   const bottom = b * k;
   const g = gcd(top, bottom);
   const canGlue = g > 1;
+  useReportState({ a, b, k, top, bottom }, onState);
 
   const glue = () => {
     const [n, d] = simplify(top, bottom);

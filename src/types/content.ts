@@ -109,8 +109,10 @@ export interface InteractiveChunk extends ChunkBase {
   intro?: RichText;
   /** Starting values for the widget's controls. */
   props?: Record<string, number>;
-  /** Things to try, shown under the widget. */
+  /** Things to try, shown under the widget (ticked by the student). */
   tasks?: RichText[];
+  /** Sandbox challenges, auto-checked: solved when every key in `goal` matches the widget's state. */
+  challenges?: { id: string; text: RichText; goal: Record<string, number> }[];
 }
 
 export type Chunk =

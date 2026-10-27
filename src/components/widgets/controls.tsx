@@ -1,4 +1,4 @@
-import { useId, useMemo, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useId, useMemo, useRef, type CSSProperties, type ReactNode } from "react";
 import { renderRich } from "../../lib/richText";
 import { cx } from "../ui/primitives";
 
@@ -100,4 +100,22 @@ export function EquationBar({ tex, children, className }: { tex: string; childre
 
 export function WidgetPanel({ children }: { children: ReactNode }) {
   return <div className="space-y-5 rounded-2xl border border-slate-200 bg-slate-50/70 p-4 sm:p-5">{children}</div>;
+}
+
+export type WidgetState = Record<string, number>;
+
+/**
+ * Reports a widget's state to its chunk (for auto-checked challenges) whenever it
+ * changes. The starting state isn't reported until the student changes something.
+ */
+export function useReportState(state: WidgetState, onState?: (s: WidgetState) => void) {
+  const key = JSON.stringify(state);
+  const initial = useRef(key);
+  const changed = useRef(false);
+  useEffect(() => {
+    if (!changed.current && key === initial.current) return;
+    changed.current = true;
+    onState?.(JSON.parse(key));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
 }

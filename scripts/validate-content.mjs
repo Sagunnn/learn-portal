@@ -101,6 +101,13 @@ export function validateAll() {
     const qIds = new Set();
     lesson.chunks.forEach((c, i) => c.type === "check" && checkQuestion(c.question, `${rel} chunk ${i + 1}`, errors, qIds));
     lesson.quiz?.questions.forEach((q, i) => checkQuestion(q, `${rel} quiz question ${i + 1}`, errors, qIds));
+    const challengeIds = new Set();
+    lesson.chunks.forEach((c) =>
+      c.challenges?.forEach((ch) => {
+        if (challengeIds.has(ch.id)) errors.push(`${rel}: duplicate challenge id "${ch.id}"`);
+        challengeIds.add(ch.id);
+      }),
+    );
     const cardIds = new Set();
     lesson.flashcards?.forEach((card) => {
       if (cardIds.has(card.id)) errors.push(`${rel}: duplicate flashcard id "${card.id}"`);

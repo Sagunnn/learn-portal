@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from "react";
 import type { RichText } from "../../types/content";
 import { Rich, useLang } from "../ui/primitives";
+import { Mascot } from "../ui/Coach";
 
 /** Speech-bubble "tooltip" attached under a wrong answer. Inline (not floating) so it never clips on phones. */
 export function WhyBubble({ id, children, title }: { id?: string; children: ReactNode; title?: string }) {
@@ -9,7 +10,7 @@ export function WhyBubble({ id, children, title }: { id?: string; children: Reac
     <div
       id={id}
       role="status"
-      className="relative mt-2 animate-rise rounded-xl bg-slate-900 px-4 py-3 text-sm text-slate-100 shadow-lg before:absolute before:-top-1.5 before:left-6 before:size-3 before:rotate-45 before:bg-slate-900"
+      className="relative mt-2 animate-rise rounded-2xl border-b-4 border-rose-500 bg-slate-900 px-4 py-3 text-sm text-slate-100 shadow-lg before:absolute before:-top-1.5 before:left-6 before:size-3 before:rotate-45 before:bg-slate-900"
     >
       <div className="mb-1 text-xs font-bold uppercase tracking-wide text-rose-300">
         {title ?? (lang === "ne" ? "किन मिलेन?" : "Why not?")}
@@ -39,11 +40,12 @@ export function Feedback({ firstTry, explanation, review, revealed }: {
         ? praise[roll % praise.length]
         : lang === "ne" ? "अब मिल्यो!" : "Got it now!";
   return (
-    <div role="status" className="animate-rise rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3">
-      <div className="flex items-center gap-2 font-bold text-emerald-800">
-        <span aria-hidden>{revealed ? "📘" : "🎉"}</span> {heading}
+    <div role="status" className="flex animate-rise items-start gap-3 rounded-2xl border-2 border-b-4 border-emerald-300 bg-emerald-50 px-4 py-3">
+      <Mascot size={36} mood={revealed ? "think" : "cheer"} />
+      <div className="min-w-0">
+        <div className="font-extrabold text-emerald-800">{heading}</div>
+        {explanation && <Rich text={explanation} className="mt-0.5 text-slate-700" />}
       </div>
-      {explanation && <Rich text={explanation} className="mt-1 text-slate-700" />}
     </div>
   );
 }

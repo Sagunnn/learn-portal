@@ -1,13 +1,19 @@
 import { useState } from "react";
 import { simplify } from "../../lib/fraction";
-import { EquationBar, Slider, WidgetPanel } from "./controls";
+import { EquationBar, Slider, WidgetPanel, useReportState, type WidgetState } from "./controls";
 import { C, OverlapGrid } from "./figures";
 
 /**
  * Module 4 — "Area Overlap Grid". a/b of the width is blue, c/d of the height is
  * yellow; the green overlap is a·c of the b·d small squares.
  */
-export default function AreaOverlap({ a: a0 = 2, b: b0 = 3, c: c0 = 3, d: d0 = 4 }: { a?: number; b?: number; c?: number; d?: number }) {
+export default function AreaOverlap({
+  a: a0 = 2,
+  b: b0 = 3,
+  c: c0 = 3,
+  d: d0 = 4,
+  onState,
+}: { a?: number; b?: number; c?: number; d?: number; onState?: (s: WidgetState) => void }) {
   const [b, setB] = useState(clamp(b0, 1, 10));
   const [a, setA] = useState(clamp(a0, 0, b0));
   const [d, setD] = useState(clamp(d0, 1, 10));
@@ -16,6 +22,7 @@ export default function AreaOverlap({ a: a0 = 2, b: b0 = 3, c: c0 = 3, d: d0 = 4
   const top = a * c;
   const bottom = b * d;
   const [sn, sd] = simplify(top, bottom);
+  useReportState({ a, b, c, d, green: top, total: bottom }, onState);
   let tex = `\\dfrac{${a}}{${b}} \\times \\dfrac{${c}}{${d}} = \\dfrac{${a} \\times ${c}}{${b} \\times ${d}} = \\dfrac{${top}}{${bottom}}`;
   if (top > 0 && sd !== bottom) tex += ` = \\dfrac{${sn}}{${sd}}`;
 

@@ -1,5 +1,6 @@
 import { useRef, useState, type FormEvent } from "react";
 import { checkFill } from "../../lib/answer";
+import { confettiAt } from "../../lib/confetti";
 import { toText } from "../../lib/richText";
 import type { FillQuestion as Fill, RichText } from "../../types/content";
 import { Accordion, Button, Rich, cx, langProps, useLang } from "../ui/primitives";
@@ -44,6 +45,7 @@ export default function FillQuestion({
     const result = checkFill(question, value);
     if (result.correct) {
       setSolved(true);
+      confettiAt(inputRef.current, wrongCount === 0 ? 1 : 0.5);
       setWrong(null);
       onResolved?.({ firstTry: wrongCount === 0 });
     } else {
@@ -88,10 +90,10 @@ export default function FillQuestion({
       placeholder={question.placeholder ?? (isFraction ? "e.g. 3/4" : ne ? "उत्तर" : "answer")}
       aria-label={ne ? "उत्तर लेख्नुहोस्" : "Your answer"}
       className={cx(
-        "mx-1 inline-block w-40 rounded-lg border-2 px-3 py-1 align-baseline font-semibold outline-none transition sm:w-48",
+        "mx-1 inline-block w-40 rounded-xl border-2 border-b-4 px-3 py-1 align-baseline font-bold outline-none transition sm:w-48",
         lp.className,
         solved
-          ? "border-emerald-500 bg-emerald-50 text-emerald-800"
+          ? cx("border-emerald-500 bg-emerald-50 text-emerald-800", !review && !revealed && "animate-celebrate")
           : wrong
             ? cx("border-rose-400 bg-rose-50 text-rose-800", shaking && "animate-shake")
             : "border-slate-300 bg-white focus:border-indigo-500",

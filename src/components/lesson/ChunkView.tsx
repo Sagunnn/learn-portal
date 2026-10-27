@@ -1,5 +1,13 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { confettiAt } from "../../lib/confetti";
+import { progress } from "../../lib/progress";
+import { splitStory } from "../../lib/story";
+import { useProgress } from "../../hooks/useProgress";
+import { Bubble, Coach } from "../ui/Coach";
+import { useLessonId } from "./LessonContext";
 import type {
+  InteractiveChunk,
+  TextChunk,
   CalloutChunk,
   Chunk,
   FormulaChunk,
@@ -19,28 +27,25 @@ export interface ChunkViewProps {
   onResolved?: (r: { firstTry: boolean }) => void;
   /** check chunks the student already passed (e.g. after a reload) */
   review?: boolean;
+  /** text chunks: how many speech bubbles to show (all when undefined) */
+  reveal?: number;
 }
 
-export default function ChunkView({ chunk, onResolved, review }: ChunkViewProps) {
+export default function ChunkView(props: ChunkViewProps) {
   const inherited = useLang();
-  const lang = chunk.lang ?? inherited;
+  const lang = props.chunk.lang ?? inherited;
   return (
     <LangProvider value={lang}>
-      <ChunkBody chunk={chunk} onResolved={onResolved} review={review} />
+      <ChunkBody {...props} />
     </LangProvider>
   );
 }
 
-function ChunkBody({ chunk, onResolved, review }: ChunkViewProps) {
+function ChunkBody({ chunk, onResolved, review, reveal }: ChunkViewProps) {
   const ne = useLang() === "ne";
   switch (chunk.type) {
     case "text":
-      return (
-        <div>
-          {chunk.title && <Title>{chunk.title}</Title>}
-          <Rich text={chunk.body} className="text-[1.05rem] leading-relaxed text-slate-700" />
-        </div>
-      );
+      return <Story chunk={chunk} reveal={reveal} />;
     case "callout":
       return <Callout chunk={chunk} />;
     case "formula":
@@ -58,18 +63,8 @@ function ChunkBody({ chunk, onResolved, review }: ChunkViewProps) {
           <QuestionView question={chunk.question} onResolved={onResolved} review={review} />
         </div>
       );
-    case "interactive": {
-      const Widget = WIDGETS[chunk.widget];
-      return (
-        <div>
-          <Eyebrow>{ne ? "चलाएर हेर्नुहोस्" : "Interactive"}</Eyebrow>
-          {chunk.title && <Title>{chunk.title}</Title>}
-          {chunk.intro && <Rich text={chunk.intro} className="mb-4 text-slate-700" />}
-          {Widget ? <Widget {...chunk.props} /> : <p className="text-rose-600">Unknown widget "{chunk.widget}"</p>}
-          {chunk.tasks && chunk.tasks.length > 0 && <Tasks tasks={chunk.tasks} />}
-        </div>
-      );
-    }
+    case "interactive":
+      return <Interactive chunk={chunk} />;
     case "image":
       return (
         <figure>
@@ -86,19 +81,129 @@ function ChunkBody({ chunk, onResolved, review }: ChunkViewProps) {
 
 // ---- Pieces ----------------------------------------------------------------------
 
+/** Text as a short story: the coach says one bubble per Continue. */
+function Story({ chunk, reveal }: { chunk: TextChunk; reveal?: number }) {
+  const segments = splitStory(chunk.body);
+  const shown = reveal === undefined ? segments.length : Math.min(reveal, segments.length);
+  return (
+    <div>
+      {chunk.title && (
+        <h3 className="mb-3 ml-14 text-xl font-extrabold tracking-tight text-slate-900">
+          <Rich text={chunk.title} inline />
+        </h3>
+      )}
+      <Coach>
+        {segments.slice(0, shown).map((s, i) => (
+          <Bubble key={i} isNew={reveal !== undefined && i === shown - 1 && i > 0}>
+            <Rich text={s} />
+          </Bubble>
+        ))}
+      </Coach>
+    </div>
+  );
+}
+
+/** A widget, its intro as coach bubbles, auto-checked challenges and a "Try this" list. */
+function Interactive({ chunk }: { chunk: InteractiveChunk }) {
+  const ne = useLang() === "ne";
+  const Widget = WIDGETS[chunk.widget];
+  const lessonId = useLessonId();
+  const done = new Set(useProgress().lessons[lessonId]?.challengesDone ?? []);
+  const rowRefs = useRef<Record<string, HTMLLIElement | null>>({});
+  const [justSolved, setJustSolved] = useState<string | null>(null);
+
+  const onState = (s: Record<string, number>) => {
+    for (const c of chunk.challenges ?? []) {
+      if (done.has(c.id)) continue;
+      if (Object.entries(c.goal).every(([k, v]) => s[k] === v)) {
+        if (progress.completeChallenge(lessonId, c.id) > 0) {
+          confettiAt(rowRefs.current[c.id], 1.2);
+          setJustSolved(c.id);
+        }
+      }
+    }
+  };
+
+  return (
+    <div>
+      <Eyebrow>{ne ? "चलाएर हेर्नुहोस्" : "Interactive sandbox"}</Eyebrow>
+      {chunk.title && <Title>{chunk.title}</Title>}
+      {chunk.intro && (
+        <Coach className="mb-4">
+          {splitStory(chunk.intro).map((s, i) => (
+            <Bubble key={i} tone="indigo">
+              <Rich text={s} />
+            </Bubble>
+          ))}
+        </Coach>
+      )}
+      {Widget ? <Widget {...chunk.props} onState={onState} /> : <p className="text-rose-600">Unknown widget "{chunk.widget}"</p>}
+
+      {chunk.challenges && chunk.challenges.length > 0 && (
+        <div className="mt-4">
+          <div className="mb-2 flex items-center justify-between text-sm font-extrabold text-slate-800">
+            <span>🏆 {ne ? "चुनौती" : "Challenges"}</span>
+            <span className="text-slate-400">
+              {chunk.challenges.filter((c) => done.has(c.id)).length}/{chunk.challenges.length}
+            </span>
+          </div>
+          <ul className="space-y-2">
+            {chunk.challenges.map((c) => {
+              const ok = done.has(c.id);
+              return (
+                <li
+                  key={c.id}
+                  ref={(el) => {
+                    rowRefs.current[c.id] = el;
+                  }}
+                  className={cx(
+                    "flex items-center gap-3 rounded-2xl border-2 border-b-4 px-4 py-2.5 transition-colors duration-300",
+                    ok ? "border-emerald-400 bg-emerald-50" : "border-slate-200 bg-white",
+                    justSolved === c.id && "animate-celebrate",
+                  )}
+                >
+                  <span
+                    className={cx(
+                      "grid size-7 shrink-0 place-items-center rounded-full text-sm font-extrabold",
+                      ok ? "bg-emerald-500 text-white" : "border-2 border-dashed border-slate-300 text-slate-300",
+                    )}
+                    aria-hidden
+                  >
+                    {ok ? "✓" : "?"}
+                  </span>
+                  <Rich text={c.text} className={cx("min-w-0 flex-1", ok ? "text-emerald-900" : "text-slate-700")} />
+                  <span className={cx("shrink-0 text-xs font-extrabold", ok ? "text-emerald-600" : "text-amber-600")}>
+                    {ok ? (ne ? "भयो!" : "Done!") : "+5 XP"}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
+      {chunk.tasks && chunk.tasks.length > 0 && <Tasks tasks={chunk.tasks} />}
+    </div>
+  );
+}
+
 /** "Try this" checklist under a widget; ticking is just for the student. */
 function Tasks({ tasks }: { tasks: string[] | (string | string[])[] }) {
   const ne = useLang() === "ne";
   const [done, setDone] = useState<Set<number>>(() => new Set());
   return (
-    <div className="mt-4 rounded-xl border border-indigo-100 bg-indigo-50/60 p-4">
-      <div className="mb-2 text-sm font-bold text-indigo-800">
-        {ne ? "यो गरेर हेर्नुहोस्" : "Try this"} · {done.size}/{tasks.length}
+    <div className="mt-4">
+      <div className="mb-2 text-sm font-extrabold text-slate-800">
+        🤔 {ne ? "सोचौँ" : "Think about it"} <span className="text-slate-400">· {done.size}/{tasks.length}</span>
       </div>
       <ul className="space-y-2">
         {tasks.map((t, i) => (
           <li key={i}>
-            <label className="flex cursor-pointer items-start gap-3">
+            <label
+              className={cx(
+                "press flex cursor-pointer items-start gap-3 rounded-2xl px-4 py-2.5",
+                done.has(i) ? "border-indigo-300 bg-indigo-50" : "border-slate-200 bg-white hover:bg-slate-50",
+              )}
+            >
               <input
                 type="checkbox"
                 className="mt-1 size-4 shrink-0 accent-indigo-600"

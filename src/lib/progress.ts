@@ -9,6 +9,7 @@ export const XP = {
   quizCorrect: 5,
   quizPerfectBonus: 10,
   cardKnown: 1,
+  challenge: 5,
 } as const;
 
 export const DAILY_GOAL = 30;
@@ -31,6 +32,8 @@ export interface LessonProgress {
   quizBest?: number; // percent
   quizAttempts?: number;
   cardsKnown?: string[];
+  /** Sandbox challenges solved inside interactive modules. */
+  challengesDone?: string[];
   lastVisited?: string;
 }
 
@@ -184,6 +187,13 @@ export const progress = {
     known ? set.add(cardId) : set.delete(cardId);
     const next = patchLesson(state, id, { cardsKnown: [...set] });
     return known ? gain(next, XP.cardKnown) : (commit(next), 0);
+  },
+
+  /** Returns XP earned (0 if this challenge was already solved). */
+  completeChallenge(id: string, challengeId: string): number {
+    const done = state.lessons[id]?.challengesDone ?? [];
+    if (done.includes(challengeId)) return 0;
+    return gain(patchLesson(state, id, { challengesDone: [...done, challengeId] }), XP.challenge);
   },
 
   resetCards(id: string) {

@@ -29,7 +29,7 @@ export default function SubjectPage() {
         ← Dashboard
       </Link>
 
-      <header className={cx("rounded-2xl bg-gradient-to-br p-6 text-white shadow-sm", t.gradient)}>
+      <header className={cx("rounded-2xl border-b-[6px] border-black/20 bg-gradient-to-br p-6 text-white", t.gradient)}>
         <div className="flex items-start justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">{subject.name}</h1>
@@ -62,12 +62,12 @@ export default function SubjectPage() {
               <li key={e.meta.id}>
                 <Link
                   to={`/lesson/${e.meta.id}`}
-                  className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-slate-300 hover:shadow-md"
+                  className="press flex items-center gap-4 rounded-2xl border-slate-200 bg-white p-4 hover:-translate-y-0.5 hover:border-indigo-200"
                 >
                   <span
                     className={cx(
-                      "grid size-12 shrink-0 place-items-center rounded-xl text-lg font-bold",
-                      status === "mastered" ? "bg-emerald-500 text-white" : cx(t.soft, t.text),
+                      "grid size-12 shrink-0 place-items-center rounded-2xl border-b-4 text-lg font-extrabold",
+                      status === "mastered" ? "border-emerald-700 bg-emerald-500 text-white" : cx("border-black/10", t.soft, t.text),
                     )}
                   >
                     {status === "mastered" ? "✓" : e.meta.chapter}

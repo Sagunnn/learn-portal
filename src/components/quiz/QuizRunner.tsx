@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useProgress } from "../../hooks/useProgress";
+import { confetti } from "../../lib/confetti";
 import { progress } from "../../lib/progress";
+import { Mascot } from "../ui/Coach";
 import type { Question, Quiz } from "../../types/content";
 import { Button, Card, Rich, cx, useLang } from "../ui/primitives";
 import QuestionView from "./QuestionView";
@@ -49,8 +51,10 @@ export default function QuizRunner({ lessonId, quiz, onReviewCards }: { lessonId
       return;
     }
     const correct = results.filter(Boolean).length;
-    setSummary({ correct, total, ...progress.recordQuiz(lessonId, correct, total) });
+    const result = progress.recordQuiz(lessonId, correct, total);
+    setSummary({ correct, total, ...result });
     setPhase("summary");
+    if (result.percent >= pass) confetti(innerWidth / 2, innerHeight * 0.45, result.percent === 100 ? 2.5 : 1.5);
   };
 
   // Enter moves on once the current question is answered.
@@ -73,9 +77,7 @@ export default function QuizRunner({ lessonId, quiz, onReviewCards }: { lessonId
   if (phase === "intro") {
     return (
       <Card className="mx-auto max-w-xl p-8 text-center">
-        <div className="text-5xl" aria-hidden>
-          🎯
-        </div>
+        <Mascot size={72} mood="happy" className="mx-auto" />
         <h2 className="mt-3 text-2xl font-bold text-slate-900">{ne ? "अभ्यास परीक्षा" : "Quiz time"}</h2>
         <p className="mt-2 text-slate-600">
           {total} {ne ? "प्रश्न" : total === 1 ? "question" : "questions"} · {ne ? "पास" : "pass mark"} {pass}%
@@ -109,7 +111,7 @@ export default function QuizRunner({ lessonId, quiz, onReviewCards }: { lessonId
           <div className="text-6xl" aria-hidden>
             {summary.percent === 100 ? "🏆" : passed ? "🌟" : "💪"}
           </div>
-          <h2 className="mt-3 text-3xl font-bold text-slate-900">
+          <h2 className="mt-3 text-4xl font-extrabold text-slate-900">
             {summary.correct} / {summary.total}
           </h2>
           <p className="mt-1 text-lg font-semibold text-slate-600">{summary.percent}%</p>
@@ -121,7 +123,7 @@ export default function QuizRunner({ lessonId, quiz, onReviewCards }: { lessonId
                 : ne ? `पास हुन ${pass}% चाहिन्छ। फेरि प्रयास गर्नुहोस्!` : `You need ${pass}% to pass. Have another go!`}
           </p>
           <div className="mt-4 flex flex-wrap justify-center gap-2 text-sm font-semibold">
-            <span className="rounded-full bg-amber-100 px-3 py-1 text-amber-800">+{summary.xp} XP</span>
+            <span className="rounded-2xl border-2 border-b-4 border-amber-300 bg-amber-100 px-3 py-1 font-extrabold text-amber-800">⚡ +{summary.xp} XP</span>
             {summary.isBest && summary.previousBest !== undefined && (
               <span className="rounded-full bg-emerald-100 px-3 py-1 text-emerald-800">
                 {ne ? "नयाँ रेकर्ड!" : "New best!"} ({summary.previousBest}% → {summary.percent}%)

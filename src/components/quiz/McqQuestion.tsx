@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { shuffled } from "../../lib/answer";
+import { confettiAt } from "../../lib/confetti";
 import type { McqQuestion as Mcq } from "../../types/content";
 import { Accordion, Rich, cx, useLang } from "../ui/primitives";
 import { Feedback, WhyBubble } from "./Feedback";
@@ -36,6 +37,7 @@ export default function McqQuestion({
     if (opt.correct) {
       setSolved(true);
       setShown(null);
+      confettiAt(document.getElementById(`opt-${question.id}-${optIndex}`), tried.size === 0 ? 1 : 0.5);
       onResolved?.({ firstTry: tried.size === 0 });
       return;
     }
@@ -83,24 +85,26 @@ export default function McqQuestion({
             <li key={optIndex}>
               <button
                 type="button"
+                id={`opt-${question.id}-${optIndex}`}
                 onClick={() => pick(optIndex)}
                 aria-disabled={solved}
                 aria-describedby={shown === optIndex ? `why-${question.id}-${optIndex}` : undefined}
                 onAnimationEnd={() => setShaking(null)}
                 className={cx(
-                  "flex w-full items-start gap-3 rounded-xl border-2 bg-white px-4 py-3 text-left transition",
-                  !solved && !isWrong && "border-slate-200 hover:border-slate-300 hover:bg-slate-50 active:translate-y-px",
-                  isWrong && "border-rose-300 bg-rose-50/70 text-slate-500",
+                  "press flex w-full items-start gap-3 rounded-2xl bg-white px-4 py-3 text-left font-medium",
+                  !solved && !isWrong && "border-slate-200 hover:border-indigo-300 hover:bg-indigo-50/40",
+                  isWrong && "border-rose-300 bg-rose-50 text-slate-500",
                   shaking === optIndex && "animate-shake",
-                  isRight && "animate-pop border-emerald-500 bg-emerald-50 text-emerald-900",
+                  isRight && "border-emerald-500 bg-emerald-50 text-emerald-900",
+                  isRight && !review && "animate-celebrate",
                   solved && !isRight && !isWrong && "border-slate-100 text-slate-400",
                 )}
               >
                 <span
                   aria-hidden
                   className={cx(
-                    "grid size-7 shrink-0 place-items-center rounded-lg border text-sm font-bold",
-                    isRight ? "border-emerald-500 bg-emerald-500 text-white" : isWrong ? "border-rose-300 bg-rose-100 text-rose-600" : "border-slate-200 text-slate-500",
+                    "grid size-7 shrink-0 place-items-center rounded-lg border-2 text-sm font-extrabold",
+                    isRight ? "border-emerald-500 bg-emerald-500 text-white" : isWrong ? "border-rose-300 bg-rose-100 text-rose-600" : "border-slate-200 text-slate-400",
                   )}
                 >
                   {isRight ? "✓" : isWrong ? "✕" : LETTERS[pos]}
