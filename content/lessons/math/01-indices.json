@@ -1,0 +1,228 @@
+{
+  "$schema": "../../../schema/lesson.schema.json",
+  "meta": {
+    "id": "math-indices",
+    "subject": "math",
+    "chapter": 1,
+    "title": "Indices and their laws",
+    "titleLocal": "घाताङ्क र यसका नियमहरू",
+    "summary": "Write repeated multiplication as a power, and use the four laws of indices to simplify.",
+    "estMinutes": 20,
+    "tags": ["algebra", "powers"]
+  },
+  "chunks": [
+    {
+      "type": "text",
+      "title": "Repeated multiplication, written short",
+      "body": [
+        "Writing $2 \\times 2 \\times 2 \\times 2 \\times 2$ is slow. Mathematicians write it as $2^5$.",
+        "In $2^5$, **2** is the **base** and **5** is the **index** (also called the *power* or *exponent*). The index tells you how many times the base is multiplied by itself.",
+        "$$2^5 = 2 \\times 2 \\times 2 \\times 2 \\times 2 = 32$$"
+      ]
+    },
+    {
+      "type": "callout",
+      "variant": "warning",
+      "title": "A classic mistake",
+      "body": [
+        "$2^5$ is **not** $2 \\times 5$.",
+        "$2 \\times 5 = 10$, but $2^5 = 32$. The index counts *how many 2s* you multiply together."
+      ]
+    },
+    {
+      "type": "check",
+      "question": {
+        "id": "check-3-to-4",
+        "type": "mcq",
+        "prompt": "What is $3^4$?",
+        "options": [
+          { "text": "$81$", "correct": true },
+          { "text": "$12$", "why": "That's $3 \\times 4$. The index 4 means multiply **four 3s**: $3 \\times 3 \\times 3 \\times 3$." },
+          { "text": "$64$", "why": "That's $4^3$ (three 4s). Here the base is 3 and the index is 4 — don't swap them." },
+          { "text": "$27$", "why": "That's $3^3$, only three 3s. You need four of them." }
+        ],
+        "explanation": "$3^4 = 3 \\times 3 \\times 3 \\times 3 = 81$"
+      }
+    },
+    {
+      "type": "text",
+      "title": "Multiplying powers with the same base",
+      "body": [
+        "What is $a^3 \\times a^2$? Write every $a$ out:",
+        "$$a^3 \\times a^2 = (a \\cdot a \\cdot a)(a \\cdot a) = a^5$$",
+        "There are $3 + 2 = 5$ copies of $a$. So when the **bases are the same**, multiplying means **adding the indices**."
+      ]
+    },
+    {
+      "type": "formula",
+      "title": "The four laws of indices",
+      "items": [
+        { "tex": "a^m \\times a^n = a^{m+n}", "label": "Product law — add the indices" },
+        { "tex": "a^m \\div a^n = a^{m-n}", "label": "Quotient law — subtract the indices" },
+        { "tex": "(a^m)^n = a^{mn}", "label": "Power law — multiply the indices" },
+        { "tex": "a^0 = 1 \\quad (a \\neq 0)", "label": "Zero index" }
+      ],
+      "caption": "These laws only work when the **bases are the same**. $2^3 \\times 5^2$ can't be combined into a single power."
+    },
+    {
+      "type": "text",
+      "title": "Why is $a^0 = 1$?",
+      "body": [
+        "Use the quotient law on $\\dfrac{a^3}{a^3}$:",
+        "$$\\frac{a^3}{a^3} = a^{3-3} = a^0$$",
+        "But any number (except 0) divided by itself is 1. So $a^0$ **must** equal $1$. That's why $5^0 = 1$ and even $1000^0 = 1$."
+      ]
+    },
+    {
+      "type": "practice",
+      "problem": "Simplify $\\dfrac{2^5 \\times 2^3}{2^4}$ and find its value.",
+      "hint": "Simplify the top first with the product law, then divide using the quotient law.",
+      "steps": [
+        "Top: same base 2, so add the indices: $2^5 \\times 2^3 = 2^{5+3} = 2^8$.",
+        "Divide: subtract the indices: $\\dfrac{2^8}{2^4} = 2^{8-4} = 2^4$.",
+        "Evaluate: $2^4 = 2 \\times 2 \\times 2 \\times 2 = 16$."
+      ],
+      "answer": "$2^4 = 16$"
+    },
+    {
+      "type": "check",
+      "question": {
+        "id": "check-power-law",
+        "type": "fill",
+        "prompt": "$(x^3)^2 = x^{\\square}$. The missing index is ___",
+        "answers": ["6"],
+        "match": "number",
+        "mistakes": [
+          { "answers": ["5"], "why": "You added $3 + 2$. Adding is for **multiplying powers** like $x^3 \\times x^2$. A power of a power means **multiply** the indices: $3 \\times 2$." },
+          { "answers": ["9"], "why": "That's $3^2$. You need the two indices multiplied: $3 \\times 2$." },
+          { "answers": ["1"], "why": "You subtracted. Subtraction is the quotient law (dividing). For a power of a power, multiply." }
+        ],
+        "explanation": "$(x^3)^2 = x^3 \\times x^3 = x^{3+3} = x^6$ — the same as $x^{3 \\times 2}$."
+      }
+    },
+    {
+      "type": "practice",
+      "title": "Challenge",
+      "problem": "Simplify $(3x^2)^3$.",
+      "hint": "The power outside the bracket applies to **both** the 3 and the $x^2$.",
+      "steps": [
+        "Raise each part to the power 3: $(3x^2)^3 = 3^3 \\times (x^2)^3$.",
+        "$3^3 = 3 \\times 3 \\times 3 = 27$.",
+        "Power law: $(x^2)^3 = x^{2 \\times 3} = x^6$.",
+        "Put them together: $27x^6$."
+      ],
+      "answer": "$27x^6$"
+    },
+    {
+      "type": "callout",
+      "variant": "remember",
+      "title": "Quick summary",
+      "body": [
+        "- Multiply same bases → **add** the indices",
+        "- Divide same bases → **subtract** the indices",
+        "- Power of a power → **multiply** the indices",
+        "- Any non-zero number to the power 0 → **1**"
+      ]
+    }
+  ],
+  "flashcards": [
+    { "id": "base-index", "front": "In $7^4$, which is the base and which is the index?", "back": "Base: $7$ (the number multiplied)\nIndex: $4$ (how many times)", "tag": "Vocabulary" },
+    { "id": "product", "front": "$a^m \\times a^n = \\;?$", "back": "$a^{m+n}$\nSame base: **add** the indices.", "tag": "Law" },
+    { "id": "quotient", "front": "$a^m \\div a^n = \\;?$", "back": "$a^{m-n}$\nSame base: **subtract** the indices.", "tag": "Law" },
+    { "id": "power", "front": "$(a^m)^n = \\;?$", "back": "$a^{mn}$\nPower of a power: **multiply** the indices.", "tag": "Law" },
+    { "id": "zero", "front": "$a^0 = \\;?$  (for $a \\neq 0$)", "back": "$1$\nBecause $\\frac{a^n}{a^n} = a^0$ and anything divided by itself is 1.", "tag": "Law" },
+    { "id": "one", "front": "$a^1 = \\;?$", "back": "$a$\nA letter on its own has a hidden index of 1.", "tag": "Law" },
+    { "id": "trap", "front": "Is $2^5$ the same as $2 \\times 5$?", "back": "No! $2^5 = 32$ but $2 \\times 5 = 10$.", "tag": "Trap" }
+  ],
+  "quiz": {
+    "passPercent": 70,
+    "questions": [
+      {
+        "id": "q-quotient",
+        "type": "mcq",
+        "prompt": "$x^5 \\div x^2 = \\;?$",
+        "options": [
+          { "text": "$x^3$", "correct": true },
+          { "text": "$x^7$", "why": "You added the indices. Adding is for multiplying; for **dividing**, subtract: $5 - 2$." },
+          { "text": "$x^{10}$", "why": "You multiplied the indices. That's the rule for a power of a power, like $(x^5)^2$." },
+          { "text": "$x^{2.5}$", "why": "Indices aren't divided. Dividing powers with the same base means subtracting the indices: $5 - 2 = 3$." }
+        ],
+        "explanation": "Quotient law: $x^5 \\div x^2 = x^{5-2} = x^3$."
+      },
+      {
+        "id": "q-zero",
+        "type": "fill",
+        "prompt": "$5^0 = $ ___",
+        "answers": ["1"],
+        "match": "number",
+        "mistakes": [
+          { "answers": ["0"], "why": "Tempting! But $5^0 = \\frac{5^2}{5^2}$ — a number divided by itself — which is $1$, not $0$." },
+          { "answers": ["5"], "why": "$5^1 = 5$. With index 0 the answer is always 1 (for any non-zero base)." }
+        ],
+        "explanation": "Any non-zero number to the power 0 equals 1."
+      },
+      {
+        "id": "q-product",
+        "type": "mcq",
+        "prompt": "Which is equal to $2^3 \\times 2^4$?",
+        "options": [
+          { "text": "$2^7$", "correct": true },
+          { "text": "$2^{12}$", "why": "You multiplied the indices ($3 \\times 4$). When multiplying same bases, **add** them: $3 + 4$." },
+          { "text": "$4^7$", "why": "The base stays the same! Don't multiply the bases: $2^3 \\times 2^4 = 2^{3+4}$." },
+          { "text": "$4^{12}$", "why": "Both the base and the index changed. Keep base 2 and add the indices." }
+        ],
+        "explanation": "$2^3 \\times 2^4 = 2^{3+4} = 2^7 = 128$."
+      },
+      {
+        "id": "q-power",
+        "type": "fill",
+        "prompt": "$(a^4)^3 = a^{\\square}$. The missing index is ___",
+        "answers": ["12"],
+        "match": "number",
+        "mistakes": [
+          { "answers": ["7"], "why": "You added $4 + 3$. For a power of a power, multiply: $4 \\times 3$." },
+          { "answers": ["64"], "why": "That's $4^3$. The indices simply multiply: $4 \\times 3$." },
+          { "answers": ["1"], "why": "You subtracted. For a power of a power, multiply the indices." }
+        ],
+        "explanation": "$(a^4)^3 = a^{4 \\times 3} = a^{12}$."
+      },
+      {
+        "id": "q-value",
+        "type": "mcq",
+        "prompt": "What is the value of $\\dfrac{10^6}{10^4}$?",
+        "options": [
+          { "text": "$100$", "correct": true },
+          { "text": "$10^{24}$", "why": "You multiplied the indices. Dividing same bases → subtract: $6 - 4 = 2$." },
+          { "text": "$10^{1.5}$", "why": "Don't divide the indices; subtract them: $10^{6-4} = 10^2$." },
+          { "text": "$1000$", "why": "$1000 = 10^3$. Check again: $6 - 4 = 2$, so the answer is $10^2$." }
+        ],
+        "explanation": "$\\dfrac{10^6}{10^4} = 10^{6-4} = 10^2 = 100$."
+      },
+      {
+        "id": "q-true",
+        "type": "mcq",
+        "prompt": "Which statement is **true**?",
+        "options": [
+          { "text": "$3^2 \\times 3^0 = 9$", "correct": true },
+          { "text": "$4^0 = 0$", "why": "Any non-zero number to the power 0 is 1, so $4^0 = 1$." },
+          { "text": "$2^3 = 6$", "why": "$2^3 = 2 \\times 2 \\times 2 = 8$. The number $6$ is $2 \\times 3$." },
+          { "text": "$5^2 \\times 3^2 = 15^4$", "why": "You can only add indices when the bases are the same. Here $5^2 \\times 3^2 = 25 \\times 9 = 225$, but $15^4 = 50625$." }
+        ],
+        "explanation": "$3^2 \\times 3^0 = 3^{2+0} = 3^2 = 9$. (Or: $9 \\times 1 = 9$.)"
+      },
+      {
+        "id": "q-hidden-one",
+        "type": "fill",
+        "prompt": "$y^2 \\times y^3 \\times y = y^{\\square}$. The missing index is ___",
+        "answers": ["6"],
+        "match": "number",
+        "hint": "What index is hiding on a plain $y$?",
+        "mistakes": [
+          { "answers": ["5"], "why": "Don't forget the last $y$! A letter on its own is $y^1$, so the total is $2 + 3 + 1$." },
+          { "answers": ["7"], "why": "Close — the plain $y$ is $y^1$, not $y^2$. Try $2 + 3 + 1$." }
+        ],
+        "explanation": "$y^2 \\times y^3 \\times y^1 = y^{2+3+1} = y^6$."
+      }
+    ]
+  }
+}

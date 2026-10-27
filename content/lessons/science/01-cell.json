@@ -1,0 +1,217 @@
+{
+  "$schema": "../../../schema/lesson.schema.json",
+  "meta": {
+    "id": "science-cell",
+    "subject": "science",
+    "chapter": 1,
+    "title": "The Cell: Unit of Life",
+    "titleLocal": "कोष: जीवनको एकाइ",
+    "summary": "What cells are, what their parts do, and how plant and animal cells differ.",
+    "estMinutes": 15,
+    "tags": ["biology", "living things"]
+  },
+  "chunks": [
+    {
+      "type": "text",
+      "title": "Building blocks of life",
+      "body": [
+        "A house is built from bricks. Your body is built from **cells** — tens of trillions of them.",
+        "A **cell** is the smallest unit that can carry out all the processes of life. That's why it's called the **structural and functional unit of life**."
+      ]
+    },
+    {
+      "type": "callout",
+      "variant": "fact",
+      "title": "Who saw cells first?",
+      "body": "In **1665**, Robert Hooke looked at a thin slice of **cork** through his microscope. He saw tiny box-like spaces and called them *cells*, from a Latin word meaning 'small room'."
+    },
+    {
+      "type": "text",
+      "title": "One cell or many?",
+      "body": [
+        "Most cells are so small that we need a **microscope** to see them.",
+        "Some living things are made of just **one cell**, like *Amoeba*, *Paramecium* and bacteria. They are **unicellular**.",
+        "Plants, animals and humans are made of many cells. They are **multicellular**."
+      ]
+    },
+    {
+      "type": "check",
+      "question": {
+        "id": "check-amoeba",
+        "type": "mcq",
+        "prompt": "An *Amoeba* is made of just one cell. So it is…",
+        "options": [
+          { "text": "unicellular", "correct": true },
+          { "text": "multicellular", "why": "*Multi* means many. Humans and mango trees are multicellular; *Amoeba* has only one cell." },
+          { "text": "non-living", "why": "*Amoeba* eats, moves, grows and reproduces — all signs of life. Being one cell doesn't make it non-living." },
+          { "text": "a tissue", "why": "A tissue is a group of many similar cells working together. One cell alone isn't a tissue." }
+        ],
+        "explanation": "*Uni* means one: a **unicellular** organism is a single cell that does everything to stay alive."
+      }
+    },
+    {
+      "type": "table",
+      "title": "Main parts of a cell",
+      "headers": ["Part", "What it does", "Think of it as…"],
+      "rows": [
+        ["Cell membrane", "Thin outer layer that controls what goes in and out", "A security gate"],
+        ["Cytoplasm", "Jelly-like fluid where most of the cell's work happens", "The factory floor"],
+        ["Nucleus", "Controls all the cell's activities; holds the genetic material (DNA)", "The head office"],
+        ["Mitochondria", "Release energy from food (respiration)", "A power station"],
+        ["Vacuole", "Stores water, food and wastes", "A storeroom"]
+      ]
+    },
+    {
+      "type": "text",
+      "title": "Plant cells have extras",
+      "body": [
+        "Plant cells have all of the parts above, **plus**:",
+        "- **Cell wall** — a stiff layer *outside* the membrane, made of *cellulose*. It gives the plant shape and support.",
+        "- **Chloroplasts** — green structures containing *chlorophyll*. They make food by **photosynthesis**.",
+        "- A **large central vacuole** that keeps the cell firm. Animal cells have only small vacuoles, or none."
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Plant cell vs animal cell",
+      "headers": ["Feature", "Plant cell", "Animal cell"],
+      "rows": [
+        ["Cell wall", "Present", "Absent"],
+        ["Chloroplasts", "Present", "Absent"],
+        ["Vacuole", "One large, central", "Small or absent"],
+        ["Shape", "Usually fixed, box-like", "Usually irregular or rounded"],
+        ["Membrane, cytoplasm, nucleus, mitochondria", "Present", "Present"]
+      ]
+    },
+    {
+      "type": "callout",
+      "variant": "warning",
+      "title": "Common trap",
+      "body": "Plant cells **do** have a cell membrane. The cell wall sits *outside* the membrane — it's an extra layer, not a replacement."
+    },
+    {
+      "type": "check",
+      "question": {
+        "id": "check-chloroplast",
+        "type": "fill",
+        "prompt": "The green structures in a plant cell that make food are called ___.",
+        "answers": ["chloroplasts", "chloroplast"],
+        "mistakes": [
+          { "answers": ["chlorophyll"], "why": "Close! **Chlorophyll** is the green *pigment*. It sits inside the structures called **chloroplasts**." },
+          { "answers": ["nucleus"], "why": "The nucleus controls the cell, but it doesn't make food." },
+          { "answers": ["mitochondria", "mitochondrion"], "why": "Mitochondria *release* energy from food. Making food is the chloroplasts' job." }
+        ],
+        "explanation": "**Chloroplasts** contain chlorophyll and make food by photosynthesis."
+      }
+    },
+    {
+      "type": "practice",
+      "title": "Think like a scientist",
+      "problem": "A student looks at a cell under a microscope. It has a nucleus, a cell membrane and cytoplasm, but **no cell wall** and **no chloroplasts**. Is it a plant cell or an animal cell?",
+      "hint": "Which two parts are found only in plant cells?",
+      "steps": [
+        "List what plant cells have that animal cells don't: a **cell wall** and **chloroplasts**.",
+        "This cell has **neither** of them.",
+        "It does have the parts that *all* cells share: membrane, cytoplasm and nucleus."
+      ],
+      "answer": "An **animal cell** — it has no cell wall and no chloroplasts."
+    }
+  ],
+  "flashcards": [
+    { "id": "cell", "front": "What is a cell?", "back": "The smallest structural and functional unit of life.", "tag": "Definition" },
+    { "id": "hooke", "front": "Who first named cells, and when?", "back": "Robert Hooke, in 1665, while looking at cork.", "tag": "History" },
+    { "id": "unicellular", "front": "Unicellular", "back": "Made of one cell.\n*Amoeba*, *Paramecium*, bacteria", "tag": "Vocabulary" },
+    { "id": "multicellular", "front": "Multicellular", "back": "Made of many cells.\nPlants, animals, humans", "tag": "Vocabulary" },
+    { "id": "nucleus", "front": "Nucleus", "back": "Controls the cell's activities and holds the DNA.", "tag": "Cell part" },
+    { "id": "membrane", "front": "Cell membrane", "back": "Thin outer layer that controls what enters and leaves the cell.", "tag": "Cell part" },
+    { "id": "mitochondria", "front": "Mitochondria", "back": "Release energy from food — the cell's power station.", "tag": "Cell part" },
+    { "id": "chloroplast", "front": "Chloroplast", "back": "Green structure in plant cells that makes food by photosynthesis.", "tag": "Plant only" },
+    { "id": "wall", "front": "Cell wall", "back": "Stiff cellulose layer outside the membrane in plant cells; gives shape and support.", "tag": "Plant only" }
+  ],
+  "quiz": {
+    "passPercent": 70,
+    "questions": [
+      {
+        "id": "q-control",
+        "type": "mcq",
+        "prompt": "Which part controls all the activities of a cell?",
+        "options": [
+          { "text": "Nucleus", "correct": true },
+          { "text": "Cytoplasm", "why": "Cytoplasm is where much of the work happens, but it doesn't give the orders. The nucleus does." },
+          { "text": "Cell membrane", "why": "The membrane controls what enters and leaves, not everything the cell does." },
+          { "text": "Vacuole", "why": "Vacuoles are for storage — water, food and wastes." }
+        ],
+        "explanation": "The **nucleus** is the control centre of the cell."
+      },
+      {
+        "id": "q-plant-only",
+        "type": "mcq",
+        "prompt": "Which is found in plant cells but **not** in animal cells?",
+        "options": [
+          { "text": "Cell wall", "correct": true },
+          { "text": "Nucleus", "why": "Both plant and animal cells have a nucleus." },
+          { "text": "Mitochondria", "why": "Plant cells need energy too, so both plant and animal cells have mitochondria." },
+          { "text": "Cell membrane", "why": "All cells have a membrane. In plants it sits just inside the cell wall." }
+        ],
+        "explanation": "The **cell wall** (and chloroplasts) are only in plant cells."
+      },
+      {
+        "id": "q-hooke",
+        "type": "fill",
+        "prompt": "The scientist who named cells after looking at cork in 1665 was Robert ___.",
+        "answers": ["Hooke"],
+        "mistakes": [
+          { "answers": ["hook"], "why": "Nearly — it's spelled **Hooke**, with an *e* at the end." },
+          { "answers": ["newton"], "why": "Isaac Newton lived at the same time, but cells were named by Robert **Hooke**." }
+        ],
+        "explanation": "Robert **Hooke** saw box-like spaces in cork and called them cells."
+      },
+      {
+        "id": "q-mitochondria",
+        "type": "mcq",
+        "prompt": "Why are mitochondria called the 'power station' of the cell?",
+        "options": [
+          { "text": "They release energy from food", "correct": true },
+          { "text": "They make food using sunlight", "why": "That's what **chloroplasts** do (photosynthesis)." },
+          { "text": "They store water", "why": "Storage is the **vacuole's** job." },
+          { "text": "They control what enters the cell", "why": "That's the **cell membrane**." }
+        ],
+        "explanation": "Mitochondria break down food to **release energy** (respiration)."
+      },
+      {
+        "id": "q-leaf",
+        "type": "mcq",
+        "prompt": "A cell from a leaf would most likely have…",
+        "options": [
+          { "text": "a cell wall, chloroplasts and a large vacuole", "correct": true },
+          { "text": "a cell wall but no nucleus", "why": "Leaf cells do have a nucleus — it controls the cell's activities." },
+          { "text": "chloroplasts but no cell membrane", "why": "Every cell has a membrane. The wall is outside it, not a replacement." },
+          { "text": "no vacuole at all", "why": "Plant cells have a large central vacuole that keeps them firm." }
+        ],
+        "explanation": "Leaf cells are plant cells, and they're green because they're full of chloroplasts."
+      },
+      {
+        "id": "q-unicellular",
+        "type": "fill",
+        "prompt": "Living things made of only one cell are called ___.",
+        "answers": ["unicellular", "unicellular organisms", "एककोषीय"],
+        "mistakes": [
+          { "answers": ["multicellular", "multicellular organisms"], "why": "*Multi* means many. One cell → **uni**cellular." }
+        ],
+        "explanation": "*Uni* = one, so one-celled organisms are **unicellular**."
+      },
+      {
+        "id": "q-multicellular",
+        "type": "mcq",
+        "prompt": "Which of these is a **multicellular** organism?",
+        "options": [
+          { "text": "A mango tree", "correct": true },
+          { "text": "*Amoeba*", "why": "*Amoeba* is a single cell — it's unicellular." },
+          { "text": "A bacterium", "why": "A bacterium is a single cell — it's unicellular." },
+          { "text": "*Paramecium*", "why": "*Paramecium* is single-celled, like *Amoeba*." }
+        ],
+        "explanation": "A mango tree is made of billions of cells working together."
+      }
+    ]
+  }
+}

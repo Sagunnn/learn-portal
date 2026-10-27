@@ -1,0 +1,299 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://learn.sagunpradhan.com.np/schema/lesson.schema.json",
+  "title": "Lesson",
+  "description": "One chapter/lesson. Drop a file that matches this schema into content/lessons/<subject>/ and it appears in the app.",
+  "type": "object",
+  "required": ["meta", "chunks"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "meta": { "$ref": "#/$defs/meta" },
+    "chunks": {
+      "description": "The Learn path. Shown one at a time; the student presses Continue to reveal the next chunk.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/chunk" }
+    },
+    "flashcards": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/flashcard" }
+    },
+    "quiz": { "$ref": "#/$defs/quiz" }
+  },
+  "$defs": {
+    "richText": {
+      "description": "A string, or an array of lines (each line is a paragraph). Supports $inline math$, $$display math$$, **bold**, *italic*, ==highlight==, `code`, and lines starting with '- ' or '1. ' for lists. Write \\$ for a literal dollar sign.",
+      "oneOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "array", "minItems": 1, "items": { "type": "string" } }
+      ]
+    },
+    "lang": {
+      "description": "Content language. 'ne' switches on Devanagari typography (Mukta, taller line height).",
+      "enum": ["en", "ne"]
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "meta": {
+      "type": "object",
+      "required": ["id", "subject", "chapter", "title", "summary"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id", "description": "Globally unique. Used in the URL (/lesson/<id>) and as the progress key, so don't rename it once students have started." },
+        "subject": { "type": "string", "description": "Must match an id in content/subjects.json." },
+        "chapter": { "type": "number", "minimum": 0, "description": "Sort order inside the subject." },
+        "title": { "type": "string", "minLength": 1 },
+        "titleLocal": { "type": "string", "description": "Optional Nepali title shown under the main title." },
+        "summary": { "type": "string", "minLength": 1 },
+        "lang": { "$ref": "#/$defs/lang" },
+        "estMinutes": { "type": "integer", "minimum": 1 },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "draft": { "type": "boolean", "description": "true hides the lesson from the app." }
+      }
+    },
+    "chunk": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "enum": ["text", "callout", "formula", "wordBreakdown", "table", "practice", "check", "image"] }
+      },
+      "allOf": [
+        { "if": { "properties": { "type": { "const": "text" } } }, "then": { "$ref": "#/$defs/textChunk" } },
+        { "if": { "properties": { "type": { "const": "callout" } } }, "then": { "$ref": "#/$defs/calloutChunk" } },
+        { "if": { "properties": { "type": { "const": "formula" } } }, "then": { "$ref": "#/$defs/formulaChunk" } },
+        { "if": { "properties": { "type": { "const": "wordBreakdown" } } }, "then": { "$ref": "#/$defs/wordBreakdownChunk" } },
+        { "if": { "properties": { "type": { "const": "table" } } }, "then": { "$ref": "#/$defs/tableChunk" } },
+        { "if": { "properties": { "type": { "const": "practice" } } }, "then": { "$ref": "#/$defs/practiceChunk" } },
+        { "if": { "properties": { "type": { "const": "check" } } }, "then": { "$ref": "#/$defs/checkChunk" } },
+        { "if": { "properties": { "type": { "const": "image" } } }, "then": { "$ref": "#/$defs/imageChunk" } }
+      ]
+    },
+    "textChunk": {
+      "type": "object",
+      "required": ["type", "body"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "text" },
+        "title": { "type": "string" },
+        "body": { "$ref": "#/$defs/richText" },
+        "lang": { "$ref": "#/$defs/lang" }
+      }
+    },
+    "calloutChunk": {
+      "type": "object",
+      "required": ["type", "variant", "body"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "callout" },
+        "variant": { "enum": ["tip", "remember", "warning", "example", "fact"] },
+        "title": { "type": "string" },
+        "body": { "$ref": "#/$defs/richText" },
+        "lang": { "$ref": "#/$defs/lang" }
+      }
+    },
+    "formulaChunk": {
+      "type": "object",
+      "required": ["type", "items"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "formula" },
+        "title": { "type": "string" },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["tex"],
+            "additionalProperties": false,
+            "properties": {
+              "tex": { "type": "string", "description": "KaTeX source without $ delimiters." },
+              "label": { "type": "string" }
+            }
+          }
+        },
+        "caption": { "$ref": "#/$defs/richText" },
+        "lang": { "$ref": "#/$defs/lang" }
+      }
+    },
+    "wordBreakdownChunk": {
+      "type": "object",
+      "required": ["type", "items"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "wordBreakdown" },
+        "title": { "type": "string" },
+        "intro": { "$ref": "#/$defs/richText" },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["word", "parts"],
+            "additionalProperties": false,
+            "properties": {
+              "word": { "type": "string" },
+              "parts": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "type": "object",
+                  "required": ["text", "role"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "text": { "type": "string" },
+                    "role": { "enum": ["prefix", "root", "suffix"], "description": "prefix = उपसर्ग, root = मूल शब्द, suffix = प्रत्यय" }
+                  }
+                }
+              },
+              "meaning": { "$ref": "#/$defs/richText" }
+            }
+          }
+        },
+        "lang": { "$ref": "#/$defs/lang" }
+      }
+    },
+    "tableChunk": {
+      "type": "object",
+      "required": ["type", "headers", "rows"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "table" },
+        "title": { "type": "string" },
+        "headers": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "rows": { "type": "array", "minItems": 1, "items": { "type": "array", "items": { "type": "string" } } },
+        "lang": { "$ref": "#/$defs/lang" }
+      }
+    },
+    "practiceChunk": {
+      "description": "A worked problem with a toggleable Hint and a step-by-step Solution.",
+      "type": "object",
+      "required": ["type", "problem", "steps", "answer"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "practice" },
+        "title": { "type": "string" },
+        "problem": { "$ref": "#/$defs/richText" },
+        "hint": { "$ref": "#/$defs/richText" },
+        "steps": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/richText" } },
+        "answer": { "$ref": "#/$defs/richText" },
+        "lang": { "$ref": "#/$defs/lang" }
+      }
+    },
+    "checkChunk": {
+      "description": "A quick question inside the Learn path. Continue stays locked until it is answered.",
+      "type": "object",
+      "required": ["type", "question"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "check" },
+        "question": { "$ref": "#/$defs/question" }
+      }
+    },
+    "imageChunk": {
+      "type": "object",
+      "required": ["type", "src", "alt"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "image" },
+        "src": { "type": "string", "description": "Path under public/, e.g. /images/science/cell.svg" },
+        "alt": { "type": "string", "minLength": 1 },
+        "caption": { "$ref": "#/$defs/richText" },
+        "lang": { "$ref": "#/$defs/lang" }
+      }
+    },
+    "flashcard": {
+      "type": "object",
+      "required": ["id", "front", "back"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "front": { "$ref": "#/$defs/richText" },
+        "back": { "$ref": "#/$defs/richText" },
+        "tag": { "type": "string" },
+        "lang": { "$ref": "#/$defs/lang" }
+      }
+    },
+    "quiz": {
+      "type": "object",
+      "required": ["questions"],
+      "additionalProperties": false,
+      "properties": {
+        "passPercent": { "type": "integer", "minimum": 1, "maximum": 100, "default": 70 },
+        "questions": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/question" } }
+      }
+    },
+    "question": {
+      "type": "object",
+      "required": ["id", "type"],
+      "properties": {
+        "type": { "enum": ["mcq", "fill"] }
+      },
+      "allOf": [
+        { "if": { "properties": { "type": { "const": "mcq" } } }, "then": { "$ref": "#/$defs/mcq" } },
+        { "if": { "properties": { "type": { "const": "fill" } } }, "then": { "$ref": "#/$defs/fill" } }
+      ]
+    },
+    "mcq": {
+      "type": "object",
+      "required": ["id", "type", "prompt", "options"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "type": { "const": "mcq" },
+        "prompt": { "$ref": "#/$defs/richText" },
+        "options": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": ["text"],
+            "additionalProperties": false,
+            "properties": {
+              "text": { "$ref": "#/$defs/richText" },
+              "correct": { "const": true },
+              "why": { "$ref": "#/$defs/richText", "description": "Required on wrong options: shown when the student picks it." }
+            }
+          }
+        },
+        "explanation": { "$ref": "#/$defs/richText", "description": "Shown once the question is answered correctly." },
+        "hint": { "$ref": "#/$defs/richText" },
+        "shuffle": { "type": "boolean", "default": true },
+        "lang": { "$ref": "#/$defs/lang" }
+      }
+    },
+    "fill": {
+      "type": "object",
+      "required": ["id", "type", "prompt", "answers"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "type": { "const": "fill" },
+        "prompt": { "$ref": "#/$defs/richText", "description": "Put ___ (three underscores) where the blank goes." },
+        "answers": { "type": "array", "minItems": 1, "items": { "type": "string" }, "description": "Accepted answers. The first one is shown when the student gives up. Add romanised spellings for Nepali answers." },
+        "match": { "enum": ["text", "number"], "default": "text" },
+        "tolerance": { "type": "number", "minimum": 0, "description": "number match only" },
+        "caseSensitive": { "type": "boolean", "default": false },
+        "mistakes": {
+          "type": "array",
+          "description": "Predictable wrong answers, each with its own explanation.",
+          "items": {
+            "type": "object",
+            "required": ["answers", "why"],
+            "additionalProperties": false,
+            "properties": {
+              "answers": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+              "why": { "$ref": "#/$defs/richText" }
+            }
+          }
+        },
+        "placeholder": { "type": "string" },
+        "explanation": { "$ref": "#/$defs/richText" },
+        "hint": { "$ref": "#/$defs/richText" },
+        "lang": { "$ref": "#/$defs/lang" }
+      }
+    }
+  }
+}

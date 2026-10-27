@@ -1,0 +1,38 @@
+{
+  "name": "learn-portal",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Grade 7 learning portal (Science, Mathematics, Nepali) — learn.sagunpradhan.com.np",
+  "scripts": {
+    "dev": "vite",
+    "validate": "node scripts/validate-content.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "build": "npm run validate && tsc --noEmit && vite build && cp dist/index.html dist/404.html",
+    "preview": "vite preview"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource/mukta": "^5.3.0",
+    "katex": "^0.19.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router": "^8.5.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "ajv": "^8.20.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
+  }
+}
