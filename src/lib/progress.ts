@@ -190,10 +190,10 @@ export const progress = {
   },
 
   /** Returns XP earned (0 if this challenge was already solved). */
-  completeChallenge(id: string, challengeId: string): number {
+  completeChallenge(id: string, challengeId: string, xp: number = XP.challenge): number {
     const done = state.lessons[id]?.challengesDone ?? [];
     if (done.includes(challengeId)) return 0;
-    return gain(patchLesson(state, id, { challengesDone: [...done, challengeId] }), XP.challenge);
+    return gain(patchLesson(state, id, { challengesDone: [...done, challengeId] }), xp);
   },
 
   resetCards(id: string) {

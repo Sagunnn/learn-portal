@@ -100,7 +100,19 @@ export interface ImageChunk extends ChunkBase {
   caption?: RichText;
 }
 
-export type WidgetName = "equivalentFractions" | "mixedNumberTank" | "gridMerger" | "areaOverlap";
+export type WidgetName =
+  | "equivalentFractions"
+  | "mixedNumberTank"
+  | "gridMerger"
+  | "areaOverlap"
+  | "gridRunner"
+  | "vectorSorter"
+  | "skateTrack"
+  | "cratePush"
+  | "workDetector";
+
+/** A challenge goal value: an exact number, or a range. */
+export type GoalValue = number | { min?: number; max?: number };
 
 export interface InteractiveChunk extends ChunkBase {
   type: "interactive";
@@ -112,7 +124,7 @@ export interface InteractiveChunk extends ChunkBase {
   /** Things to try, shown under the widget (ticked by the student). */
   tasks?: RichText[];
   /** Sandbox challenges, auto-checked: solved when every key in `goal` matches the widget's state. */
-  challenges?: { id: string; text: RichText; goal: Record<string, number> }[];
+  challenges?: { id: string; text: RichText; goal: Record<string, GoalValue>; xp?: number }[];
 }
 
 export type Chunk =
@@ -145,7 +157,8 @@ export type Visual =
   | { kind: "pie"; n: number; d: number; k?: number }
   | { kind: "tank"; n: number; d: number }
   | { kind: "sum"; a: [number, number]; b: [number, number] }
-  | { kind: "product"; a: [number, number]; b: [number, number] };
+  | { kind: "product"; a: [number, number]; b: [number, number] }
+  | { kind: "triangle"; top: string; left: string; right: string };
 
 export interface McqOption {
   text: RichText;
@@ -195,7 +208,15 @@ export interface Quiz {
 export interface CheatSheet {
   title?: string;
   intro?: RichText;
-  items: { title: string; tex?: string; body?: RichText; visual?: Visual }[];
+  items: {
+    title: string;
+    tex?: string;
+    body?: RichText;
+    visual?: Visual;
+    table?: { headers: string[]; rows: string[][] };
+    /** span both columns */
+    wide?: boolean;
+  }[];
 }
 
 export interface Lesson {

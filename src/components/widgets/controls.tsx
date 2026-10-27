@@ -16,11 +16,13 @@ export function Slider({
   onChange,
   color = "#4f46e5",
   hint,
+  step = 1,
 }: {
   label: ReactNode;
   value: number;
   min: number;
   max: number;
+  step?: number;
   onChange: (v: number) => void;
   color?: string;
   hint?: string;
@@ -42,7 +44,7 @@ export function Slider({
         type="range"
         min={min}
         max={max}
-        step={1}
+        step={step}
         value={value}
         aria-valuetext={hint}
         onChange={(e) => onChange(Number(e.target.value))}
@@ -90,7 +92,7 @@ export function Stepper({
 export function EquationBar({ tex, children, className }: { tex: string; children?: ReactNode; className?: string }) {
   return (
     <div className={cx("rounded-2xl bg-slate-900 px-4 py-4 text-center text-white [&_.katex]:text-white", className)}>
-      <div className="overflow-x-auto text-xl sm:text-2xl" aria-live="polite">
+      <div className="overflow-x-auto text-sm sm:text-2xl" aria-live="polite">
         <Tex tex={tex} display />
       </div>
       {children && <div className="mt-1 text-sm text-slate-300">{children}</div>}

@@ -3,10 +3,16 @@ import { Rich } from "../ui/primitives";
 import { Tex } from "../widgets/controls";
 import { VisualFigure } from "../widgets/figures";
 
-/** One-page revision sheet. Hidden on screen; it's the only thing that prints. */
+/**
+ * One-page revision sheet; the only thing that prints. On screen it's laid out
+ * off-canvas rather than display:none, so its maths fonts load before printing.
+ */
 export default function PrintSheet({ sheet, title, subject }: { sheet: CheatSheet; title: string; subject?: string }) {
   return (
-    <section className="hidden text-[11px] leading-snug text-slate-900 print:block" aria-hidden>
+    <section
+      className="pointer-events-none absolute -left-[10000px] top-0 w-[190mm] text-[11px] leading-snug text-slate-900 print:static print:w-auto"
+      aria-hidden
+    >
       <header className="mb-3 flex items-end justify-between border-b-2 border-slate-900 pb-2">
         <div>
           <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{subject} · Formula &amp; visual summary</div>
@@ -17,7 +23,7 @@ export default function PrintSheet({ sheet, title, subject }: { sheet: CheatShee
       {sheet.intro && <Rich text={sheet.intro} className="mb-3 text-[11px] text-slate-700" />}
       <div className="grid grid-cols-2 gap-2.5">
         {sheet.items.map((item, i) => (
-          <article key={i} className="break-inside-avoid rounded-lg border border-slate-300 p-2.5">
+          <article key={i} className={"break-inside-avoid rounded-lg border border-slate-300 p-2.5" + (item.wide ? " col-span-2" : "")}>
             <h2 className="text-[12px] font-bold">{item.title}</h2>
             {item.tex && (
               <div className="my-1 text-center text-[13px]">
@@ -28,6 +34,30 @@ export default function PrintSheet({ sheet, title, subject }: { sheet: CheatShee
               <div className="print-visual my-1 flex h-[118px] justify-center">
                 <VisualFigure visual={item.visual} />
               </div>
+            )}
+            {item.table && (
+              <table className="my-1 w-full border-collapse text-[10.5px]">
+                <thead>
+                  <tr>
+                    {item.table.headers.map((h, j) => (
+                      <th key={j} className="border border-slate-300 bg-slate-100 px-1.5 py-1 text-left font-bold">
+                        <Rich text={h} inline />
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {item.table.rows.map((row, r) => (
+                    <tr key={r}>
+                      {row.map((cell, c) => (
+                        <td key={c} className={"border border-slate-300 px-1.5 py-0.5" + (c === 0 ? " font-semibold" : "")}>
+                          <Rich text={cell} inline />
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             )}
             {item.body && <Rich text={item.body} className="text-[10.5px] text-slate-700 [&>*+*]:mt-1" />}
           </article>

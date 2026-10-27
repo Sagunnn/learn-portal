@@ -136,7 +136,11 @@ export default function LessonPage() {
             ))}
           </div>
           {lesson?.cheatSheet && (
-            <Button variant="secondary" size="sm" onClick={() => window.print()} title="Print a one-page formula and picture summary">
+            <Button variant="secondary" size="sm" onClick={async () => {
+                // Wait for the maths fonts, or formulas can print blank.
+                await document.fonts?.ready;
+                window.print();
+              }} title="Print a one-page formula and picture summary">
               🖨 {ne ? "एक पाने सारांश प्रिन्ट" : "Print 1-page summary"}
             </Button>
           )}

@@ -115,8 +115,11 @@ function Interactive({ chunk }: { chunk: InteractiveChunk }) {
   const onState = (s: Record<string, number>) => {
     for (const c of chunk.challenges ?? []) {
       if (done.has(c.id)) continue;
-      if (Object.entries(c.goal).every(([k, v]) => s[k] === v)) {
-        if (progress.completeChallenge(lessonId, c.id) > 0) {
+      const met = Object.entries(c.goal).every(([k, g]) =>
+        typeof g === "number" ? s[k] === g : s[k] !== undefined && (g.min === undefined || s[k] >= g.min) && (g.max === undefined || s[k] <= g.max),
+      );
+      if (met) {
+        if (progress.completeChallenge(lessonId, c.id, c.xp) > 0) {
           confettiAt(rowRefs.current[c.id], 1.2);
           setJustSolved(c.id);
         }
@@ -142,7 +145,7 @@ function Interactive({ chunk }: { chunk: InteractiveChunk }) {
       {chunk.challenges && chunk.challenges.length > 0 && (
         <div className="mt-4">
           <div className="mb-2 flex items-center justify-between text-sm font-extrabold text-slate-800">
-            <span>🏆 {ne ? "चुनौती" : "Challenges"}</span>
+            <span>🏆 {ne ? "चुनौती" : chunk.challenges.some((c) => (c.xp ?? 5) >= 50) ? "Missions" : "Challenges"}</span>
             <span className="text-slate-400">
               {chunk.challenges.filter((c) => done.has(c.id)).length}/{chunk.challenges.length}
             </span>
@@ -173,7 +176,7 @@ function Interactive({ chunk }: { chunk: InteractiveChunk }) {
                   </span>
                   <Rich text={c.text} className={cx("min-w-0 flex-1", ok ? "text-emerald-900" : "text-slate-700")} />
                   <span className={cx("shrink-0 text-xs font-extrabold", ok ? "text-emerald-600" : "text-amber-600")}>
-                    {ok ? (ne ? "भयो!" : "Done!") : "+5 XP"}
+                    {ok ? (ne ? "भयो!" : "Done!") : `+${c.xp ?? 5} XP`}
                   </span>
                 </li>
               );

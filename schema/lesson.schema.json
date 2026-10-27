@@ -795,7 +795,7 @@
       }
     },
     "interactiveChunk": {
-      "description": "A hands-on visualizer. Widgets: equivalentFractions (props a, b, k), mixedNumberTank (n, d), gridMerger (a1, b1, a2, b2), areaOverlap (a, b, c, d).",
+      "description": "A hands-on visualizer. Widgets: equivalentFractions (props a, b, k), mixedNumberTank (n, d), gridMerger (a1, b1, a2, b2), areaOverlap (a, b, c, d). Physics: gridRunner (no props), vectorSorter (no props), skateTrack (u, a), cratePush (surface 0-2), workDetector (scenario 0-2).",
       "type": "object",
       "required": [
         "type",
@@ -811,7 +811,12 @@
             "equivalentFractions",
             "mixedNumberTank",
             "gridMerger",
-            "areaOverlap"
+            "areaOverlap",
+            "gridRunner",
+            "vectorSorter",
+            "skateTrack",
+            "cratePush",
+            "workDetector"
           ]
         },
         "title": {
@@ -839,7 +844,7 @@
         },
         "challenges": {
           "type": "array",
-          "description": "Auto-checked sandbox challenges (+5 XP each, once). Solved when every key in goal equals the widget's state. State keys: equivalentFractions a, b, k, top, bottom; mixedNumberTank n, d, wholes, rest; gridMerger a1, b1, a2, b2, phase (0-2), over (1 if the sum is more than 1); areaOverlap a, b, c, d, green, total.",
+          "description": "Auto-checked sandbox challenges (+5 XP each, once). Solved when every key in goal equals the widget's state. State keys: equivalentFractions a, b, k, top, bottom; mixedNumberTank n, d, wholes, rest; gridMerger a1, b1, a2, b2, phase (0-2), over (1 if the sum is more than 1); areaOverlap a, b, c, d, green, total. Physics: gridRunner distance, disp, atShop, steps; vectorSorter sorted, mistakes; skateTrack u, finished, time, turned; cratePush surface, net, people, accel, moving; workDetector scenario, force, distance, work, pushed.",
           "items": {
             "type": "object",
             "required": [
@@ -858,9 +863,33 @@
               "goal": {
                 "type": "object",
                 "minProperties": 1,
+                "description": "Each key: an exact number, or {min, max}.",
                 "additionalProperties": {
-                  "type": "integer"
+                  "oneOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "minProperties": 1,
+                      "properties": {
+                        "min": {
+                          "type": "number"
+                        },
+                        "max": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  ]
                 }
+              },
+              "xp": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 200,
+                "default": 5
               }
             }
           }
@@ -972,6 +1001,30 @@
               "description": "[numerator, denominator]"
             }
           }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "top",
+            "left",
+            "right"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "triangle"
+            },
+            "top": {
+              "type": "string"
+            },
+            "left": {
+              "type": "string"
+            },
+            "right": {
+              "type": "string"
+            }
+          }
         }
       ]
     },
@@ -1033,6 +1086,35 @@
               },
               "visual": {
                 "$ref": "#/$defs/visual"
+              },
+              "table": {
+                "type": "object",
+                "required": [
+                  "headers",
+                  "rows"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "headers": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "rows": {
+                    "type": "array",
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "wide": {
+                "type": "boolean",
+                "description": "Span both columns."
               }
             }
           }

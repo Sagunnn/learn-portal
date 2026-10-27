@@ -360,6 +360,30 @@ export function OverlapGrid({ a, b, title }: { a: [number, number]; b: [number, 
   );
 }
 
+// ---- Formula triangle ------------------------------------------------------------------
+
+/** Cover the one you want: top = left × right; left = top ÷ right; right = top ÷ left. */
+export function FormulaTriangle({ top, left, right }: { top: string; left: string; right: string }) {
+  return (
+    <svg viewBox="0 0 200 170" className="block h-auto w-full" role="img" aria-label={`${top} = ${left} × ${right}`}>
+      <polygon points="100,8 192,162 8,162" fill="#fef3c7" stroke={C.line} strokeWidth={4} strokeLinejoin="round" />
+      <line x1={54} y1={85} x2={146} y2={85} stroke={C.line} strokeWidth={4} />
+      <text x={100} y={70} textAnchor="middle" fontSize={34} fontWeight={800} fontStyle="italic" fill="#b45309" fontFamily="KaTeX_Math, serif">
+        {top}
+      </text>
+      <text x={66} y={140} textAnchor="middle" fontSize={30} fontWeight={800} fontStyle="italic" fill={C.cut} fontFamily="KaTeX_Math, serif">
+        {left}
+      </text>
+      <text x={134} y={140} textAnchor="middle" fontSize={30} fontWeight={800} fontStyle="italic" fill={C.blue} fontFamily="KaTeX_Math, serif">
+        {right}
+      </text>
+      <text x={100} y={140} textAnchor="middle" fontSize={26} fontWeight={800} fill={C.line}>
+        ×
+      </text>
+    </svg>
+  );
+}
+
 // ---- Dispatcher for hints / cheat sheet ---------------------------------------------------
 
 export function VisualFigure({ visual }: { visual: Visual }) {
@@ -380,6 +404,12 @@ export function VisualFigure({ visual }: { visual: Visual }) {
       return (
         <div className="mx-auto max-w-56">
           <OverlapGrid a={visual.a} b={visual.b} />
+        </div>
+      );
+    case "triangle":
+      return (
+        <div className="mx-auto max-w-40">
+          <FormulaTriangle top={visual.top} left={visual.left} right={visual.right} />
         </div>
       );
   }

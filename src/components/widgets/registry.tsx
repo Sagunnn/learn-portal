@@ -4,6 +4,11 @@ import AreaOverlap from "./AreaOverlap";
 import EquivalentFractions from "./EquivalentFractions";
 import GridMerger from "./GridMerger";
 import MixedNumberTank from "./MixedNumberTank";
+import CratePush from "./physics/CratePush";
+import GridRunner from "./physics/GridRunner";
+import SkateTrack from "./physics/SkateTrack";
+import VectorSorter from "./physics/VectorSorter";
+import WorkDetector from "./physics/WorkDetector";
 
 /**
  * Interactive widgets a lesson can place with
@@ -17,4 +22,9 @@ export const WIDGETS: Record<WidgetName, ComponentType<any>> = {
   mixedNumberTank: MixedNumberTank,
   gridMerger: GridMerger,
   areaOverlap: AreaOverlap,
+  gridRunner: GridRunner,
+  vectorSorter: VectorSorter,
+  skateTrack: SkateTrack,
+  cratePush: CratePush,
+  workDetector: WorkDetector,
 };

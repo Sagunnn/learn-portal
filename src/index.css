@@ -136,6 +136,29 @@
   @apply translate-y-[2px] border-b-2 mb-[2px];
 }
 
+/* Physics labs: straining push, sweat drops, "0 J" flash */
+.phys-shake {
+  animation: phys-shake 0.12s linear infinite;
+}
+@keyframes phys-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+.phys-sweat {
+  animation: phys-sweat 1s ease-in infinite;
+}
+@keyframes phys-sweat {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(26px); opacity: 0; }
+}
+.phys-flash {
+  animation: phys-flash 0.5s ease-in-out 3;
+}
+@keyframes phys-flash {
+  50% { background-color: #fecdd3; transform: scale(1.02); }
+}
+
 /* Flashcard flip */
 .flip-scene {
   perspective: 1400px;

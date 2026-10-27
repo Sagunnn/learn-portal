@@ -98,6 +98,11 @@ Set `"draft": true` in `meta` to hide a lesson while you write it. To add a subj
 | `mixedNumberTank`     | `n`, `d`             | Pieces fill containers of d; improper ↔ mixed number                  |
 | `gridMerger`          | `a1`, `b1`, `a2`, `b2` | Columns vs rows, overlay to a common grid, combine (adding)          |
 | `areaOverlap`         | `a`, `b`, `c`, `d`   | Blue columns × yellow rows, green overlap (multiplying)               |
+| `gridRunner`          | none                 | Walk a map: distance (green path) vs displacement (indigo arrow)      |
+| `vectorSorter`        | none                 | Drag/tap quantities into Scalar and Vector buckets                    |
+| `skateTrack`          | `u`, `a`             | 100 m track, live a = (v − u)/t, speedometer, a dot every second       |
+| `cratePush`           | `surface` (0–2)      | Tug-of-war on ice/wood/rough road, force arrows, F net and F = m × a  |
+| `workDetector`        | `scenario` (0–2)     | W = F × d: cart (work), wall (0 J), carried bag (0 J against gravity)  |
 
 To add a widget: build it in `src/components/widgets/`, register it in `registry.tsx`, and add its name to `WidgetName` and the schema's `widget` enum.
 
@@ -109,7 +114,7 @@ To add a widget: build it in `src/components/widgets/`, register it in `registry
 
 **Print summary**: add a top-level `cheatSheet` (`title?`, `intro?`, up to 8 `items` with `title`, `tex?`, `body?`, `visual?`) and the lesson gets a "Print 1-page summary" button. Only the sheet prints, sized for one A4 page.
 
-**Sandbox challenges**: an `interactive` chunk can list `challenges: [{ "id", "text", "goal": { "top": 8, "bottom": 12 } }]`. A challenge is solved (confetti, +5 XP, saved) the moment the widget's state matches every key in `goal`. The state keys for each widget are listed in the schema's description of `challenges`.
+**Sandbox challenges / missions**: an `interactive` chunk can list `challenges: [{ "id", "text", "goal": { "top": 8, "bottom": 12 }, "xp": 50 }]`. A goal value is an exact number or a range like `{ "max": 8 }`; `xp` defaults to 5. A challenge is solved (confetti, +5 XP, saved) the moment the widget's state matches every key in `goal`. The state keys for each widget are listed in the schema's description of `challenges`.
 
 ## Design system
 
